@@ -36,8 +36,10 @@ namespace PatternDesigner.Tools
 
         public ClassTool()
         {
-            
-
+            this.Name = "ClassTool";
+            this.ToolTipText = "ClassTool";
+            this.Image = IconSet.bounding_box;
+            CheckOnClick = true;
         }
 
         public void ToolMouseDown(object sender, MouseEventArgs e)

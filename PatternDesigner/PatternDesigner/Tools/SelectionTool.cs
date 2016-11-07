@@ -37,7 +37,10 @@ namespace PatternDesigner.Tools
 
         public SelectionTool()
         {
-            
+            this.Name = "Selection tool";
+            this.ToolTipText = "Selection tool";
+            this.Image = IconSet.cursor;
+            this.CheckOnClick = true;
         }
 
         public void ToolMouseDown(object sender, MouseEventArgs e)

@@ -7,8 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-//using ClassDiagram.MenuItems;
-//using ClassDiagram.ToolbarItems;
 using PatternDesigner.Tools;
 using System.Diagnostics;
 
