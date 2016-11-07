@@ -1,1 +1,1 @@
-# patterndesigner-hide
+# pdhide
