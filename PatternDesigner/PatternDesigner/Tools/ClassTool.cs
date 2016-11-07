@@ -48,6 +48,8 @@ namespace PatternDesigner.Tools
             {
                 this.rectangle = new Rectangle(e.X, e.Y);
                 this.canvas.AddDrawingObject(this.rectangle);
+                    this.canvas.AddDrawingObject(this.rectangle);
+                this.canvas.AddDrawingObject(this.rectangle);
             }
         }
 
