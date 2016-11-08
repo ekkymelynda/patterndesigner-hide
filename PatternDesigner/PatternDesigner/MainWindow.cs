@@ -128,6 +128,12 @@ namespace PatternDesigner
             this.toolbox.AddSeparator();
             //this.toolbox.AddTool(new LineTool());
             this.toolbox.AddTool(new ClassTool());
+            this.toolbox.AddSeparator();
+            this.toolbox.AddTool(new AssociationTool());
+            this.toolbox.AddTool(new DirectedTool());
+            this.toolbox.AddTool(new GeneralizationTool());
+            this.toolbox.AddTool(new DependencyTool());
+            this.toolbox.AddTool(new RealizationTool());
             this.toolbox.ToolSelected += Toolbox_ToolSelected;
 
             #endregion

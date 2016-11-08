@@ -83,12 +83,47 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Shapes\AssociationLine.cs" />
+    <Compile Include="Shapes\DependencyLine.cs" />
+    <Compile Include="Shapes\DirectedAssociationLine.cs" />
+    <Compile Include="Shapes\GeneralizationLine.cs" />
+    <Compile Include="Shapes\RealizationLine.cs" />
     <Compile Include="Shapes\Rectangle.cs" />
     <Compile Include="States\EditState.cs" />
     <Compile Include="States\PreviewState.cs" />
     <Compile Include="States\StaticState.cs" />
+    <Compile Include="Tools\AssociationTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Tools\AssociationTool.Designer.cs">
+      <DependentUpon>AssociationTool.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tools\ClassTool.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Tools\DependencyTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Tools\DependencyTool.Designer.cs">
+      <DependentUpon>DependencyTool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\DirectedTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Tools\DirectedTool.Designer.cs">
+      <DependentUpon>DirectedTool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\GeneralizationTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Tools\GeneralizationTool.Designer.cs">
+      <DependentUpon>GeneralizationTool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\RealizationTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Tools\RealizationTool.Designer.cs">
+      <DependentUpon>RealizationTool.cs</DependentUpon>
     </Compile>
     <Compile Include="Tools\SelectionTool.cs">
       <SubType>Component</SubType>
@@ -139,6 +174,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\vector-diagonal-line-with-box-edges.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\assosiation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dependency.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\directed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\general.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\realization.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,3 +7,12 @@ C:\Users\EKKY MELYNDA\Documents\Visual Studio 2015\Projects\pdhide\trunk\Pattern
 C:\Users\EKKY MELYNDA\Documents\Visual Studio 2015\Projects\pdhide\trunk\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.IconSet.resources
 C:\Users\EKKY MELYNDA\Documents\Visual Studio 2015\Projects\pdhide\trunk\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.exe
 C:\Users\EKKY MELYNDA\Documents\Visual Studio 2015\Projects\pdhide\trunk\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.pdb
+E:\5113100128 rere\kuliah\KPL\FP\pdhide\PatternDesigner\PatternDesigner\bin\Debug\PatternDesigner.exe.config
+E:\5113100128 rere\kuliah\KPL\FP\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.exe
+E:\5113100128 rere\kuliah\KPL\FP\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.pdb
+E:\5113100128 rere\kuliah\KPL\FP\pdhide\PatternDesigner\PatternDesigner\bin\Debug\PatternDesigner.exe
+E:\5113100128 rere\kuliah\KPL\FP\pdhide\PatternDesigner\PatternDesigner\bin\Debug\PatternDesigner.pdb
+E:\5113100128 rere\kuliah\KPL\FP\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.csprojResolveAssemblyReference.cache
+E:\5113100128 rere\kuliah\KPL\FP\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.IconSet.resources
+E:\5113100128 rere\kuliah\KPL\FP\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.Properties.Resources.resources
+E:\5113100128 rere\kuliah\KPL\FP\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.csproj.GenerateResource.Cache
