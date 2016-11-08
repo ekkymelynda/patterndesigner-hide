@@ -51,6 +51,14 @@ namespace PatternDesigner.Shapes
             this.pen.Color = Color.Black;
             this.pen.DashStyle = DashStyle.Solid;
             Graphics.DrawRectangle(this.pen, X, Y, Width, Height);
+            this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            Point start1 = new Point(X, Y + Height/3);
+            Point end1 = new Point(X + Width, Y + Height / 3);
+            this.Graphics.DrawLine(this.pen, start1, end1);
+            this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            Point start2 = new Point(X, Y + Height / 3 * 2);
+            Point end2 = new Point(X + Width, Y + Height / 3 * 2);
+            this.Graphics.DrawLine(this.pen, start2, end2);
         }
 
         public override void RenderOnEditingView()
@@ -58,6 +66,14 @@ namespace PatternDesigner.Shapes
             this.pen.Color = Color.Blue;
             this.pen.DashStyle = DashStyle.Solid;
             Graphics.DrawRectangle(this.pen, X, Y, Width, Height);
+            this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            Point start1 = new Point(X, Y + Height / 3);
+            Point end1 = new Point(X + Width, Y + Height / 3);
+            this.Graphics.DrawLine(this.pen, start1, end1);
+            this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            Point start2 = new Point(X, Y + Height / 3 * 2);
+            Point end2 = new Point(X + Width, Y + Height / 3 * 2);
+            this.Graphics.DrawLine(this.pen, start2, end2);
         }
 
         public override void RenderOnPreview()
@@ -65,6 +81,14 @@ namespace PatternDesigner.Shapes
             this.pen.Color = Color.Red;
             this.pen.DashStyle = DashStyle.DashDot;
             Graphics.DrawRectangle(this.pen, X, Y, Width, Height);
+            this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            Point start1 = new Point(X, Y + Height / 3);
+            Point end1 = new Point(X + Width, Y + Height / 3);
+            this.Graphics.DrawLine(this.pen, start1, end1);
+            this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            Point start2 = new Point(X, Y + Height / 3 * 2);
+            Point end2 = new Point(X + Width, Y + Height / 3 * 2);
+            this.Graphics.DrawLine(this.pen, start2, end2);
         }
 
         public override void Translate(int x, int y, int xAmount, int yAmount)
