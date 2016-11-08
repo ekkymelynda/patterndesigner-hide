@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClassProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClassProperties.Designer.cs">
+      <DependentUpon>ClassProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="DefaultCanvas.cs">
       <SubType>Component</SubType>
     </Compile>

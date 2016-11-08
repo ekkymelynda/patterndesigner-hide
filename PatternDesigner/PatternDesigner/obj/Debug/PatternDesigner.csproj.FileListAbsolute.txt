@@ -16,3 +16,12 @@ E:\5113100128 rere\kuliah\KPL\FP\pdhide\PatternDesigner\PatternDesigner\obj\Debu
 E:\5113100128 rere\kuliah\KPL\FP\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.IconSet.resources
 E:\5113100128 rere\kuliah\KPL\FP\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.Properties.Resources.resources
 E:\5113100128 rere\kuliah\KPL\FP\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.csproj.GenerateResource.Cache
+D:\SEMESTER 7\KPL\hidden\PatternDesigner\PatternDesigner\bin\Debug\PatternDesigner.exe.config
+D:\SEMESTER 7\KPL\hidden\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.exe
+D:\SEMESTER 7\KPL\hidden\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.pdb
+D:\SEMESTER 7\KPL\hidden\PatternDesigner\PatternDesigner\bin\Debug\PatternDesigner.exe
+D:\SEMESTER 7\KPL\hidden\PatternDesigner\PatternDesigner\bin\Debug\PatternDesigner.pdb
+D:\SEMESTER 7\KPL\hidden\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.csprojResolveAssemblyReference.cache
+D:\SEMESTER 7\KPL\hidden\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.IconSet.resources
+D:\SEMESTER 7\KPL\hidden\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.Properties.Resources.resources
+D:\SEMESTER 7\KPL\hidden\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.csproj.GenerateResource.Cache

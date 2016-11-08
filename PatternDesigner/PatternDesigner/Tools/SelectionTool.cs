@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace PatternDesigner.Tools
 {
@@ -13,6 +14,9 @@ namespace PatternDesigner.Tools
         private DrawingObject selectedObject;
         private int xInitial;
         private int yInitial;
+        private ClassProperties fm;
+        int count = 0;
+        Guid id_object;
 
         public Cursor Cursor
         {
@@ -52,6 +56,10 @@ namespace PatternDesigner.Tools
             {
                 canvas.DeselectAllObjects();
                 selectedObject = canvas.SelectObjectAt(e.X, e.Y);
+                Debug.WriteLine("id sesudah" + selectedObject.ID.ToString());
+                incCount();
+                id_object = selectedObject.ID;
+                Debug.WriteLine("ID sebelum: " + selectedObject.ID.ToString());
             }
 
         }
@@ -60,16 +68,35 @@ namespace PatternDesigner.Tools
         {
             if (e.Button == MouseButtons.Left && canvas != null)
             {
-                if (selectedObject != null)
-                {
-                    int xAmount = e.X - xInitial;
-                    int yAmount = e.Y - yInitial;
-                    xInitial = e.X;
-                    yInitial = e.Y;
+                canvas.DeselectAllObjects();
 
-                    selectedObject.Translate(e.X, e.Y, xAmount, yAmount);
-                }
+                selectedObject = canvas.SelectObjectAt(e.X, e.Y);
+               
             }
+        }
+
+        protected void incCount()
+        {
+            count++;
+            if (id_object == selectedObject.ID)
+            {
+
+                if (count == 2)
+                {
+                    //MessageBox.Show("middle double click");
+                    Debug.WriteLine("count = 2");
+                    ClassProperties fm = new ClassProperties(id_object);
+                    Debug.WriteLine("fm show");
+                    fm.Show();
+                }
+
+                count = 0;
+            }
+            Debug.WriteLine("COUNTNYA " + count);
+
+
+
+
         }
 
         public void ToolMouseUp(object sender, MouseEventArgs e)
