@@ -68,10 +68,15 @@ namespace PatternDesigner.Tools
         {
             if (e.Button == MouseButtons.Left && canvas != null)
             {
-                canvas.DeselectAllObjects();
+                if (selectedObject != null)
+                {
+                    int xAmount = e.X - xInitial;
+                    int yAmount = e.Y - yInitial;
+                    xInitial = e.X;
+                    yInitial = e.Y;
 
-                selectedObject = canvas.SelectObjectAt(e.X, e.Y);
-               
+                    selectedObject.Translate(e.X, e.Y, xAmount, yAmount);
+                }
             }
         }
 
