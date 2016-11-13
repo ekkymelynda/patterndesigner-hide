@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using PatternDesigner.Tools;
 using System.Diagnostics;
+using DiagramToolkit.Commands;
 
 namespace PatternDesigner
 {
@@ -47,8 +48,8 @@ namespace PatternDesigner
 
             #region Commands
 
-            //BlackCanvasBgCommand blackCanvasBgCmd = new BlackCanvasBgCommand(this.canvas);
-            //WhiteCanvasBgCommand whiteCanvasBgCmd = new WhiteCanvasBgCommand(this.canvas);
+            ICanvas canvas = this.editor.GetSelectedCanvas();
+            AddPattern1 addPattern1 = new AddPattern1(canvas);
 
             #endregion
 
@@ -68,6 +69,7 @@ namespace PatternDesigner
             this.menubar.AddMenuItem(generateMenuItem);
 
             DefaultMenuItem factoryMenuItem = new DefaultMenuItem("Factory Pattern");
+            factoryMenuItem.SetCommand(addPattern1);
             generateMenuItem.AddMenuItem(factoryMenuItem);
 
             DefaultMenuItem singletonMenuItem = new DefaultMenuItem("Singleton Pattern");
