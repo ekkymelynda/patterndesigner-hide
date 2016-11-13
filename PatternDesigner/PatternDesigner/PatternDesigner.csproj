@@ -52,6 +52,13 @@
     <Compile Include="ClassProperties.Designer.cs">
       <DependentUpon>ClassProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="Commands\AddSingletonPattern.cs" />
+    <Compile Include="Commands\AddCompositePattern.cs" />
+    <Compile Include="Commands\AddFacadePattern.cs" />
+    <Compile Include="Commands\AddCommandPattern.cs" />
+    <Compile Include="Commands\AddMementoPattern.cs" />
+    <Compile Include="Commands\AddPattern.cs" />
+    <Compile Include="Commands\AddFactoryPattern.cs" />
     <Compile Include="Commands\AddPattern1.cs" />
     <Compile Include="DefaultCanvas.cs">
       <SubType>Component</SubType>
@@ -197,7 +204,15 @@
   <ItemGroup>
     <None Include="Resources\realization.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="PatternSource\SingletonPattern.txt" />
+    <Content Include="PatternSource\FacadePattern.txt" />
+    <Content Include="PatternSource\CompositePattern.txt" />
+    <Content Include="PatternSource\CommandPattern.txt" />
+    <Content Include="PatternSource\MementoPattern.txt" />
+    <Content Include="PatternSource\FactoryPattern.txt" />
+    <Content Include="PatternSource\TryPattern.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
