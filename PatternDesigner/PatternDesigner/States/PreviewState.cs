@@ -28,5 +28,10 @@ namespace PatternDesigner.States
         {
             obj.ChangeState(EditState.GetInstance());
         }
+
+        public override void Deselect(DrawingObject obj)
+        {
+            obj.ChangeState(StaticState.GetInstance());
+        }
     }
 }
