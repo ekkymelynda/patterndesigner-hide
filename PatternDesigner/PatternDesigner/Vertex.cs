@@ -8,6 +8,11 @@ namespace PatternDesigner
 {
     public abstract class Vertex : DrawingObject, IObservable
     {
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
+
         private List<Edge> edge;
 
         public Vertex()
@@ -19,7 +24,7 @@ namespace PatternDesigner
         {
             foreach(var a in edge)
             {
-                a.Update(this, x, y);
+                a.Update();
             }
         }
 

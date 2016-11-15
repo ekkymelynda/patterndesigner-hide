@@ -8,6 +8,6 @@ namespace PatternDesigner
 {
     public interface IObserver
     {
-        void Update(IObservable o, int x, int y);
+        void Update();
     }
 }
