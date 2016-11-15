@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using PatternDesigner.Tools;
 using System.Diagnostics;
+using DiagramToolkit.Commands;
 
 namespace PatternDesigner
 {
@@ -47,8 +48,14 @@ namespace PatternDesigner
 
             #region Commands
 
-            //BlackCanvasBgCommand blackCanvasBgCmd = new BlackCanvasBgCommand(this.canvas);
-            //WhiteCanvasBgCommand whiteCanvasBgCmd = new WhiteCanvasBgCommand(this.canvas);
+            ICanvas canvas = this.editor.GetSelectedCanvas();
+            AddPattern1 addPattern1 = new AddPattern1(canvas);
+            AddFactoryPattern addFactoryPattern = new AddFactoryPattern(canvas);
+            AddCommandPattern addCommandPattern = new AddCommandPattern(canvas);
+            AddCompositePattern addCompositePattern = new AddCompositePattern(canvas);
+            AddFacadePattern addFacadePattern = new AddFacadePattern(canvas);
+            AddMementoPattern addMementroPattern = new AddMementoPattern(canvas);
+            AddSingletonPattern addSingletonPattern = new AddSingletonPattern(canvas);
 
             #endregion
 
@@ -67,23 +74,38 @@ namespace PatternDesigner
             DefaultMenuItem generateMenuItem = new DefaultMenuItem("Generate");
             this.menubar.AddMenuItem(generateMenuItem);
 
+            DefaultMenuItem creationalSubMenu = new DefaultMenuItem("Creational Pattern");
+            generateMenuItem.AddMenuItem(creationalSubMenu);
+
+            DefaultMenuItem structuralSubMenu = new DefaultMenuItem("Structural Pattern");
+            generateMenuItem.AddMenuItem(structuralSubMenu);
+
+            DefaultMenuItem behavioralSubMenu = new DefaultMenuItem("Behavioral Pattern");
+            generateMenuItem.AddMenuItem(behavioralSubMenu);
+
             DefaultMenuItem factoryMenuItem = new DefaultMenuItem("Factory Pattern");
-            generateMenuItem.AddMenuItem(factoryMenuItem);
+            factoryMenuItem.SetCommand(addFactoryPattern);
+            creationalSubMenu.AddMenuItem(factoryMenuItem);
 
             DefaultMenuItem singletonMenuItem = new DefaultMenuItem("Singleton Pattern");
-            generateMenuItem.AddMenuItem(singletonMenuItem);
+            singletonMenuItem.SetCommand(addSingletonPattern);
+            creationalSubMenu.AddMenuItem(singletonMenuItem);
 
             DefaultMenuItem compositeMenuItem = new DefaultMenuItem("Composite Pattern");
-            generateMenuItem.AddMenuItem(compositeMenuItem);
+            compositeMenuItem.SetCommand(addCompositePattern);
+            structuralSubMenu.AddMenuItem(compositeMenuItem);
 
             DefaultMenuItem facadeMenuItem = new DefaultMenuItem("Facade Pattern");
-            generateMenuItem.AddMenuItem(facadeMenuItem);
+            facadeMenuItem.SetCommand(addFacadePattern);
+            structuralSubMenu.AddMenuItem(facadeMenuItem);
 
             DefaultMenuItem commandMenuItem = new DefaultMenuItem("Command Pattern");
-            generateMenuItem.AddMenuItem(commandMenuItem);
+            commandMenuItem.SetCommand(addCommandPattern);
+            behavioralSubMenu.AddMenuItem(commandMenuItem);
 
             DefaultMenuItem mementoMenuItem = new DefaultMenuItem("Memento Pattern");
-            generateMenuItem.AddMenuItem(mementoMenuItem);
+            mementoMenuItem.SetCommand(addMementroPattern);
+            behavioralSubMenu.AddMenuItem(mementoMenuItem);
 
             /*DefaultMenuItem newMenuItem = new DefaultMenuItem("New");
             fileMenuItem.AddMenuItem(newMenuItem);

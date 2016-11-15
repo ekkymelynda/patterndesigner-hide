@@ -16,7 +16,7 @@ namespace PatternDesigner.Shapes
         public int Width { get; set; }
         public int Height { get; set; }
 
-        private Pen pen;
+        public Pen pen;
 
         public Rectangle()
         {
@@ -50,30 +50,36 @@ namespace PatternDesigner.Shapes
         {
             this.pen.Color = Color.Black;
             this.pen.DashStyle = DashStyle.Solid;
-            Graphics.DrawRectangle(this.pen, X, Y, Width, Height);
-            this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            Point start1 = new Point(X, Y + Height/3);
-            Point end1 = new Point(X + Width, Y + Height / 3);
-            this.Graphics.DrawLine(this.pen, start1, end1);
-            this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            Point start2 = new Point(X, Y + Height / 3 * 2);
-            Point end2 = new Point(X + Width, Y + Height / 3 * 2);
-            this.Graphics.DrawLine(this.pen, start2, end2);
+            if (this.Graphics != null)
+            {
+                Graphics.DrawRectangle(this.pen, X, Y, Width, Height);
+                this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                Point start1 = new Point(X, Y + Height / 3);
+                Point end1 = new Point(X + Width, Y + Height / 3);
+                this.Graphics.DrawLine(this.pen, start1, end1);
+                this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                Point start2 = new Point(X, Y + Height / 3 * 2);
+                Point end2 = new Point(X + Width, Y + Height / 3 * 2);
+                this.Graphics.DrawLine(this.pen, start2, end2);
+            }
         }
 
         public override void RenderOnEditingView()
         {
             this.pen.Color = Color.Blue;
             this.pen.DashStyle = DashStyle.Solid;
-            Graphics.DrawRectangle(this.pen, X, Y, Width, Height);
-            this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            Point start1 = new Point(X, Y + Height / 3);
-            Point end1 = new Point(X + Width, Y + Height / 3);
-            this.Graphics.DrawLine(this.pen, start1, end1);
-            this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            Point start2 = new Point(X, Y + Height / 3 * 2);
-            Point end2 = new Point(X + Width, Y + Height / 3 * 2);
-            this.Graphics.DrawLine(this.pen, start2, end2);
+            if (this.Graphics != null)
+            {
+                Graphics.DrawRectangle(this.pen, X, Y, Width, Height);
+                this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                Point start1 = new Point(X, Y + Height / 3);
+                Point end1 = new Point(X + Width, Y + Height / 3);
+                this.Graphics.DrawLine(this.pen, start1, end1);
+                this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                Point start2 = new Point(X, Y + Height / 3 * 2);
+                Point end2 = new Point(X + Width, Y + Height / 3 * 2);
+                this.Graphics.DrawLine(this.pen, start2, end2);
+            }
         }
 
         public override void RenderOnPreview()

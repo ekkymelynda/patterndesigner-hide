@@ -1,0 +1,11 @@
+Kelas 60 10 100 100
+Kelas 360 10 100 100
+Kelas 210 160 100 100
+Kelas 210 310 100 100
+Kelas 60 310 100 100
+Kelas 360 310 100 100
+DirectedAssociation 110 110 260 160
+DirectedAssociation 410 110 260 160
+DirectedAssociation 260 260 110 310
+DirectedAssociation 260 260 260 310
+DirectedAssociation 260 260 410 310

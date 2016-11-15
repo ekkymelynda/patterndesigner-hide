@@ -58,8 +58,11 @@ namespace PatternDesigner.Tools
                 selectedObject = canvas.SelectObjectAt(e.X, e.Y);
                 //Debug.WriteLine("id sesudah" + selectedObject.ID.ToString());
                 incCount();
-                id_object = selectedObject.ID;
-                //Debug.WriteLine("ID sebelum: " + selectedObject.ID.ToString());
+                if (selectedObject != null)
+                {
+                    id_object = selectedObject.ID;
+                    Debug.WriteLine("ID sebelum: " + selectedObject.ID.ToString());
+                }
             }
 
         }
@@ -83,25 +86,24 @@ namespace PatternDesigner.Tools
         protected void incCount()
         {
             count++;
-            if (id_object == selectedObject.ID)
+            if (selectedObject != null)
             {
-
-                if (count == 2)
+                if (id_object == selectedObject.ID)
                 {
-                    //MessageBox.Show("middle double click");
-                    Debug.WriteLine("count = 2");
-                    ClassProperties fm = new ClassProperties(id_object);
-                    Debug.WriteLine("fm show");
-                    fm.Show();
-                }
 
-                count = 0;
+                    if (count == 2)
+                    {
+                        //MessageBox.Show("middle double click");
+                        Debug.WriteLine("count = 2");
+                        ClassProperties fm = new ClassProperties(id_object);
+                        Debug.WriteLine("fm show");
+                        fm.Show();
+                    }
+
+                    count = 0;
+                }
             }
             Debug.WriteLine("COUNTNYA " + count);
-
-
-
-
         }
 
         public void ToolMouseUp(object sender, MouseEventArgs e)
@@ -111,7 +113,11 @@ namespace PatternDesigner.Tools
 
         public void ToolMouseDoubleClick(object sender, MouseEventArgs e)
         {
-
+            fm = new ClassProperties(id_object);
+            Debug.WriteLine("fm show");
+            Form af = Form.ActiveForm;
+            af.Enabled = false;
+            fm.Show();
         }
     }
 }
