@@ -77,19 +77,24 @@ namespace PatternDesigner.Tools
                     if (canvas.GetObjectAt(e.X, e.Y) is Vertex)
                     {
                         EndingObject = (Vertex)canvas.GetObjectAt(e.X, e.Y);
+                        if (StartingObject != null)
+                        {
+                            StartingObject.Subscribe(associationLine);
+                            associationLine.AddVertex(StartingObject);
+                        }
+
+                        if (EndingObject != null)
+                        {
+                            EndingObject.Subscribe(associationLine);
+                            associationLine.AddVertex(EndingObject);
+                        }
+                    }
+                    else if(!(canvas.GetObjectAt(e.X, e.Y) is Vertex))
+                    {
+                        canvas.RemoveDrawingObject(this.associationLine);
                     }
 
-                    if(StartingObject != null)
-                    {
-                        StartingObject.Subscribe(associationLine);
-                        associationLine.AddVertex(StartingObject);
-                    }
-
-                    if (EndingObject != null)
-                    {
-                        EndingObject.Subscribe(associationLine);
-                        associationLine.AddVertex(EndingObject);
-                    }
+                    
                 }
                 else if (e.Button == MouseButtons.Right)
                 {

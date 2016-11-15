@@ -95,8 +95,12 @@ namespace PatternDesigner.Shapes
 
         public override void Translate(int x, int y, int xAmount, int yAmount)
         {
-            this.Startpoint = new Point(this.Startpoint.X + xAmount, this.Startpoint.Y + yAmount);
-            this.Endpoint = new Point(this.Endpoint.X + xAmount, this.Endpoint.Y + yAmount);
+            Debug.WriteLine("text");
+            if (a == null || b == null)
+            {
+                this.Startpoint = new Point(this.Startpoint.X + xAmount, this.Startpoint.Y + yAmount);
+                this.Endpoint = new Point(this.Endpoint.X + xAmount, this.Endpoint.Y + yAmount);
+            }
         }
 
         public override void AddVertex(Vertex v)
