@@ -95,7 +95,6 @@ namespace PatternDesigner.Shapes
 
         public override void Translate(int x, int y, int xAmount, int yAmount)
         {
-            Debug.WriteLine("text");
             if (a == null || b == null)
             {
                 this.Startpoint = new Point(this.Startpoint.X + xAmount, this.Startpoint.Y + yAmount);
