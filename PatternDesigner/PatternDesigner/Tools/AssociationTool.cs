@@ -44,12 +44,12 @@ namespace PatternDesigner.Tools
         {
             if (e.Button == MouseButtons.Left)
             {
-                associationLine = new AssociationLine(new System.Drawing.Point(e.X, e.Y));
-                associationLine.Endpoint = new System.Drawing.Point(e.X, e.Y);
-                canvas.AddDrawingObject(associationLine);
                 if(canvas.GetObjectAt(e.X,e.Y) is Vertex)
                 {
                     StartingObject = (Vertex)canvas.GetObjectAt(e.X, e.Y);
+                    associationLine = new AssociationLine(new System.Drawing.Point(StartingObject.Width + StartingObject.X, (StartingObject.Height/2) + StartingObject.Y));
+                    associationLine.Endpoint = new System.Drawing.Point(e.X, e.Y);
+                    canvas.AddDrawingObject(associationLine);
                 }
             }
         }
@@ -71,25 +71,19 @@ namespace PatternDesigner.Tools
             {
                 if (e.Button == MouseButtons.Left)
                 {
-                    associationLine.Endpoint = new System.Drawing.Point(e.X, e.Y);
-                    associationLine.Select();
-
                     if (canvas.GetObjectAt(e.X, e.Y) is Vertex)
                     {
                         EndingObject = (Vertex)canvas.GetObjectAt(e.X, e.Y);
-                        if (StartingObject != null)
-                        {
-                            StartingObject.Subscribe(associationLine);
-                            associationLine.AddVertex(StartingObject);
-                        }
+                        associationLine.Endpoint = new System.Drawing.Point(EndingObject.X, (EndingObject.Height/2) + EndingObject.Y);
+                        associationLine.Select();
 
-                        if (EndingObject != null)
-                        {
-                            EndingObject.Subscribe(associationLine);
-                            associationLine.AddVertex(EndingObject);
-                        }
+                        StartingObject.Subscribe(associationLine);
+                        associationLine.AddVertex(StartingObject);
+                        
+                        EndingObject.Subscribe(associationLine);
+                        associationLine.AddVertex(EndingObject);
                     }
-                    else if(!(canvas.GetObjectAt(e.X, e.Y) is Vertex))
+                    else
                     {
                         canvas.RemoveDrawingObject(this.associationLine);
                     }
