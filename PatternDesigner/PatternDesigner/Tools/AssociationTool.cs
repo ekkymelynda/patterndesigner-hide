@@ -8,6 +8,8 @@ namespace PatternDesigner.Tools
     {
         private ICanvas canvas;
         private AssociationLine associationLine;
+        private Vertex StartingObject;
+        private Vertex EndingObject;
 
         public Cursor Cursor
         {
@@ -45,6 +47,10 @@ namespace PatternDesigner.Tools
                 associationLine = new AssociationLine(new System.Drawing.Point(e.X, e.Y));
                 associationLine.Endpoint = new System.Drawing.Point(e.X, e.Y);
                 canvas.AddDrawingObject(associationLine);
+                if(canvas.GetObjectAt(e.X,e.Y) is Vertex)
+                {
+                    StartingObject = (Vertex)canvas.GetObjectAt(e.X, e.Y);
+                }
             }
         }
 
@@ -67,6 +73,23 @@ namespace PatternDesigner.Tools
                 {
                     associationLine.Endpoint = new System.Drawing.Point(e.X, e.Y);
                     associationLine.Select();
+
+                    if (canvas.GetObjectAt(e.X, e.Y) is Vertex)
+                    {
+                        EndingObject = (Vertex)canvas.GetObjectAt(e.X, e.Y);
+                    }
+
+                    if(StartingObject != null)
+                    {
+                        StartingObject.Subscribe(associationLine);
+                        associationLine.AddVertex(StartingObject);
+                    }
+
+                    if (EndingObject != null)
+                    {
+                        EndingObject.Subscribe(associationLine);
+                        associationLine.AddVertex(EndingObject);
+                    }
                 }
                 else if (e.Button == MouseButtons.Right)
                 {

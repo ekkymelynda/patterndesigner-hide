@@ -56,10 +56,10 @@ namespace PatternDesigner.Tools
             {
                 canvas.DeselectAllObjects();
                 selectedObject = canvas.SelectObjectAt(e.X, e.Y);
-                Debug.WriteLine("id sesudah" + selectedObject.ID.ToString());
+                //Debug.WriteLine("id sesudah" + selectedObject.ID.ToString());
                 incCount();
                 id_object = selectedObject.ID;
-                Debug.WriteLine("ID sebelum: " + selectedObject.ID.ToString());
+                //Debug.WriteLine("ID sebelum: " + selectedObject.ID.ToString());
             }
 
         }

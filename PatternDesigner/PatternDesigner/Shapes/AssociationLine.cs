@@ -5,7 +5,7 @@ using System.Drawing.Drawing2D;
 
 namespace PatternDesigner.Shapes
 {
-    class AssociationLine : DrawingObject
+    class AssociationLine : Edge
     {
         private const double EPSILON = 3.0;
 
@@ -13,6 +13,8 @@ namespace PatternDesigner.Shapes
         public Point Endpoint { get; set; }
 
         private Pen pen;
+        private Vertex a;
+        private Vertex b;
 
         public AssociationLine()
         {
@@ -95,6 +97,30 @@ namespace PatternDesigner.Shapes
         {
             this.Startpoint = new Point(this.Startpoint.X + xAmount, this.Startpoint.Y + yAmount);
             this.Endpoint = new Point(this.Endpoint.X + xAmount, this.Endpoint.Y + yAmount);
+        }
+
+        public override void AddVertex(Vertex v)
+        {
+            if(a == null)
+            {
+                a = v;
+            }
+            else
+            {
+                b = v;
+            }
+        }
+
+        public override void Update(IObservable o, int x, int y)
+        {
+            if(a == o)
+            {
+                this.Startpoint = new Point(this.Startpoint.X + x, this.Startpoint.Y + y);
+            }
+            if(b == o)
+            {
+                this.Endpoint = new Point(this.Endpoint.X + x, this.Endpoint.Y + y);
+            }
         }
     }
 }
