@@ -9,13 +9,8 @@ using System.Drawing.Drawing2D;
 
 namespace PatternDesigner.Shapes
 {
-    public class Rectangle : DrawingObject
+    public class Rectangle : Vertex
     {
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
-
         public Pen pen;
 
         public Rectangle()
@@ -101,6 +96,7 @@ namespace PatternDesigner.Shapes
         {
             this.X += xAmount;
             this.Y += yAmount;
+            Broadcast(xAmount, yAmount);
         }
     }
 }

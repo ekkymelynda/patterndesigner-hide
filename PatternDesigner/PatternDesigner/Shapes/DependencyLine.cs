@@ -5,12 +5,9 @@ using System.Drawing.Drawing2D;
 
 namespace PatternDesigner.Shapes
 {
-    class DependencyLine : DrawingObject
+    class DependencyLine : Edge
     {
         private const double EPSILON = 3.0;
-
-        public Point Startpoint { get; set; }
-        public Point Endpoint { get; set; }
 
         private Pen pen;
 

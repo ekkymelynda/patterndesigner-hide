@@ -5,14 +5,12 @@ using System.Drawing.Drawing2D;
 
 namespace PatternDesigner.Shapes
 {
-    class AssociationLine : DrawingObject
+    class AssociationLine : Edge
     {
         private const double EPSILON = 3.0;
 
-        public Point Startpoint { get; set; }
-        public Point Endpoint { get; set; }
-
         private Pen pen;
+        
 
         public AssociationLine()
         {
@@ -93,8 +91,13 @@ namespace PatternDesigner.Shapes
 
         public override void Translate(int x, int y, int xAmount, int yAmount)
         {
-            this.Startpoint = new Point(this.Startpoint.X + xAmount, this.Startpoint.Y + yAmount);
-            this.Endpoint = new Point(this.Endpoint.X + xAmount, this.Endpoint.Y + yAmount);
+            /*if (startVertex == null || endVertex == null)
+            {
+                this.Startpoint = new Point(this.Startpoint.X + xAmount, this.Startpoint.Y + yAmount);
+                this.Endpoint = new Point(this.Endpoint.X + xAmount, this.Endpoint.Y + yAmount);
+            }*/
         }
+
+        
     }
 }
