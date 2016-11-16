@@ -84,8 +84,6 @@ namespace PatternDesigner
                     {
                         canvas.RemoveDrawingObject(this.line);
                     }
-
-
                 }
                 else if (e.Button == MouseButtons.Right)
                 {
@@ -96,6 +94,7 @@ namespace PatternDesigner
 
         public void ToolMouseDoubleClick(object sender, MouseEventArgs e)
         {
+
         }
     }
 }
