@@ -113,7 +113,6 @@ namespace PatternDesigner.Tools
         public void ToolMouseDoubleClick(object sender, MouseEventArgs e)
         {
             fm = new ClassProperties(id_object);
-            Debug.WriteLine("fm show");
             Form af = Form.ActiveForm;
             af.Enabled = false;
             fm.Show();
