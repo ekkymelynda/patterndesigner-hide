@@ -254,4 +254,4 @@ paket-files/
 .idea/
 *.sln.iml
 
-PatternDesigner\PatternDesigner\bin\Debug\
+PatternDesigner/PatternDesigner/bin/Debug/
