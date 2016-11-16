@@ -4,6 +4,7 @@
 _ReSharper.*/
 *.sdf
 bin/
+bin/Debug/
 obj/
 Debug/
 Release/
