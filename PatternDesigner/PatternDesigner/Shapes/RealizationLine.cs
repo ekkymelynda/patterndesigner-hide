@@ -8,10 +8,6 @@ namespace PatternDesigner.Shapes
 {
     class RealizationLine : Edge
     {
-        private const double EPSILON = 3.0;
-
-        private Pen pen;
-
         public RealizationLine()
         {
             this.pen = new Pen(Color.Black);
@@ -72,32 +68,6 @@ namespace PatternDesigner.Shapes
                 this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
                 this.Graphics.DrawLine(pen, this.Startpoint, this.Endpoint);
             }
-        }
-
-        public override bool Intersect(int xTest, int yTest)
-        {
-            double m = GetSlope();
-            double b = Endpoint.Y - m * Endpoint.X;
-            double y_point = m * xTest + b;
-
-            if (Math.Abs(yTest - y_point) < EPSILON)
-            {
-                Debug.WriteLine("Object " + ID + " is selected.");
-                return true;
-            }
-            return false;
-        }
-
-        public double GetSlope()
-        {
-            double m = (double)(Endpoint.Y - Startpoint.Y) / (double)(Endpoint.X - Startpoint.X);
-            return m;
-        }
-
-        public override void Translate(int x, int y, int xAmount, int yAmount)
-        {
-            this.Startpoint = new Point(this.Startpoint.X + xAmount, this.Startpoint.Y + yAmount);
-            this.Endpoint = new Point(this.Endpoint.X + xAmount, this.Endpoint.Y + yAmount);
         }
     }
 }

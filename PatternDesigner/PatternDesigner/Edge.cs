@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,29 @@ namespace PatternDesigner
         public Point Endpoint { get; set; }
         private Vertex startVertex;
         private Vertex endVertex;
+
+        public const double EPSILON = 3.0;
+        public Pen pen;
+
+        public double GetSlope()
+        {
+            double m = (double)(Endpoint.Y - Startpoint.Y) / (double)(Endpoint.X - Startpoint.X);
+            return m;
+        }
+
+        public override bool Intersect(int xTest, int yTest)
+        {
+            double m = GetSlope();
+            double b = Endpoint.Y - m * Endpoint.X;
+            double y_point = m * xTest + b;
+
+            if (Math.Abs(yTest - y_point) < EPSILON)
+            {
+                Debug.WriteLine("Object " + ID + " is selected.");
+                return true;
+            }
+            return false;
+        }
 
         public void AddVertex(Vertex v)
         {
