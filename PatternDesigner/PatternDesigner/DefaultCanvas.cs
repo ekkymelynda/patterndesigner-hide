@@ -30,7 +30,6 @@ namespace PatternDesigner
             this.MouseDown += DefaultCanvas_MouseDown;
             this.MouseUp += DefaultCanvas_MouseUp;
             this.MouseMove += DefaultCanvas_MouseMove;
-            this.MouseDoubleClick += DefaultCanvas_DoubleClick;
 
         }
 
@@ -57,15 +56,6 @@ namespace PatternDesigner
             if (this.activeTool != null)
             {
                 this.activeTool.ToolMouseDown(sender, e);
-                this.Repaint();
-            }
-        }
-
-        private void DefaultCanvas_DoubleClick(object sender, MouseEventArgs e)
-        {
-            if (this.activeTool != null)
-            {
-                this.activeTool.ToolMouseDoubleClick(sender, e);
                 this.Repaint();
             }
         }

@@ -14,6 +14,8 @@ namespace PatternDesigner
     {
         public Guid ID { get; set; }
         public Graphics Graphics { get; set; }
+        public string nama { get; set; }
+        public List<Method> method = new List<Method>();
 
         public DrawingState State
         {
