@@ -14,6 +14,9 @@ namespace PatternDesigner
     {
         public Guid ID { get; set; }
         public Graphics Graphics { get; set; }
+        public string nama { get; set; }
+        public List<Method> meth = new List<Method>();
+        public List<Attribute> att = new List<Attribute>();
 
         public DrawingState State
         {

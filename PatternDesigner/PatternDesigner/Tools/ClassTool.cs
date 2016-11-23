@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PatternDesigner.Shapes;
+using System.Diagnostics;
 
 namespace PatternDesigner.Tools
 {
@@ -12,6 +13,8 @@ namespace PatternDesigner.Tools
     {
         private ICanvas canvas;
         private Rectangle rectangle;
+        public Guid id_object;
+        //private ClassProperties fm;
 
         public Cursor Cursor
         {
@@ -86,9 +89,16 @@ namespace PatternDesigner.Tools
             }
         }
 
+        
         public void ToolMouseDoubleClick(object sender, MouseEventArgs e)
         {
-            
+            /*
+            fm = new ClassProperties(id_object);
+            Debug.WriteLine("fm show");
+            Form af = Form.ActiveForm;
+            af.Enabled = false;
+            fm.Show();
+            */
         }
     }
 }

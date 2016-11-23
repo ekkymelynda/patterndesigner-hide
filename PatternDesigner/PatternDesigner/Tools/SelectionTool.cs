@@ -14,7 +14,7 @@ namespace PatternDesigner.Tools
         private DrawingObject selectedObject;
         private int xInitial;
         private int yInitial;
-        private ClassProperties fm;
+        //private ClassProperties fm;
         int count = 0;
         Guid id_object;
 
@@ -83,6 +83,7 @@ namespace PatternDesigner.Tools
             }
         }
 
+        
         protected void incCount()
         {
             count++;
@@ -95,7 +96,7 @@ namespace PatternDesigner.Tools
                     {
                         //MessageBox.Show("middle double click");
                         Debug.WriteLine("count = 2");
-                        ClassProperties fm = new ClassProperties(id_object);
+                        ClassProperties fm = new ClassProperties(selectedObject);
                         Debug.WriteLine("fm show");
                         fm.Show();
                     }
@@ -105,19 +106,24 @@ namespace PatternDesigner.Tools
             }
             Debug.WriteLine("COUNTNYA " + count);
         }
+        
 
         public void ToolMouseUp(object sender, MouseEventArgs e)
         {
 
         }
 
+        
         public void ToolMouseDoubleClick(object sender, MouseEventArgs e)
         {
+            /*   
             fm = new ClassProperties(id_object);
             Debug.WriteLine("fm show");
             Form af = Form.ActiveForm;
             af.Enabled = false;
             fm.Show();
+            */
         }
+        
     }
 }
