@@ -30,7 +30,6 @@ D:\Kuliah\SEMESTER 7\Konstruksi Perangkat Lunak\pdhide\PatternDesigner\PatternDe
 D:\Kuliah\SEMESTER 7\Konstruksi Perangkat Lunak\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.pdb
 D:\Kuliah\SEMESTER 7\Konstruksi Perangkat Lunak\pdhide\PatternDesigner\PatternDesigner\bin\Debug\PatternDesigner.exe
 D:\Kuliah\SEMESTER 7\Konstruksi Perangkat Lunak\pdhide\PatternDesigner\PatternDesigner\bin\Debug\PatternDesigner.pdb
-D:\Kuliah\SEMESTER 7\Konstruksi Perangkat Lunak\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.csprojResolveAssemblyReference.cache
 D:\Kuliah\SEMESTER 7\Konstruksi Perangkat Lunak\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.IconSet.resources
 D:\Kuliah\SEMESTER 7\Konstruksi Perangkat Lunak\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.Properties.Resources.resources
 D:\Kuliah\SEMESTER 7\Konstruksi Perangkat Lunak\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.csproj.GenerateResource.Cache
