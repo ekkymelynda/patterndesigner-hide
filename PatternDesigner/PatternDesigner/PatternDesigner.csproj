@@ -47,11 +47,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attribute.cs" />
+    <Compile Include="Baris.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ClassProperties.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ClassProperties.Designer.cs">
       <DependentUpon>ClassProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Colom\KotakInput.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Commands\AddSingletonPattern.cs" />
     <Compile Include="Commands\AddCompositePattern.cs" />
@@ -62,6 +68,9 @@
     <Compile Include="Commands\AddFactoryPattern.cs" />
     <Compile Include="Commands\AddPattern1.cs" />
     <Compile Include="DefaultCanvas.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DefaultColom.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="DefaultEditor.cs">
@@ -83,6 +92,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ICanvas.cs" />
+    <Compile Include="IColom.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="IconSet.Designer.cs">
       <AutoGen>True</AutoGen>

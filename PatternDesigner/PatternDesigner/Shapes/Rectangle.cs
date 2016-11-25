@@ -56,7 +56,6 @@ namespace PatternDesigner.Shapes
             //sf.LineAlignment = StringAlignment.Center;
             sf.Alignment = StringAlignment.Center;
 
-
             if (this.Graphics != null)
             {
                 

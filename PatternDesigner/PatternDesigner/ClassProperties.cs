@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using PatternDesigner.Colom;
 
 namespace PatternDesigner
 {
@@ -31,7 +32,7 @@ namespace PatternDesigner
         private TabControl addAtributTabControl;
         private TabPage Operation, Atribut, Method;
         private Label classNama;
-
+        
         private Form main;
 
         public ClassProperties(Vertex obj, Form main1)
@@ -84,6 +85,18 @@ namespace PatternDesigner
             txt.Location = new Point(80, 20);
             txt.Size = new Size(150, 45);
             Operation.Controls.Add(txt);
+
+            Baris baris = new Baris(1, Operation);
+            baris.Init(20, 100);
+
+            KotakInput kotak = new KotakInput(Operation);
+            kotak.setSize(100, 100);
+            baris.AddKolom(kotak);
+            KotakInput kotak2 = new KotakInput(Operation);
+            kotak2.setSize(100, 100);
+            baris.AddKolom(kotak2);
+
+            baris.DrawBaris();
 
             //Atribut area start
             i = 1;
