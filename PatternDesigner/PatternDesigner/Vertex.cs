@@ -12,6 +12,9 @@ namespace PatternDesigner
         public int Y { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
+        public string nama { get; set; }
+        public List<Method> meth = new List<Method>();
+        public List<Attribute> att = new List<Attribute>();
 
         private List<Edge> edge;
 

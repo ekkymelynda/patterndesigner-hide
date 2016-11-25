@@ -14,8 +14,11 @@ namespace PatternDesigner.Tools
         private DrawingObject selectedObject;
         private int xInitial;
         private int yInitial;
+<<<<<<< HEAD
         //private ClassProperties fm;
         int count = 0;
+=======
+>>>>>>> b53e310cb2d00ff97e9e2cb0529d617a0990094d
         Guid id_object;
 
         public Cursor Cursor
@@ -56,8 +59,12 @@ namespace PatternDesigner.Tools
             {
                 canvas.DeselectAllObjects();
                 selectedObject = canvas.SelectObjectAt(e.X, e.Y);
+<<<<<<< HEAD
                 //Debug.WriteLine("id sesudah" + selectedObject.ID.ToString());
                 incCount();
+=======
+                //incCount();
+>>>>>>> b53e310cb2d00ff97e9e2cb0529d617a0990094d
                 if (selectedObject != null)
                 {
                     id_object = selectedObject.ID;
@@ -82,6 +89,7 @@ namespace PatternDesigner.Tools
                 }
             }
         }
+<<<<<<< HEAD
 
         
         protected void incCount()
@@ -107,6 +115,8 @@ namespace PatternDesigner.Tools
             Debug.WriteLine("COUNTNYA " + count);
         }
         
+=======
+>>>>>>> b53e310cb2d00ff97e9e2cb0529d617a0990094d
 
         public void ToolMouseUp(object sender, MouseEventArgs e)
         {
@@ -116,6 +126,7 @@ namespace PatternDesigner.Tools
         
         public void ToolMouseDoubleClick(object sender, MouseEventArgs e)
         {
+<<<<<<< HEAD
             /*   
             fm = new ClassProperties(id_object);
             Debug.WriteLine("fm show");
@@ -123,6 +134,32 @@ namespace PatternDesigner.Tools
             af.Enabled = false;
             fm.Show();
             */
+=======
+            this.xInitial = e.X;
+            this.yInitial = e.Y;
+
+            if (e.Button == MouseButtons.Left && canvas != null)
+            {
+                canvas.DeselectAllObjects();
+                selectedObject = canvas.SelectObjectAt(e.X, e.Y);
+                //incCount();
+                if (selectedObject != null)
+                {
+                    if (selectedObject is Vertex)
+                    {
+                        Vertex objectTerpilih = (Vertex)selectedObject;
+                        Form main = Form.ActiveForm;
+                        ClassProperties fm = new ClassProperties(objectTerpilih, main);
+                        //main.Enabled = false;
+                        Debug.WriteLine("fm show");
+                        fm.Show();
+                    }
+                    id_object = selectedObject.ID;
+                    Debug.WriteLine("ID sebelum: " + selectedObject.ID.ToString());
+                }
+            }
+
+>>>>>>> b53e310cb2d00ff97e9e2cb0529d617a0990094d
         }
         
     }

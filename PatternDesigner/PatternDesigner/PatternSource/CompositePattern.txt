@@ -1,6 +1,6 @@
 Kelas 200 10 100 100
 Kelas 150 160 100 100
 Kelas 300 160 100 100
-Generalization 200 160 250 110
-Generalization 350 160 250 110
-DirectedAssociation 350 160 300 60
+Generalization 150 160 200 10
+Generalization 300 160 200 10
+DirectedAssociation 300 160 200 10

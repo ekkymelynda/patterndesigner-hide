@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace PatternDesigner
 {
-    public class Method
+    public class Attribute
     {
+        public string visibility;
         public string nama;
         public string tipe;
-        public string visibility;
     }
 }
