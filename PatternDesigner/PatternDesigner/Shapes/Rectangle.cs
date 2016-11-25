@@ -9,14 +9,8 @@ using System.Drawing.Drawing2D;
 
 namespace PatternDesigner.Shapes
 {
-    public class Rectangle : DrawingObject
+    public class Rectangle : Vertex
     {
-        //public string nama { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
-
         public Pen pen;
         PointF ukuran = new PointF(100, 1);
         private SizeF widthTerkecil;
@@ -51,12 +45,8 @@ namespace PatternDesigner.Shapes
 
         public override void RenderOnStaticView()
         {
-<<<<<<< HEAD
-            this.Height = 40 + this.method.Count * 15 + 10;
-=======
             widthTerkecil = new SizeF(100F, 1F);
             this.Height = 40 + this.att.Count * 15 + this.meth.Count * 15;
->>>>>>> b53e310cb2d00ff97e9e2cb0529d617a0990094d
             this.pen.Color = Color.Black;
             this.pen.DashStyle = DashStyle.Solid;
             Font f = new Font("Arial", 12);
@@ -139,46 +129,12 @@ namespace PatternDesigner.Shapes
 
                 Graphics.DrawRectangle(this.pen, X, Y, Width, Height);
 
-<<<<<<< HEAD
-                if (nama != null)
-                {
-                    this.Graphics.DrawString(this.nama, f, drawBrush, X + Width / 2, Y, sf);
-                }
-
-=======
                 //separator nama dengan atribut
->>>>>>> b53e310cb2d00ff97e9e2cb0529d617a0990094d
                 this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
                 Point start1 = new Point(X, Y + 20);
                 Point end1 = new Point(X + Width, Y + 20);
                 this.Graphics.DrawLine(this.pen, start1, end1);
 
-<<<<<<< HEAD
-                this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                //Point start2 = new Point(X, Y + 10 + (method.Count + 1) * 15);
-                //Point end2 = new Point(X + Width, Y + 10 + (method.Count + 1) * 15);
-                Point start2 = new Point(X, Y + 30);
-                Point end2 = new Point(X + Width, Y + 30);
-                this.Graphics.DrawLine(this.pen, start2, end2);
-
-                
-
-                int posY = Y + 30;
-
-                if (method.Count > 0 )
-                {
-                    //Debug.WriteLine("ada");
-                    foreach (Method meth in method)
-                    {
-                        this.Graphics.DrawString(meth.tipe + " " + meth.nama, f, drawBrush, X, posY);
-                        posY += 15;
-                    }
-                }
-                else
-                {
-                    //Debug.WriteLine("kosong");
-                }                
-=======
                 //separator atribut dengan method
                 this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
                 Point start2 = new Point(X, Y + 10 + (att.Count + 1) * 15);
@@ -187,7 +143,6 @@ namespace PatternDesigner.Shapes
 
 
                 //Console.WriteLine(Y + 30 + (meth.Count) * 15 + (att.Count) * 15);
->>>>>>> b53e310cb2d00ff97e9e2cb0529d617a0990094d
             }
         }
 
@@ -199,12 +154,6 @@ namespace PatternDesigner.Shapes
             this.Height = 40 + this.att.Count * 15 + this.meth.Count * 15;
             this.pen.Color = Color.Blue;
             this.pen.DashStyle = DashStyle.Solid;
-<<<<<<< HEAD
-            this.Height = 40 + this.method.Count * 15 + 10;
-            this.pen.Color = Color.Blue;
-            this.pen.DashStyle = DashStyle.Solid;
-=======
->>>>>>> b53e310cb2d00ff97e9e2cb0529d617a0990094d
             Font f = new Font("Arial", 12);
             SolidBrush drawBrush = new SolidBrush(Color.Blue);
 
@@ -285,47 +234,12 @@ namespace PatternDesigner.Shapes
 
                 Graphics.DrawRectangle(this.pen, X, Y, Width, Height);
 
-<<<<<<< HEAD
-                if (nama != null)
-                {
-                    this.Graphics.DrawString(this.nama, f, drawBrush, X + Width / 2, Y, sf);
-                }
-
-=======
                 //separator nama dengan atribut
->>>>>>> b53e310cb2d00ff97e9e2cb0529d617a0990094d
                 this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
                 Point start1 = new Point(X, Y + 20);
                 Point end1 = new Point(X + Width, Y + 20);
                 this.Graphics.DrawLine(this.pen, start1, end1);
 
-<<<<<<< HEAD
-                this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                //Point start2 = new Point(X, Y + 10 + (method.Count + 1) * 15);
-                //Point end2 = new Point(X + Width, Y + 10 + (method.Count + 1) * 15);
-                Point start2 = new Point(X, Y + 30);
-                Point end2 = new Point(X + Width, Y + 30);
-                this.Graphics.DrawLine(this.pen, start2, end2);
-
-
-
-                int posY = Y + 30;
-
-                if (method.Count > 0)
-                {
-                    //Debug.WriteLine("ada");
-                    foreach (Method meth in method)
-                    {
-
-                        this.Graphics.DrawString(meth.tipe + " " + meth.nama, f, drawBrush, X, posY);
-                        posY += 15;
-                    }
-                }
-                else
-                {
-                    //Debug.WriteLine("kosong");
-                }
-=======
                 //separator atribut dengan method
                 this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
                 Point start2 = new Point(X, Y + 10 + (att.Count + 1) * 15);
@@ -334,7 +248,6 @@ namespace PatternDesigner.Shapes
 
 
                 //Console.WriteLine(Y + 30 + (meth.Count) * 15 + (att.Count) * 15);
->>>>>>> b53e310cb2d00ff97e9e2cb0529d617a0990094d
             }
         }
 
@@ -357,6 +270,7 @@ namespace PatternDesigner.Shapes
         {
             this.X += xAmount;
             this.Y += yAmount;
+            Broadcast(xAmount, yAmount);
         }
 
         private void UpdateMinWidth(String text, Font f)

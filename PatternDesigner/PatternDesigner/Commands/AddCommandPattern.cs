@@ -34,7 +34,6 @@ namespace DiagramToolkit.Commands
                 item = line.Split(' ');
                 Debug.WriteLine(item[0] + " " + item[1] + " " + item[2] + " " + item[3] + " " + item[4]);
                 AddObjectFromFile(item[0], Convert.ToInt32(item[1]), Convert.ToInt32(item[2]), Convert.ToInt32(item[3]), Convert.ToInt32(item[4]));
-
                 /*
                 foreach (string i in item)
                 {
