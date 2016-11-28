@@ -21,5 +21,8 @@ namespace PatternDesigner
         DrawingObject GetObjectAt(int x, int y);
         DrawingObject SelectObjectAt(int x, int y);
         void DeselectAllObjects();
+        Stack<ICommand> GetUndoStack();
+        Stack<ICommand> GetRedoStack();
+        void AddCommand(ICommand command);
     }
 }

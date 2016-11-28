@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using PatternDesigner.Commands;
 
 namespace PatternDesigner.Shapes
 {
@@ -122,7 +123,7 @@ namespace PatternDesigner.Shapes
                 {
                     //Debug.WriteLine("kosong");
                 }
-                Debug.WriteLine("lala= " + widthTerkecil.Width);
+                
 
                 this.Width = (int)widthTerkecil.Width;
 
@@ -227,7 +228,7 @@ namespace PatternDesigner.Shapes
                 {
                     //Debug.WriteLine("kosong");
                 }
-                Debug.WriteLine("lala= " + widthTerkecil.Width);
+                
 
                 this.Width = (int)widthTerkecil.Width;
 
@@ -265,11 +266,10 @@ namespace PatternDesigner.Shapes
             this.Graphics.DrawLine(this.pen, start2, end2);
         }
 
-        public override void Translate(int x, int y, int xAmount, int yAmount)
+        public override void Translate(int xAmount, int yAmount)
         {
-            this.X += xAmount;
-            this.Y += yAmount;
-            Broadcast(xAmount, yAmount);
+            ICommand command = new TranslateVertex(this, xAmount, yAmount);
+            command.Execute();
         }
 
         private void UpdateMinWidth(String text, Font f)

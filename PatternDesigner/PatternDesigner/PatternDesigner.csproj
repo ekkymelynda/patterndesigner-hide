@@ -67,6 +67,9 @@
     <Compile Include="Commands\AddPattern.cs" />
     <Compile Include="Commands\AddFactoryPattern.cs" />
     <Compile Include="Commands\AddPattern1.cs" />
+    <Compile Include="Commands\Redo.cs" />
+    <Compile Include="Commands\TranslateVertex.cs" />
+    <Compile Include="Commands\Undo.cs" />
     <Compile Include="DefaultCanvas.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -201,5 +201,10 @@ namespace PatternDesigner.Commands
         {
             
         }
+
+        public void Unexecute()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

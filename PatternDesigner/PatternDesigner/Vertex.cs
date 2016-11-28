@@ -23,7 +23,7 @@ namespace PatternDesigner
             edge = new List<Edge>();
         }
 
-        public void Broadcast(int x, int y)
+        public void Broadcast()
         {
             foreach(var a in edge)
             {
@@ -41,7 +41,7 @@ namespace PatternDesigner
             edge.Remove((Edge)o);
         }
 
-        
+
 
     }
 }

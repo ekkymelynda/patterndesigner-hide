@@ -10,6 +10,6 @@ namespace PatternDesigner
     {
         void Subscribe(IObserver o);
         void Unsubscribe(IObserver o);
-        void Broadcast(int x, int y);
+        void Broadcast();
     }
 }
