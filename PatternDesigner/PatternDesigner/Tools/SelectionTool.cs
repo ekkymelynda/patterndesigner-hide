@@ -106,7 +106,7 @@ namespace PatternDesigner.Tools
             {
                 canvas.DeselectAllObjects();
                 selectedObject = canvas.SelectObjectAt(e.X, e.Y);
-                //incCount();
+
                 if (selectedObject != null)
                 {
                     if (selectedObject is Vertex)
@@ -114,6 +114,16 @@ namespace PatternDesigner.Tools
                         Vertex objectTerpilih = (Vertex)selectedObject;
                         Form main = Form.ActiveForm;
                         ClassProperties fm = new ClassProperties(objectTerpilih, main);
+                        //main.Enabled = false;
+                        Debug.WriteLine("fm show");
+                        fm.Show();
+                    }
+
+                    else if (selectedObject is Edge)
+                    {
+                        Edge objectTerpilih = (Edge)selectedObject;
+                        Form main = Form.ActiveForm;
+                        RelationshipProperties fm = new RelationshipProperties(objectTerpilih, main);
                         //main.Enabled = false;
                         Debug.WriteLine("fm show");
                         fm.Show();

@@ -8,12 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
-using PatternDesigner.Colom;
 
 namespace PatternDesigner
 {
     public partial class ClassProperties : Form
     {
+        //private Form classForm;
         private TextBox txt, jenisLabel, namaLabel, tipeLabel, namaMethod, tipeMethod, visibilityMethod;
         private Vertex objek;
         private Button[] deleteButton = new Button[100];
@@ -37,6 +37,7 @@ namespace PatternDesigner
 
         public ClassProperties(Vertex obj, Form main1)
         {
+            //classForm = FindForm();
             InitializeComponent();
             this.main = main1;
             this.objek = obj;
@@ -52,7 +53,7 @@ namespace PatternDesigner
             newButton = new Button();
             newButton.Location = new Point(510, 320);
             newButton.Size = new Size(50, 20);
-            newButton.Text = "OK";
+            newButton.Text = "Apply";
             this.Controls.Add(newButton);
 
             cancelButton = new Button();
@@ -85,18 +86,6 @@ namespace PatternDesigner
             txt.Location = new Point(80, 20);
             txt.Size = new Size(150, 45);
             Operation.Controls.Add(txt);
-
-            Baris baris = new Baris(1, Operation);
-            baris.Init(20, 100);
-
-            KotakInput kotak = new KotakInput(Operation);
-            kotak.setSize(100, 100);
-            baris.AddKolom(kotak);
-            KotakInput kotak2 = new KotakInput(Operation);
-            kotak2.setSize(100, 100);
-            baris.AddKolom(kotak2);
-
-            baris.DrawBaris();
 
             //Atribut area start
             i = 1;
@@ -429,12 +418,17 @@ namespace PatternDesigner
                 }
             }
 
-            /*
-            Form classForm = Form.ActiveForm;
-            classForm.Close();
-            main.Enabled = true;
-            */
+            //CloseForm();
+            
         }
+
+        /*
+        private void CloseForm()
+        {
+            main.Enabled = true;
+            classForm.Close();
+        }
+        */
 
 
 

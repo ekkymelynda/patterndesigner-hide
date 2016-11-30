@@ -41,5 +41,5 @@ C:\Users\USER\Documents\Visual Studio 2015\Projects\Pattern Designer Hide\Patter
 C:\Users\USER\Documents\Visual Studio 2015\Projects\Pattern Designer Hide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.IconSet.resources
 C:\Users\USER\Documents\Visual Studio 2015\Projects\Pattern Designer Hide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.Properties.Resources.resources
 C:\Users\USER\Documents\Visual Studio 2015\Projects\Pattern Designer Hide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.csproj.GenerateResource.Cache
-C:\Users\USER\Documents\Visual Studio 2015\Projects\Pattern Designer Hide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.csprojResolveAssemblyReference.cache
 D:\Kuliah\SEMESTER 7\Konstruksi Perangkat Lunak\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.csprojResolveAssemblyReference.cache
+C:\Users\USER\Documents\Visual Studio 2015\Projects\Pattern Designer Hide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.csprojResolveAssemblyReference.cache

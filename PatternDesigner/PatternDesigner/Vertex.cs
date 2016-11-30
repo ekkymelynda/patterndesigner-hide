@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +42,15 @@ namespace PatternDesigner
             edge.Remove((Edge)o);
         }
 
+        public override bool Intersect(int xTest, int yTest)
+        {
+            if ((xTest >= X && xTest <= X + Width) && (yTest >= Y && yTest <= Y + Height))
+            {
+                Debug.WriteLine("Object " + ID + " is selected.");
+                return true;
+            }
+            return false;
+        }
 
 
     }

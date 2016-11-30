@@ -34,16 +34,6 @@ namespace PatternDesigner.Shapes
             this.Height = height;
         }
 
-        public override bool Intersect(int xTest, int yTest)
-        {
-            if ((xTest >= X && xTest <= X + Width) && (yTest >= Y && yTest <= Y + Height))
-            {
-                Debug.WriteLine("Object " + ID + " is selected.");
-                return true;
-            }
-            return false;
-        }
-
         public override void RenderOnStaticView()
         {
             widthTerkecil = new SizeF(100F, 1F);
@@ -140,9 +130,6 @@ namespace PatternDesigner.Shapes
                 Point start2 = new Point(X, Y + 10 + (att.Count + 1) * 15);
                 Point end2 = new Point(X + Width, Y + 10 + (att.Count + 1) * 15);
                 this.Graphics.DrawLine(this.pen, start2, end2);
-
-
-                //Console.WriteLine(Y + 30 + (meth.Count) * 15 + (att.Count) * 15);
             }
         }
 
@@ -245,9 +232,6 @@ namespace PatternDesigner.Shapes
                 Point start2 = new Point(X, Y + 10 + (att.Count + 1) * 15);
                 Point end2 = new Point(X + Width, Y + 10 + (att.Count + 1) * 15);
                 this.Graphics.DrawLine(this.pen, start2, end2);
-
-
-                //Console.WriteLine(Y + 30 + (meth.Count) * 15 + (att.Count) * 15);
             }
         }
 

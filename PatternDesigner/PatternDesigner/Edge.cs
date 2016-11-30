@@ -15,8 +15,13 @@ namespace PatternDesigner
         public Point Endpoint { get; set; }
         private Vertex startVertex;
         private Vertex endVertex;
+        public string name { get; set; }
+        public string relationStart { get; set; }
+        public string relationEnd { get; set; }
+        public int stringX;
+        public int stringY;
 
-        public const double EPSILON = 3.0;
+        public const double EPSILON = 15.0;
         public Pen pen;
 
         public double GetSlope()
@@ -24,6 +29,7 @@ namespace PatternDesigner
             double m = (double)(Endpoint.Y - Startpoint.Y) / (double)(Endpoint.X - Startpoint.X);
             return m;
         }
+
 
         public override bool Intersect(int xTest, int yTest)
         {
@@ -49,6 +55,17 @@ namespace PatternDesigner
             {
                 endVertex = v;
             }
+        }
+
+        public void DrawName()
+        {
+            Font arialFont = new Font("Arial", 10, FontStyle.Bold);
+            SolidBrush drawBrush = new SolidBrush(Color.Blue);
+            StringFormat stringFormat = new StringFormat();
+            stringFormat.Alignment = StringAlignment.Center;
+
+            this.Graphics.DrawString(this.relationStart, arialFont, drawBrush, Startpoint.X, Startpoint.Y, stringFormat);
+            this.Graphics.DrawString(this.relationEnd, arialFont, drawBrush, Endpoint.X, Endpoint.Y, stringFormat);
         }
 
         public void Update()
