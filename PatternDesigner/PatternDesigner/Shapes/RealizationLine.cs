@@ -69,7 +69,7 @@ namespace PatternDesigner.Shapes
             {
                 this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
                 this.Graphics.DrawLine(pen, this.Startpoint, this.Endpoint);
-                DrawName();
+                //DrawName();
             }
         }
     }

@@ -64,8 +64,53 @@ namespace PatternDesigner
             StringFormat stringFormat = new StringFormat();
             stringFormat.Alignment = StringAlignment.Center;
 
-            this.Graphics.DrawString(this.relationStart, arialFont, drawBrush, Startpoint.X, Startpoint.Y, stringFormat);
-            this.Graphics.DrawString(this.relationEnd, arialFont, drawBrush, Endpoint.X, Endpoint.Y, stringFormat);
+            int startPointX, startPointY, endPointX, endPointY;
+            int startVertexMin, startVertexMax, endVertexMin, endVertexMax;
+            startVertexMin = startVertex.X;
+            startVertexMax = startVertex.X + startVertex.Width;
+            endVertexMin = endVertex.X;
+            endVertexMax = endVertex.X + endVertex.Width;
+
+            if ((startVertexMin < endVertexMax && startVertexMin > endVertexMin) || (startVertexMax > endVertexMin && startVertexMax < endVertexMax) || (startVertexMin <= endVertexMin && startVertexMax >= endVertexMax) || (endVertexMin <= startVertexMin && endVertexMax >= startVertexMax))
+            {
+                if (startVertex.Y < endVertex.Y)
+                {
+                    startPointX = Startpoint.X + 10;
+                    startPointY = Startpoint.Y + 5;
+                    endPointX = Endpoint.X - 10;
+                    endPointY = Endpoint.Y - 20;
+                    Debug.WriteLine("Dibawah");
+                }
+                else
+                {
+                    startPointX = Startpoint.X - 10;
+                    startPointY = Startpoint.Y - 20;
+                    endPointX = Endpoint.X + 10;
+                    endPointY = Endpoint.Y + 5;
+                    Debug.WriteLine("Diatas");
+                }
+
+            }
+            else if (startVertex.X < endVertex.X)
+            {
+                endPointX = Endpoint.X - 10;
+                endPointY = Endpoint.Y - 20;
+                startPointX = Startpoint.X + 10;
+                startPointY = Startpoint.Y - 20;
+                Debug.WriteLine("Dikanan");
+
+            }
+            else
+            {
+                endPointX = Endpoint.X + 10;
+                endPointY = Endpoint.Y - 20;
+                startPointX = Startpoint.X - 10;
+                startPointY = Startpoint.Y - 20;
+                Debug.WriteLine("Dikiri");
+            }
+
+            this.Graphics.DrawString(this.relationStart, arialFont, drawBrush, startPointX, startPointY, stringFormat);
+            this.Graphics.DrawString(this.relationEnd, arialFont, drawBrush, endPointX, endPointY, stringFormat);
         }
 
         public void Update()
