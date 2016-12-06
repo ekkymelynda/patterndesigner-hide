@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DiagramToolkit.Commands
+namespace PatternDesigner.Commands
 {
     public class AddCompositePattern : AddPattern
     {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using PatternDesigner.Tools;
 using System.Diagnostics;
-using DiagramToolkit.Commands;
+using PatternDesigner.Commands;
 
 namespace PatternDesigner
 {
@@ -56,6 +56,8 @@ namespace PatternDesigner
             AddFacadePattern addFacadePattern = new AddFacadePattern(canvas);
             AddMementoPattern addMementroPattern = new AddMementoPattern(canvas);
             AddSingletonPattern addSingletonPattern = new AddSingletonPattern(canvas);
+            Undo undo = new Undo(canvas);
+            Redo redo = new Redo(canvas);
 
             #endregion
 
@@ -106,6 +108,18 @@ namespace PatternDesigner
             DefaultMenuItem mementoMenuItem = new DefaultMenuItem("Memento Pattern");
             mementoMenuItem.SetCommand(addMementroPattern);
             behavioralSubMenu.AddMenuItem(mementoMenuItem);
+
+            //DefaultMenuItem editMenuItem = new DefaultMenuItem("Edit");
+            //this.menubar.AddMenuItem(editMenuItem);
+
+            DefaultMenuItem undoItem = new DefaultMenuItem("Undo");
+            undoItem.SetCommand(undo);
+            this.menubar.AddMenuItem(undoItem);
+
+            DefaultMenuItem redoItem = new DefaultMenuItem("Redo");
+            redoItem.SetCommand(redo);
+            this.menubar.AddMenuItem(redoItem);
+
 
             /*DefaultMenuItem newMenuItem = new DefaultMenuItem("New");
             fileMenuItem.AddMenuItem(newMenuItem);

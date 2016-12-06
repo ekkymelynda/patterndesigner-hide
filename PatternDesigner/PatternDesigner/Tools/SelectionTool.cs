@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using PatternDesigner.Commands;
 
 namespace PatternDesigner.Tools
 {
@@ -14,6 +15,8 @@ namespace PatternDesigner.Tools
         private DrawingObject selectedObject;
         private int xInitial;
         private int yInitial;
+        private int xMouseDown;
+        private int yMouseDown;
         Guid id_object;
 
         public Cursor Cursor
@@ -54,11 +57,16 @@ namespace PatternDesigner.Tools
             {
                 canvas.DeselectAllObjects();
                 selectedObject = canvas.SelectObjectAt(e.X, e.Y);
-                //incCount();
                 if (selectedObject != null)
                 {
+                    if(selectedObject is Vertex)
+                    {
+                        this.xMouseDown = e.X;
+                        this.yMouseDown = e.Y;
+                    }
+                    
                     id_object = selectedObject.ID;
-                    Debug.WriteLine("ID sebelum: " + selectedObject.ID.ToString());
+                    Debug.WriteLine("ID" + selectedObject.ID.ToString());
                 }
             }
 
@@ -75,14 +83,18 @@ namespace PatternDesigner.Tools
                     xInitial = e.X;
                     yInitial = e.Y;
 
-                    selectedObject.Translate(e.X, e.Y, xAmount, yAmount);
+                    selectedObject.Translate(xAmount, yAmount);
                 }
             }
         }
 
         public void ToolMouseUp(object sender, MouseEventArgs e)
         {
-
+            if (selectedObject is Vertex)
+            {
+                ICommand command = new TranslateVertex((Vertex)selectedObject, (int)(e.X - this.xMouseDown), (int)(e.Y - this.yMouseDown));
+                canvas.AddCommand(command);
+            }
         }
 
         public void ToolMouseDoubleClick(object sender, MouseEventArgs e)
@@ -94,7 +106,7 @@ namespace PatternDesigner.Tools
             {
                 canvas.DeselectAllObjects();
                 selectedObject = canvas.SelectObjectAt(e.X, e.Y);
-                //incCount();
+
                 if (selectedObject != null)
                 {
                     if (selectedObject is Vertex)
@@ -102,6 +114,16 @@ namespace PatternDesigner.Tools
                         Vertex objectTerpilih = (Vertex)selectedObject;
                         Form main = Form.ActiveForm;
                         ClassProperties fm = new ClassProperties(objectTerpilih, main);
+                        //main.Enabled = false;
+                        Debug.WriteLine("fm show");
+                        fm.Show();
+                    }
+
+                    else if (selectedObject is Edge)
+                    {
+                        Edge objectTerpilih = (Edge)selectedObject;
+                        Form main = Form.ActiveForm;
+                        RelationshipProperties fm = new RelationshipProperties(objectTerpilih, main);
                         //main.Enabled = false;
                         Debug.WriteLine("fm show");
                         fm.Show();

@@ -8,6 +8,7 @@ namespace PatternDesigner
 {
     public interface ICommand
     {
-        void Execute();
+       void Execute();
+       void Unexecute();
     }
 }

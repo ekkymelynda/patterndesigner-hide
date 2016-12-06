@@ -10,6 +10,9 @@ namespace PatternDesigner
 {
     public class DefaultCanvas : Control, ICanvas
     {
+        public Stack<ICommand> Undocommands = new Stack<ICommand>();
+        public Stack<ICommand> Redocommands = new Stack<ICommand>();
+
         private ITool activeTool;
         private List<DrawingObject> drawingObjects;
 
@@ -141,5 +144,19 @@ namespace PatternDesigner
             }
         }
 
+        public void AddCommand(ICommand command)
+        {
+            Undocommands.Push(command);
+        }
+
+        public Stack<ICommand> GetUndoStack()
+        {
+            return Undocommands;
+        }
+
+        public Stack<ICommand> GetRedoStack()
+        {
+            return Redocommands;
+        }
     }
 }

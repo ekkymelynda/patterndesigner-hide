@@ -9,6 +9,9 @@ namespace PatternDesigner
 {
     public abstract class EdgeTool : ToolStripButton, ITool
     {
+        public Edge line;
+        public Vertex StartingObject;
+        public Vertex EndingObject;
         private ICanvas canvas;
 
         public Cursor Cursor
@@ -31,9 +34,6 @@ namespace PatternDesigner
                 this.canvas = value;
             }
         }
-        public Edge line;
-        public Vertex StartingObject;
-        public Vertex EndingObject;
 
         public abstract void MakeLine();
 
@@ -92,9 +92,6 @@ namespace PatternDesigner
             }
         }
 
-        public void ToolMouseDoubleClick(object sender, MouseEventArgs e)
-        {
-
-        }
+        public void ToolMouseDoubleClick(object sender, MouseEventArgs e){}
     }
 }

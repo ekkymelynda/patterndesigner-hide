@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace PatternDesigner
 {
-    public interface IObservable
+    public class Method
     {
-        void Subscribe(IObserver o);
-        void Unsubscribe(IObserver o);
-        void Broadcast();
+        public string nama;
+        public string tipe;
+        public string visibility;
     }
 }
