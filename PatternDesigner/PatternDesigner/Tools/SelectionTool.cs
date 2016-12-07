@@ -66,7 +66,7 @@ namespace PatternDesigner.Tools
                     }
                     
                     id_object = selectedObject.ID;
-                    Debug.WriteLine("ID" + selectedObject.ID.ToString());
+                    //Debug.WriteLine("ID" + selectedObject.ID.ToString());
                 }
             }
 
@@ -113,9 +113,9 @@ namespace PatternDesigner.Tools
                     {
                         Vertex objectTerpilih = (Vertex)selectedObject;
                         Form main = Form.ActiveForm;
-                        ClassProperties fm = new ClassProperties(objectTerpilih, main);
+                        ClassProperties fm = new ClassProperties(canvas, objectTerpilih, main);
                         //main.Enabled = false;
-                        Debug.WriteLine("fm show");
+                        //Debug.WriteLine("fm show");
                         fm.Show();
                     }
 
@@ -125,11 +125,11 @@ namespace PatternDesigner.Tools
                         Form main = Form.ActiveForm;
                         RelationshipProperties fm = new RelationshipProperties(objectTerpilih, main);
                         //main.Enabled = false;
-                        Debug.WriteLine("fm show");
+                        //Debug.WriteLine("fm show");
                         fm.Show();
                     }
                     id_object = selectedObject.ID;
-                    Debug.WriteLine("ID sebelum: " + selectedObject.ID.ToString());
+                    //Debug.WriteLine("ID sebelum: " + selectedObject.ID.ToString());
                 }
             }
 

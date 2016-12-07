@@ -8,12 +8,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using PatternDesigner.Commands;
 
 namespace PatternDesigner
 {
     public partial class ClassProperties : Form
     {
         //private Form classForm;
+        public ICanvas canvas;
         private TextBox txt, jenisLabel, namaLabel, tipeLabel, namaMethod, tipeMethod, visibilityMethod;
         private Vertex objek;
         private Button[] deleteButton = new Button[100];
@@ -35,10 +37,11 @@ namespace PatternDesigner
         
         private Form main;
 
-        public ClassProperties(Vertex obj, Form main1)
+        public ClassProperties(ICanvas canvas, Vertex obj, Form main1)
         {
             //classForm = FindForm();
             InitializeComponent();
+            this.canvas = canvas;
             this.main = main1;
             this.objek = obj;
             this.Size = new Size(600, 400);
@@ -394,32 +397,13 @@ namespace PatternDesigner
 
         private void NewButton_Click(object sender, EventArgs e)
         {
-            if (this.txt != null)
-            {
-                Debug.WriteLine("haloo");
-                this.objek.nama = this.txt.Text;
-            }
-            objek.att.Clear();
-            for (int a = 1; a < i; a++)
-            {
-                if (this.atributBox[a].Text != "" && this.nameAtributBox[a].Text != "" && this.typeAtributBox[a].Text != "")
-                {
-                    this.objek.att.Add(new Attribute() { visibility = this.atributBox[a].Text, nama = this.nameAtributBox[a].Text, tipe = this.typeAtributBox[a].Text });
-                }
-            }
-
-            objek.meth.Clear();
-
-            for (int b = 1; b < j; b++)
-            {
-                if (this.methodBox[b].Text != "" && this.namemethodBox[b].Text != "" && this.typemethodBox[b].Text != "")
-                {
-                    this.objek.meth.Add(new Method() { visibility = this.methodBox[b].Text, nama = this.namemethodBox[b].Text, tipe = this.typemethodBox[b].Text });
-                }
-            }
+            ICommand command = new ApplyClassProperties(this.objek, txt.Text, this.objek.nama, this.objek.meth, this.objek.att, 
+                               this.atributBox, this.nameAtributBox, this.typeAtributBox, 
+                               this.methodBox, this.namemethodBox, this.typemethodBox, i , j);
+            canvas.AddCommand(command);
+            command.Execute();
 
             //CloseForm();
-            
         }
 
         /*

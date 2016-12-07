@@ -79,7 +79,6 @@ namespace PatternDesigner
                     startPointY = Startpoint.Y + 5;
                     endPointX = Endpoint.X - 10;
                     endPointY = Endpoint.Y - 20;
-                    Debug.WriteLine("Dibawah");
                 }
                 else
                 {
@@ -87,7 +86,7 @@ namespace PatternDesigner
                     startPointY = Startpoint.Y - 20;
                     endPointX = Endpoint.X + 10;
                     endPointY = Endpoint.Y + 5;
-                    Debug.WriteLine("Diatas");
+                  
                 }
 
             }
@@ -97,7 +96,6 @@ namespace PatternDesigner
                 endPointY = Endpoint.Y - 20;
                 startPointX = Startpoint.X + 10;
                 startPointY = Startpoint.Y - 20;
-                Debug.WriteLine("Dikanan");
 
             }
             else
@@ -106,7 +104,6 @@ namespace PatternDesigner
                 endPointY = Endpoint.Y - 20;
                 startPointX = Startpoint.X - 10;
                 startPointY = Startpoint.Y - 20;
-                Debug.WriteLine("Dikiri");
             }
 
             this.Graphics.DrawString(this.relationStart, arialFont, drawBrush, startPointX, startPointY, stringFormat);
