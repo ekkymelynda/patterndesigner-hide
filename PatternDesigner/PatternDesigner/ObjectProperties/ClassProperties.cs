@@ -393,13 +393,11 @@ namespace PatternDesigner
 
         private void NewButton_Click(object sender, EventArgs e)
         {
-            //newButton.Enabled = false;
             ICommand command = new ApplyClassProperties(this.objek, txt.Text, this.objek.nama, this.objek.meth, this.objek.att, 
                                this.atributBox, this.nameAtributBox, this.typeAtributBox, 
                                this.methodBox, this.namemethodBox, this.typemethodBox, i , j);
             canvas.AddCommand(command);
             command.Execute();
-            //newButton.Enabled = true;
 
             //CloseForm();
         }
