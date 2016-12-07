@@ -24,25 +24,37 @@ namespace PatternDesigner.Commands
             this.vertex = vertex;
             this.oldName = oldName;
             this.newName = newName;
-       
-            foreach (Attribute a in att)
+
+            if (att.Count() != 0)
             {
-                oldAttribute.Add(new Attribute() { visibility = a.visibility, nama = a.nama, tipe = a.tipe });
+                foreach (Attribute a in att)
+                {
+                    oldAttribute.Add(new Attribute() { visibility = a.visibility, nama = a.nama, tipe = a.tipe });
+                }
             }
 
-            foreach (Method b in meth)
+            if (meth.Count() != 0)
             {
-                oldMethod.Add(new Method() { visibility = b.visibility, nama = b.nama, tipe = b.tipe });
+                foreach (Method b in meth)
+                {
+                    oldMethod.Add(new Method() { visibility = b.visibility, nama = b.nama, tipe = b.tipe });
+                }
             }
 
-            for (int a = 1; a < i; a++)
+            if (i > 0)
             {
-                newAttribute.Add(new Attribute() { visibility = newAttributeBox[a].Text, nama = newNameAttributebox[a].Text, tipe = newTypeAttributeBox[a].Text });
+                for (int a = 1; a < i; a++)
+                {
+                    newAttribute.Add(new Attribute() { visibility = newAttributeBox[a].Text, nama = newNameAttributebox[a].Text, tipe = newTypeAttributeBox[a].Text });
+                }
             }
 
-            for (int b = 1; b < j; b++)
+            if (j > 0)
             {
-                newMethod.Add(new Method() { visibility = newMethodBox[b].Text, nama = newNameMethodbox[b].Text, tipe = newTypeMethodBox[b].Text });
+                for (int b = 1; b < j; b++)
+                {
+                    newMethod.Add(new Method() { visibility = newMethodBox[b].Text, nama = newNameMethodbox[b].Text, tipe = newTypeMethodBox[b].Text });
+                }
             }
         }
 
@@ -51,15 +63,21 @@ namespace PatternDesigner.Commands
             vertex.nama = newName;
 
             vertex.att.Clear();
-            foreach (Attribute a in newAttribute)
+            if (newAttribute.Count() != 0)
             {
-                vertex.att.Add(new Attribute() { visibility = a.visibility, nama = a.nama, tipe = a.tipe });
+                foreach (Attribute a in newAttribute)
+                {
+                    vertex.att.Add(new Attribute() { visibility = a.visibility, nama = a.nama, tipe = a.tipe });
+                }
             }
 
             vertex.meth.Clear();
-            foreach (Method b in newMethod)
+            if (newMethod.Count() != 0)
             {
-                vertex.meth.Add(new Method() { visibility = b.visibility, nama = b.nama, tipe = b.tipe });
+                foreach (Method b in newMethod)
+                {
+                    vertex.meth.Add(new Method() { visibility = b.visibility, nama = b.nama, tipe = b.tipe });
+                }
             }
         }
 
@@ -68,15 +86,22 @@ namespace PatternDesigner.Commands
             vertex.nama = oldName;
     
             vertex.att.Clear();
-            foreach(Attribute a in oldAttribute)
+            if (oldAttribute.Count() != 0)
             {
-                vertex.att.Add(new Attribute() { visibility = a.visibility, nama = a.nama, tipe = a.tipe});
+                foreach (Attribute a in oldAttribute)
+                {
+                    vertex.att.Add(new Attribute() { visibility = a.visibility, nama = a.nama, tipe = a.tipe });
+                }
             }
 
             vertex.meth.Clear();
-            foreach (Method b in oldMethod)
+
+            if (oldMethod.Count() != 0)
             {
-                vertex.meth.Add(new Method() { visibility = b.visibility, nama = b.nama, tipe = b.tipe });
+                foreach (Method b in oldMethod)
+                {
+                    vertex.meth.Add(new Method() { visibility = b.visibility, nama = b.nama, tipe = b.tipe });
+                }
             }
         }
     }

@@ -57,6 +57,7 @@ namespace PatternDesigner
             newButton.Location = new Point(510, 320);
             newButton.Size = new Size(50, 20);
             newButton.Text = "Apply";
+            newButton.Click += NewButton_Click;
             this.Controls.Add(newButton);
 
             cancelButton = new Button();
@@ -191,8 +192,6 @@ namespace PatternDesigner
 
             //Atribut area end
 
-            newButton.Click += NewButton_MouseDown;
-
 
             //method area start
             j = 1;
@@ -294,8 +293,6 @@ namespace PatternDesigner
 
             //method area end
 
-            newButton.MouseDown += NewButton_MouseDown;
-
         }
 
         private void deleteButton_C(object sender, EventArgs e)
@@ -394,15 +391,15 @@ namespace PatternDesigner
             deleteButton[index].Dispose();
         }
 
-        private void NewButton_MouseDown(object sender, EventArgs e)
+        private void NewButton_Click(object sender, EventArgs e)
         {
-            newButton.Enabled = false;
+            //newButton.Enabled = false;
             ICommand command = new ApplyClassProperties(this.objek, txt.Text, this.objek.nama, this.objek.meth, this.objek.att, 
                                this.atributBox, this.nameAtributBox, this.typeAtributBox, 
                                this.methodBox, this.namemethodBox, this.typemethodBox, i , j);
             canvas.AddCommand(command);
             command.Execute();
-            newButton.Enabled = true;
+            //newButton.Enabled = true;
 
             //CloseForm();
         }
