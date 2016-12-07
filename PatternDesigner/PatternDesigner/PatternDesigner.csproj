@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attribute.cs" />
+    <Compile Include="Commands\ApplyRelationshipProperties.cs" />
     <Compile Include="Commands\ApplyClassProperties.cs" />
     <Compile Include="ObjectProperties\ClassProperties.cs">
       <SubType>Form</SubType>

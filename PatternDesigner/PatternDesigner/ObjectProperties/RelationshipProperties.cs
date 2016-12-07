@@ -8,22 +8,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using PatternDesigner.Commands;
 
 namespace PatternDesigner
 {
     public partial class RelationshipProperties : Form
     {
-        private Edge objek;
+        private ICanvas canvas;
+        private Edge edge;
         private Button applyButton;
         private Form main;
         private Label relationshipNameLabel, relationLabel;
         private TextBox relationshipName, relationStart, relationEnd;
 
-        public RelationshipProperties(Edge obj, Form main1)
+        public RelationshipProperties(ICanvas canvas, Edge obj, Form main1)
         {
             InitializeComponent();
+            this.canvas = canvas;
             this.main = main1;
-            this.objek = obj;
+            this.edge = obj;
             this.Size = new Size(300, 200);
 
 
@@ -34,7 +37,7 @@ namespace PatternDesigner
             this.Controls.Add(relationshipNameLabel);
 
             relationshipName = new TextBox();
-            relationshipName.Text = this.objek.name;
+            relationshipName.Text = this.edge.name;
             relationshipName.WordWrap = true;
             relationshipName.Location = new Point(120, 30);
             relationshipName.Size = new Size(150, 45);
@@ -53,14 +56,14 @@ namespace PatternDesigner
             this.Controls.Add(relationLabel);
 
             relationStart = new TextBox();
-            relationStart.Text = this.objek.relationStart;
+            relationStart.Text = this.edge.relationStart;
             relationStart.WordWrap = true;
             relationStart.Location = new Point(120, 70);
             relationStart.Size = new Size(45, 45);
             this.Controls.Add(relationStart);
 
             relationEnd = new TextBox();
-            relationEnd.Text = this.objek.relationEnd;
+            relationEnd.Text = this.edge.relationEnd;
             relationEnd.WordWrap = true;
             relationEnd.Location = new Point(185, 70);
             relationEnd.Size = new Size(45, 45);
@@ -70,9 +73,9 @@ namespace PatternDesigner
 
         private void applyButton_Click(object sender, EventArgs e)
         {
-            objek.name = relationshipName.Text;
-            objek.relationStart = relationStart.Text;
-            objek.relationEnd = relationEnd.Text;
+            ICommand command = new ApplyRelationshipProperties(edge, edge.name, relationshipName.Text, edge.relationStart, relationStart.Text, edge.relationEnd, relationEnd.Text);
+            canvas.AddCommand(command);
+            command.Execute();
         }
     }
 }

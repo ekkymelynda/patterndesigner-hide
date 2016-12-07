@@ -191,7 +191,7 @@ namespace PatternDesigner
 
             //Atribut area end
 
-            newButton.Click += NewButton_Click;
+            newButton.Click += NewButton_MouseDown;
 
 
             //method area start
@@ -294,7 +294,7 @@ namespace PatternDesigner
 
             //method area end
 
-            newButton.Click += NewButton_Click;
+            newButton.MouseDown += NewButton_MouseDown;
 
         }
 
@@ -384,7 +384,6 @@ namespace PatternDesigner
 
         private void DeleteButton_Click(object sender, EventArgs e, int index)
         {
-            //Console.WriteLine(atributBox[index]);
             this.Controls.Remove(atributBox[index]);
             atributBox[index].Dispose();
             this.Controls.Remove(nameAtributBox[index]);
@@ -395,13 +394,15 @@ namespace PatternDesigner
             deleteButton[index].Dispose();
         }
 
-        private void NewButton_Click(object sender, EventArgs e)
+        private void NewButton_MouseDown(object sender, EventArgs e)
         {
+            newButton.Enabled = false;
             ICommand command = new ApplyClassProperties(this.objek, txt.Text, this.objek.nama, this.objek.meth, this.objek.att, 
                                this.atributBox, this.nameAtributBox, this.typeAtributBox, 
                                this.methodBox, this.namemethodBox, this.typemethodBox, i , j);
             canvas.AddCommand(command);
             command.Execute();
+            newButton.Enabled = true;
 
             //CloseForm();
         }

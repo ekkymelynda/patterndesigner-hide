@@ -66,7 +66,6 @@ namespace PatternDesigner.Tools
                     }
                     
                     id_object = selectedObject.ID;
-                    //Debug.WriteLine("ID" + selectedObject.ID.ToString());
                 }
             }
 
@@ -92,8 +91,11 @@ namespace PatternDesigner.Tools
         {
             if (selectedObject is Vertex)
             {
-                ICommand command = new TranslateVertex((Vertex)selectedObject, (int)(e.X - this.xMouseDown), (int)(e.Y - this.yMouseDown));
-                canvas.AddCommand(command);
+                if (!((int)e.X - (int)this.xMouseDown == 0 && (int)e.Y - (int)this.yMouseDown == 0))
+                {
+                    ICommand command = new TranslateVertex((Vertex)selectedObject, (int)(e.X - this.xMouseDown), (int)(e.Y - this.yMouseDown));
+                    canvas.AddCommand(command);
+                }
             }
         }
 
@@ -114,8 +116,6 @@ namespace PatternDesigner.Tools
                         Vertex objectTerpilih = (Vertex)selectedObject;
                         Form main = Form.ActiveForm;
                         ClassProperties fm = new ClassProperties(canvas, objectTerpilih, main);
-                        //main.Enabled = false;
-                        //Debug.WriteLine("fm show");
                         fm.Show();
                     }
 
@@ -123,13 +123,10 @@ namespace PatternDesigner.Tools
                     {
                         Edge objectTerpilih = (Edge)selectedObject;
                         Form main = Form.ActiveForm;
-                        RelationshipProperties fm = new RelationshipProperties(objectTerpilih, main);
-                        //main.Enabled = false;
-                        //Debug.WriteLine("fm show");
+                        RelationshipProperties fm = new RelationshipProperties(canvas, objectTerpilih, main);
                         fm.Show();
                     }
                     id_object = selectedObject.ID;
-                    //Debug.WriteLine("ID sebelum: " + selectedObject.ID.ToString());
                 }
             }
 
