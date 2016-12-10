@@ -104,5 +104,15 @@ namespace PatternDesigner.Commands
                 }
             }
         }
+
+        public ICommand MakeCommand(ICanvas canvas)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetCommandName()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

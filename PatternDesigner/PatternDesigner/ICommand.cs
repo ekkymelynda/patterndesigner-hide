@@ -8,7 +8,9 @@ namespace PatternDesigner
 {
     public interface ICommand
     {
-       void Execute();
-       void Unexecute();
+        void Execute();
+        void Unexecute();
+        ICommand MakeCommand(ICanvas canvas);
+        string GetCommandName();
     }
 }

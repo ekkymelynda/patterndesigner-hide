@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using PatternDesigner.Tools;
 using System.Diagnostics;
 using PatternDesigner.Commands;
+using System.IO;
+using System.Reflection;
 
 namespace PatternDesigner
 {
@@ -17,13 +19,58 @@ namespace PatternDesigner
     {
         private IToolbox toolbox;
         private IEditor editor;
+        public IPlugin[] plugins;
         //private IToolbar toolbar;
         private IMenubar menubar;
 
         public MainWindow()
         {
             InitializeComponent();
+            LoadPlugins();
             InitUI();
+        }
+
+        private void LoadPlugins()
+        {
+            string path = Application.StartupPath + "\\Plugin";
+            Debug.WriteLine(path);
+            string[] pluginFiles = Directory.GetFiles(path, "*.dll");
+            plugins = new IPlugin[pluginFiles.Length];
+
+            for (int i = 0; i < pluginFiles.Length; i++)
+            {
+                Type type = null;
+
+                try
+                {
+                    Assembly asm = Assembly.Load(pluginFiles[i]);
+
+                    if (asm != null)
+                    {
+                        var pluginInterface = typeof(IPlugin);
+
+                        Type[] types = asm.GetTypes();
+
+                        foreach (Type t in types)
+                        {
+                            if (pluginInterface.IsAssignableFrom(t))
+                                type = t;
+                        }
+
+                    }
+
+                    if (type != null)
+                    {
+                        plugins[i] = (IPlugin)Activator.CreateInstance(type);
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+            }
         }
 
         private void InitUI()
@@ -51,7 +98,6 @@ namespace PatternDesigner
             ICanvas canvas = this.editor.GetSelectedCanvas();
             AddPattern1 addPattern1 = new AddPattern1(canvas);
             AddFactoryPattern addFactoryPattern = new AddFactoryPattern(canvas);
-            AddCommandPattern addCommandPattern = new AddCommandPattern(canvas);
             AddCompositePattern addCompositePattern = new AddCompositePattern(canvas);
             AddFacadePattern addFacadePattern = new AddFacadePattern(canvas);
             AddMementoPattern addMementroPattern = new AddMementoPattern(canvas);
@@ -76,41 +122,25 @@ namespace PatternDesigner
             DefaultMenuItem generateMenuItem = new DefaultMenuItem("Generate");
             this.menubar.AddMenuItem(generateMenuItem);
 
-            DefaultMenuItem creationalSubMenu = new DefaultMenuItem("Creational Pattern");
-            generateMenuItem.AddMenuItem(creationalSubMenu);
-
-            DefaultMenuItem structuralSubMenu = new DefaultMenuItem("Structural Pattern");
-            generateMenuItem.AddMenuItem(structuralSubMenu);
-
-            DefaultMenuItem behavioralSubMenu = new DefaultMenuItem("Behavioral Pattern");
-            generateMenuItem.AddMenuItem(behavioralSubMenu);
-
             DefaultMenuItem factoryMenuItem = new DefaultMenuItem("Factory Pattern");
             factoryMenuItem.SetCommand(addFactoryPattern);
-            creationalSubMenu.AddMenuItem(factoryMenuItem);
+            generateMenuItem.AddMenuItem(factoryMenuItem);
 
             DefaultMenuItem singletonMenuItem = new DefaultMenuItem("Singleton Pattern");
             singletonMenuItem.SetCommand(addSingletonPattern);
-            creationalSubMenu.AddMenuItem(singletonMenuItem);
+            generateMenuItem.AddMenuItem(singletonMenuItem);
 
             DefaultMenuItem compositeMenuItem = new DefaultMenuItem("Composite Pattern");
             compositeMenuItem.SetCommand(addCompositePattern);
-            structuralSubMenu.AddMenuItem(compositeMenuItem);
+            generateMenuItem.AddMenuItem(compositeMenuItem);
 
             DefaultMenuItem facadeMenuItem = new DefaultMenuItem("Facade Pattern");
             facadeMenuItem.SetCommand(addFacadePattern);
-            structuralSubMenu.AddMenuItem(facadeMenuItem);
-
-            DefaultMenuItem commandMenuItem = new DefaultMenuItem("Command Pattern");
-            commandMenuItem.SetCommand(addCommandPattern);
-            behavioralSubMenu.AddMenuItem(commandMenuItem);
+            generateMenuItem.AddMenuItem(facadeMenuItem);
 
             DefaultMenuItem mementoMenuItem = new DefaultMenuItem("Memento Pattern");
             mementoMenuItem.SetCommand(addMementroPattern);
-            behavioralSubMenu.AddMenuItem(mementoMenuItem);
-
-            //DefaultMenuItem editMenuItem = new DefaultMenuItem("Edit");
-            //this.menubar.AddMenuItem(editMenuItem);
+            generateMenuItem.AddMenuItem(mementoMenuItem);
 
             DefaultMenuItem undoItem = new DefaultMenuItem("Undo");
             undoItem.SetCommand(undo);
@@ -120,29 +150,14 @@ namespace PatternDesigner
             redoItem.SetCommand(redo);
             this.menubar.AddMenuItem(redoItem);
 
+            if (plugins != null)
+            {
+                for (int i = 0; i < this.plugins.Length; i++)
+                {
+                    generateMenuItem.Register(plugins[i], canvas);
+                }
+            }
 
-            /*DefaultMenuItem newMenuItem = new DefaultMenuItem("New");
-            fileMenuItem.AddMenuItem(newMenuItem);
-            fileMenuItem.AddSeparator();
-            DefaultMenuItem exitMenuItem = new DefaultMenuItem("Exit");
-            fileMenuItem.AddMenuItem(exitMenuItem);
-
-            DefaultMenuItem editMenuItem = new DefaultMenuItem("Edit");
-            this.menubar.AddMenuItem(editMenuItem);
-
-            DefaultMenuItem undoMenuItem = new DefaultMenuItem("Undo");
-            editMenuItem.AddMenuItem(undoMenuItem);
-            DefaultMenuItem redoMenuItem = new DefaultMenuItem("Redo");
-            editMenuItem.AddMenuItem(redoMenuItem);
-
-            DefaultMenuItem viewMenuItem = new DefaultMenuItem("View");
-            this.menubar.AddMenuItem(viewMenuItem);
-
-            DefaultMenuItem helpMenuItem = new DefaultMenuItem("Help");
-            this.menubar.AddMenuItem(helpMenuItem);
-
-            DefaultMenuItem aboutMenuItem = new DefaultMenuItem("About");
-            helpMenuItem.AddMenuItem(aboutMenuItem);*/
 
             #endregion
 

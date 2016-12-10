@@ -26,6 +26,16 @@ namespace PatternDesigner.Commands
             vertex.Broadcast();
         }
 
+        public string GetCommandName()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICommand MakeCommand(ICanvas canvas)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Unexecute()
         {
             vertex.X -= xAmount;

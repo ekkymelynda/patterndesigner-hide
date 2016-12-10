@@ -1,4 +1,6 @@
-﻿using PatternDesigner.Shapes;
+﻿using PatternDesigner;
+using PatternDesigner.Commands;
+using PatternDesigner.Shapes;
 using PatternDesigner.Tools;
 using System;
 using System.Collections.Generic;
@@ -8,21 +10,80 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PatternDesigner.Commands
+namespace PatternDesigner.CommandPattern
 {
-    public class AddPattern : ICommand
+    public class CommandPattern : ICommand, IPlugin
     {
-        protected ICanvas canvas;
-        protected Pen pen;
 
-        public AddPattern(ICanvas canvas) 
+        public ICanvas canvas;
+        public Pen pen;
+        public string name;
+
+        public string Name
         {
-            this.canvas = canvas;
+            get
+            {
+                return this.name;
+            }
+
+            set
+            {
+                this.name = "Command Pattern";
+            }
         }
 
-        public void setCanvas(ICanvas canvas)
+        public IPluginHost Host
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public CommandPattern(ICanvas canvas)
         {
             this.canvas = canvas;
+            this.name = "Command Pattern";
+        }
+
+        public void Execute()
+        {
+            pen = new Pen(Color.Black);
+            pen.Width = 1.5f;
+
+            string[] lines = System.IO.File.ReadAllLines("CommandPattern.txt");
+
+            foreach (string line in lines)
+            {
+                string[] item;
+                item = line.Split(' ');
+                Debug.WriteLine(item[0] + " " + item[1] + " " + item[2] + " " + item[3] + " " + item[4]);
+                AddObjectFromFile(item[0], Convert.ToInt32(item[1]), Convert.ToInt32(item[2]), Convert.ToInt32(item[3]), Convert.ToInt32(item[4]));
+                
+            }
+            
+            this.canvas.Repaint();
+            canvas.DeselectAllObjects();
+        }
+
+        public ICommand MakeCommand(ICanvas canvas)
+        {
+            return new CommandPattern(canvas);
+        }
+
+        public string GetCommandName()
+        {
+            return this.name;
+        }
+
+        public void Unexecute()
+        {
+            throw new NotImplementedException();
         }
 
         public void AddObjectFromFile(string jenis, int param1, int param2, int param3, int param4)
@@ -31,7 +92,7 @@ namespace PatternDesigner.Commands
             {
                 AddClass(param1, param2, param3, param4);
             }
-            else if(jenis == "Association")
+            else if (jenis == "Association")
             {
                 AddAssociation(param1, param2, param3, param4);
             }
@@ -65,15 +126,8 @@ namespace PatternDesigner.Commands
             rec.RenderOnEditingView();
         }
 
-        public void AddAssociation (int xStart, int yStart, int xEnd, int yEnd)
+        public void AddAssociation(int xStart, int yStart, int xEnd, int yEnd)
         {
-            /*
-            AssociationLine line = new AssociationLine();
-            line.Startpoint = new Point(xStart, yStart);
-            line.Endpoint = new Point(xEnd, yEnd);
-            canvas.AddDrawingObject(line);
-            line.RenderOnEditingView();
-            */
             AssociationTool lineTools = new AssociationTool();
             lineTools.StartingObject = (Vertex)canvas.GetObjectAt(xStart, yStart);
             lineTools.MakeLine();
@@ -93,13 +147,6 @@ namespace PatternDesigner.Commands
 
         public void AddDependency(int xStart, int yStart, int xEnd, int yEnd)
         {
-            /*
-            DependencyLine line = new DependencyLine();
-            line.Startpoint = new Point(xStart, yStart);
-            line.Endpoint = new Point(xEnd, yEnd);
-            canvas.AddDrawingObject(line);
-            line.RenderOnEditingView();
-            */
             DependencyTool lineTools = new DependencyTool();
             lineTools.StartingObject = (Vertex)canvas.GetObjectAt(xStart, yStart);
             lineTools.MakeLine();
@@ -107,7 +154,7 @@ namespace PatternDesigner.Commands
             canvas.AddDrawingObject(lineTools.line);
 
             lineTools.EndingObject = (Vertex)canvas.GetObjectAt(xEnd, yEnd);
-            lineTools.line.Endpoint = new System.Drawing.Point(lineTools.EndingObject.X, (lineTools.EndingObject.Height / 2) + lineTools.EndingObject.Y);
+            lineTools.line.Endpoint = new Point(lineTools.EndingObject.X, (lineTools.EndingObject.Height / 2) + lineTools.EndingObject.Y);
             lineTools.line.Select();
 
             lineTools.StartingObject.Subscribe(lineTools.line);
@@ -119,13 +166,6 @@ namespace PatternDesigner.Commands
 
         public void AddDirectedAssociation(int xStart, int yStart, int xEnd, int yEnd)
         {
-            /*
-            DirectedAssociationLine line = new DirectedAssociationLine();
-            line.Startpoint = new Point(xStart, yStart);
-            line.Endpoint = new Point(xEnd, yEnd);
-            canvas.AddDrawingObject(line);
-            line.RenderOnEditingView();
-            */
             DirectedTool directTools = new DirectedTool();
             directTools.StartingObject = (Vertex)canvas.GetObjectAt(xStart, yStart);
             directTools.MakeLine();
@@ -146,13 +186,6 @@ namespace PatternDesigner.Commands
 
         public void AddGeneralization(int xStart, int yStart, int xEnd, int yEnd)
         {
-            /*
-            GeneralizationLine line = new GeneralizationLine();
-            line.Startpoint = new Point(xStart, yStart);
-            line.Endpoint = new Point(xEnd, yEnd);
-            canvas.AddDrawingObject(line);
-            line.RenderOnEditingView();
-            */
             GeneralizationTool directTools = new GeneralizationTool();
             directTools.StartingObject = (Vertex)canvas.GetObjectAt(xStart, yStart);
             directTools.MakeLine();
@@ -172,13 +205,6 @@ namespace PatternDesigner.Commands
 
         public void AddRealization(int xStart, int yStart, int xEnd, int yEnd)
         {
-            /*
-            RealizationLine line = new RealizationLine();
-            line.Startpoint = new Point(xStart, yStart);
-            line.Endpoint = new Point(xEnd, yEnd);
-            canvas.AddDrawingObject(line);
-            line.RenderOnEditingView();
-            */
             RealizationTool directTools = new RealizationTool();
             directTools.StartingObject = (Vertex)canvas.GetObjectAt(xStart, yStart);
             directTools.MakeLine();
@@ -186,7 +212,7 @@ namespace PatternDesigner.Commands
             canvas.AddDrawingObject(directTools.line);
 
             directTools.EndingObject = (Vertex)canvas.GetObjectAt(xEnd, yEnd);
-            directTools.line.Endpoint = new System.Drawing.Point(directTools.EndingObject.X, (directTools.EndingObject.Height / 2) + directTools.EndingObject.Y);
+            directTools.line.Endpoint = new Point(directTools.EndingObject.X, (directTools.EndingObject.Height / 2) + directTools.EndingObject.Y);
             directTools.line.Select();
 
             directTools.StartingObject.Subscribe(directTools.line);
@@ -194,31 +220,6 @@ namespace PatternDesigner.Commands
 
             directTools.EndingObject.Subscribe(directTools.line);
             directTools.line.AddVertex(directTools.EndingObject);
-        }
-
-        public virtual void Execute()
-        {
-            
-        }
-
-        public void Unexecute()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void MakeCommand(ICanvas canvas)
-        {
-            throw new NotImplementedException();
-        }
-
-        ICommand ICommand.MakeCommand(ICanvas canvas)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetCommandName()
-        {
-            throw new NotImplementedException();
         }
     }
 }

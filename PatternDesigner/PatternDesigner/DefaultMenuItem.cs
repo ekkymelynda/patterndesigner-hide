@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,9 +8,10 @@ using System.Windows.Forms;
 
 namespace PatternDesigner
 {
-    public class DefaultMenuItem : ToolStripMenuItem, IMenuItem
+    public class DefaultMenuItem : ToolStripMenuItem, IMenuItem, IPluginHost
     {
         private ICommand command;
+        public ICommand commands;
 
         public DefaultMenuItem()
         {
@@ -45,6 +47,20 @@ namespace PatternDesigner
         public void SetCommand(ICommand command)
         {
             this.command = command;
+        }
+
+        public void Register(IPlugin plugin, ICanvas canvas)
+        {
+            if (plugin is ICommand)
+            {
+                
+                ICommand command = (ICommand)plugin;
+                this.commands = command.MakeCommand(canvas);
+                Debug.WriteLine(this.commands.GetCommandName());
+                DefaultMenuItem Item = new DefaultMenuItem(this.commands.GetCommandName());
+                Item.SetCommand(this.commands);
+                AddMenuItem(Item);
+            }    
         }
     }
 }

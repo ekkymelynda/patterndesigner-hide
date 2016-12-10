@@ -43,5 +43,15 @@ namespace PatternDesigner.Commands
             edge.relationStart = oldRelationStart;
             edge.relationEnd = oldRelationEnd;
         }
+
+        public ICommand MakeCommand(ICanvas canvas)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetCommandName()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
