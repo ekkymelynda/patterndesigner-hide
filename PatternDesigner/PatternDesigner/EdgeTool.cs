@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PatternDesigner.Commands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -79,6 +80,9 @@ namespace PatternDesigner
 
                         EndingObject.Subscribe(line);
                         line.AddVertex(EndingObject);
+
+                        ICommand command = new CreateRelationship(line, canvas);
+                        canvas.AddCommand(command);
                     }
                     else
                     {

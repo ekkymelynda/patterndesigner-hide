@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PatternDesigner.Shapes;
+using PatternDesigner.Commands;
+using System.Diagnostics;
 
 namespace PatternDesigner.Tools
 {
@@ -77,10 +79,14 @@ namespace PatternDesigner.Tools
             {
                 if (e.Button == MouseButtons.Left)
                 {
+                    ICommand command = new CreateClass(this.rectangle, canvas);
+                    canvas.AddCommand(command);
                     this.rectangle.Select();
                 }
                 else if (e.Button == MouseButtons.Right)
                 {
+                    canvas.RemoveDrawingObject(this.rectangle);
+                    canvas.RemoveDrawingObject(this.rectangle);
                     canvas.RemoveDrawingObject(this.rectangle);
                 }
             }
