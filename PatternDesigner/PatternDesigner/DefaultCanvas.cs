@@ -5,16 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace PatternDesigner
 {
     public class DefaultCanvas : Control, ICanvas
     {
-        public Stack<ICommand> Undocommands = new Stack<ICommand>();
-        public Stack<ICommand> Redocommands = new Stack<ICommand>();
+        private Stack<ICommand> undoCommands = new Stack<ICommand>();
+        private Stack<ICommand> redoCommands = new Stack<ICommand>();
+        private Stack<ICommand> copyStack = new Stack<ICommand>();
 
         private ITool activeTool;
         private List<DrawingObject> drawingObjects;
+        private DrawingObject selectedObject;
 
         public DefaultCanvas()
         {
@@ -128,12 +131,18 @@ namespace PatternDesigner
         public DrawingObject SelectObjectAt(int x, int y)
         {
             DrawingObject obj = GetObjectAt(x, y);
+           
             if (obj != null)
             {
                 obj.Select();
+                this.selectedObject = obj;
             }
-
             return obj;
+        }
+
+        public DrawingObject GetSelectedObject()
+        {
+            return selectedObject;
         }
 
         public void DeselectAllObjects()
@@ -144,19 +153,36 @@ namespace PatternDesigner
             }
         }
 
+        public void SetSelectedObject(DrawingObject obj)
+        {
+            this.selectedObject = obj;
+        }
+
         public void AddCommand(ICommand command)
         {
-            Undocommands.Push(command);
+            undoCommands.Push(command);
         }
 
         public Stack<ICommand> GetUndoStack()
         {
-            return Undocommands;
+            return undoCommands;
         }
 
         public Stack<ICommand> GetRedoStack()
         {
-            return Redocommands;
+            return redoCommands;
         }
+
+        public Stack<ICommand> GetCopyStack()
+        {
+            return copyStack;
+        }
+
+        public void AddCopyCommand(ICommand command)
+        {
+            copyStack.Push(command);
+        }
+
+       
     }
 }

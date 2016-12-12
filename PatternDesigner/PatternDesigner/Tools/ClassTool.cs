@@ -81,7 +81,9 @@ namespace PatternDesigner.Tools
                 {
                     ICommand command = new CreateClass(this.rectangle, canvas);
                     canvas.AddCommand(command);
+                    canvas.DeselectAllObjects();
                     this.rectangle.Select();
+                    canvas.SetSelectedObject(this.rectangle);
                 }
                 else if (e.Button == MouseButtons.Right)
                 {

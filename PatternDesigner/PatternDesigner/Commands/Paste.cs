@@ -9,27 +9,29 @@ using System.Windows.Forms;
 
 namespace PatternDesigner.Commands
 {
-    public class CreateRelationship : ICommand
+    public class Paste : ICommand
     {
-        private Edge objek;
         private ICanvas canvas;
 
 
-        public CreateRelationship(Edge objek, ICanvas canvas)
+        public Paste(ICanvas canvas)
         {
-            this.objek = objek;
             this.canvas = canvas;
         }
 
         public void Execute()
         {
-            this.canvas.AddDrawingObject(objek);
-            objek.Update();
+            if (canvas.GetCopyStack().Count > 0)
+            {
+                ICommand command = canvas.GetCopyStack().Peek();
+                command.Execute();
+                canvas.Repaint();
+            }
         }
 
         public void Unexecute()
         {
-            this.canvas.RemoveDrawingObject(objek);
+           
         }
     }
 }

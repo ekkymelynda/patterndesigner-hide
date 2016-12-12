@@ -11,11 +11,11 @@ namespace PatternDesigner.Commands
 {
     public class CreateClass : ICommand
     {
-        private Rectangle objek;
+        private Vertex objek;
         private ICanvas canvas;
 
 
-        public CreateClass(Rectangle objek, ICanvas canvas)
+        public CreateClass(Vertex objek, ICanvas canvas)
         {
             this.objek = objek;
             this.canvas = canvas;

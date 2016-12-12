@@ -47,6 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attribute.cs" />
+    <Compile Include="Commands\Paste.cs" />
+    <Compile Include="Commands\CreateClassCopy.cs" />
+    <Compile Include="Commands\Copy.cs" />
     <Compile Include="Commands\CreateRelationship.cs" />
     <Compile Include="Commands\CreateClass.cs" />
     <Compile Include="Commands\ApplyRelationshipProperties.cs" />

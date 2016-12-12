@@ -56,8 +56,11 @@ namespace PatternDesigner
             AddFacadePattern addFacadePattern = new AddFacadePattern(canvas);
             AddMementoPattern addMementroPattern = new AddMementoPattern(canvas);
             AddSingletonPattern addSingletonPattern = new AddSingletonPattern(canvas);
+
             Undo undo = new Undo(canvas);
             Redo redo = new Redo(canvas);
+            Copy copy = new Copy(canvas);
+            Paste paste = new Paste(canvas);
 
             #endregion
 
@@ -109,16 +112,26 @@ namespace PatternDesigner
             mementoMenuItem.SetCommand(addMementroPattern);
             behavioralSubMenu.AddMenuItem(mementoMenuItem);
 
-            //DefaultMenuItem editMenuItem = new DefaultMenuItem("Edit");
-            //this.menubar.AddMenuItem(editMenuItem);
+
+            DefaultMenuItem editMenuItem = new DefaultMenuItem("Edit");
+            this.menubar.AddMenuItem(editMenuItem);
 
             DefaultMenuItem undoItem = new DefaultMenuItem("Undo");
             undoItem.SetCommand(undo);
-            this.menubar.AddMenuItem(undoItem);
+            editMenuItem.AddMenuItem(undoItem);
 
             DefaultMenuItem redoItem = new DefaultMenuItem("Redo");
             redoItem.SetCommand(redo);
-            this.menubar.AddMenuItem(redoItem);
+            editMenuItem.AddMenuItem(redoItem);
+
+            DefaultMenuItem copyItem = new DefaultMenuItem("Copy");
+            copyItem.SetCommand(copy);
+            editMenuItem.AddMenuItem(copyItem);
+
+            DefaultMenuItem pasteItem = new DefaultMenuItem("Paste");
+            pasteItem.SetCommand(paste);
+            editMenuItem.AddMenuItem(pasteItem);
+
 
 
             /*DefaultMenuItem newMenuItem = new DefaultMenuItem("New");
