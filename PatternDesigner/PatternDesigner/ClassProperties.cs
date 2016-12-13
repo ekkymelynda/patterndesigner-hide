@@ -17,7 +17,7 @@ namespace PatternDesigner
         private TextBox txt, jenisLabel, namaLabel, tipeLabel, namaMethod, tipeMethod, visibilityMethod;
         private Vertex objek;
         private Button[] deleteButton = new Button[100];
-        private Button newButton, addAtributButton, cancelButton, addMethodButton, deleteButton1;
+        private Button newButton, addAtributButton, cancelButton, addMethodButton, deleteButton1, deleteMethodButton;
         private TextBox[] atributBox = new TextBox[100];
         private TextBox[] nameAtributBox = new TextBox[100];
         private TextBox[] typeAtributBox = new TextBox[100];
@@ -41,11 +41,18 @@ namespace PatternDesigner
         int yAtt = 65;
 
         Baris baris;
-        List<KotakInput> kotakAttVisi = new List<KotakInput>();
-        List<KotakInput> kotakAttNama = new List<KotakInput>();
-        List<KotakInput> kotakAttTipe = new List<KotakInput>();
         List<Baris> listBaris = new List<Baris>();
         List<ButtonColom> Tombol = new List<ButtonColom>();
+
+        int idxBarisMethod = 0;
+        int idxCollMethod = 0;
+        int idxButtonColMethod = 0;
+        int xMethod = 10;
+        int yMethod = 65;
+
+        Baris barisMethod;
+        List<Baris> listBarisMethod = new List<Baris>();
+        List<ButtonColom> TombolMethod = new List<ButtonColom>();
 
         private Form main;
 
@@ -172,6 +179,123 @@ namespace PatternDesigner
             }
 
 
+
+            //method area
+            Baris barisMethod = new Baris(1, Method);
+            barisMethod.Init(xMethod, 45);
+
+            KotakInput kotakMethod = new KotakInput(Method);
+            kotakMethod.setSize(60, 45);
+            kotakMethod.setNama("Visibility");
+            barisMethod.AddKolom(kotakMethod);
+
+            KotakInput kotakMethod2 = new KotakInput(Method);
+            kotakMethod2.setSize(300, 45);
+            kotakMethod2.setNama("Nama");
+            barisMethod.AddKolom(kotakMethod2);
+
+            KotakInput kotakMethod3 = new KotakInput(Method);
+            kotakMethod3.setSize(100, 45);
+            kotakMethod3.setNama("Tipe");
+            barisMethod.AddKolom(kotakMethod3);
+
+            barisMethod.DrawBaris();
+
+            addMethodButton = new Button();
+            addMethodButton.Location = new Point(10, 10);
+            addMethodButton.Size = new Size(100, 20);
+            addMethodButton.Text = "Tambah Method";
+            Method.Controls.Add(addMethodButton);
+            addMethodButton.Click += AddMethodButton_Click;
+
+            deleteMethodButton = new Button();
+            deleteMethodButton.Location = new Point(140, 10);
+            deleteMethodButton.Size = new Size(70, 20);
+            deleteMethodButton.Text = "HAPUS";
+            deleteMethodButton.Click += delegate (object s, EventArgs ee)
+            {
+                DeleteMethodButton_Click(s, ee, idxBarisMethod - 1);
+            };
+            
+            Method.Controls.Add(deleteMethodButton);
+
+            foreach (Method mtd in objek.meth)
+            {
+                barisMethod = new Baris(idxBarisMethod, Method);
+                barisMethod.Init(xMethod, yMethod);
+                KotakInput kotakMethodVisi = new KotakInput(Method);
+                KotakInput kotakMethodNama = new KotakInput(Method);
+                KotakInput kotakMethodTipe = new KotakInput(Method);
+                kotakMethodVisi.setNama(mtd.visibility);
+                kotakMethodVisi.kotak.Text = mtd.visibility;
+                kotakMethodVisi.setSize(60, 45);
+
+                kotakMethodNama.setNama(mtd.nama);
+                kotakMethodNama.kotak.Text = mtd.nama;
+                kotakMethodNama.setSize(300, 45);
+
+                kotakMethodTipe.setNama(mtd.tipe);
+                kotakMethodTipe.kotak.Text = mtd.tipe;
+                kotakMethodTipe.setSize(100, 45);
+
+                ButtonColom deleteMethodButton = new ButtonColom(Method, "HAPUS");
+                deleteMethodButton.setSize(70, 20);
+                deleteMethodButton.Click += delegate (object s, EventArgs ee)
+                {
+                    DeleteMethodButton_Click(s, ee, idxBarisMethod - 1);
+                };
+
+                barisMethod.AddKolom(kotakMethodVisi);
+                barisMethod.AddKolom(kotakMethodNama);
+                barisMethod.AddKolom(kotakMethodTipe);
+                barisMethod.AddKolom(deleteMethodButton);
+                barisMethod.DrawBaris();
+
+                yMethod += 20;
+                listBarisMethod.Add(barisMethod);
+                idxBarisMethod++;
+            }
+        }
+
+        private void AddMethodButton_Click(object sender, EventArgs e)
+        {
+            barisMethod = new Baris(idxBarisMethod, Method);
+            Debug.WriteLine("ID BARIS METHOD :" + idxBarisMethod);
+            barisMethod.Init(xMethod, yMethod);
+
+            KotakInput kotakMethodVisi = new KotakInput(Method);
+            kotakMethodVisi.setSize(60, 45);
+            barisMethod.AddKolom(kotakMethodVisi);
+
+            KotakInput kotakMethodNama = new KotakInput(Method);
+            kotakMethodNama.setSize(300, 45);
+            barisMethod.AddKolom(kotakMethodNama);
+
+
+            KotakInput kotakMethodTipe = new KotakInput(Method);
+            kotakMethodTipe.setSize(100, 45);
+            barisMethod.AddKolom(kotakMethodTipe);
+
+            ButtonColom deleteMethodButton = new ButtonColom(Method, "HAPUS");
+            deleteMethodButton.setSize(70, 20);
+            Tombol.Add(deleteMethodButton);
+            deleteMethodButton.Click += delegate (object s, EventArgs ee)
+            {
+                DeleteMethodButton_Click(s, ee, idxBarisMethod - 1);
+            };
+            barisMethod.AddKolom(deleteMethodButton);
+
+            barisMethod.DrawBaris();
+            yMethod += 20;
+            listBarisMethod.Add(barisMethod);
+            idxBarisMethod++;
+
+
+        }
+
+        private void DeleteMethodButton_Click(object sender, EventArgs e, int index)
+        {
+            
         }
 
         private void AddAtributButton_Click(object sender, EventArgs e)
@@ -234,15 +358,21 @@ namespace PatternDesigner
                 }
             }
 
+            //method area
             objek.meth.Clear();
 
-            for (int b = 1; b < j; b++)
+            for (int b = 0; b < idxBarisMethod; b++)
             {
-                if (this.methodBox[b].Text != "" && this.namemethodBox[b].Text != "" && this.typemethodBox[b].Text != "")
+                if (((KotakInput)listBarisMethod[b].kolom[0]).kotak.Text != "" && ((KotakInput)listBarisMethod[b].kolom[1]).kotak.Text != "" && ((KotakInput)listBarisMethod[b].kolom[2]).kotak.Text != "")
                 {
-                    this.objek.meth.Add(new Method() { visibility = this.methodBox[b].Text, nama = this.namemethodBox[b].Text, tipe = this.typemethodBox[b].Text });
+                    this.objek.meth.Add(new Method() { visibility = ((KotakInput)listBarisMethod[b].kolom[0]).kotak.Text, nama = ((KotakInput)listBarisMethod[b].kolom[1]).kotak.Text, tipe = ((KotakInput)listBarisMethod[b].kolom[2]).kotak.Text });
                 }
             }
+
+
+
+
+
         }
 
     }
