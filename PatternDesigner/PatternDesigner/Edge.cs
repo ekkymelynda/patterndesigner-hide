@@ -57,6 +57,16 @@ namespace PatternDesigner
             }
         }
 
+        public Vertex GetStartVertex()
+        {
+            return startVertex;
+        }
+
+        public Vertex GetEndVertex()
+        {
+            return endVertex;
+        }
+
         public void DrawName()
         {
             Font arialFont = new Font("Arial", 10, FontStyle.Bold);

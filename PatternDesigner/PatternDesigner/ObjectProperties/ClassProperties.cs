@@ -39,7 +39,6 @@ namespace PatternDesigner
 
         public ClassProperties(ICanvas canvas, Vertex obj, Form main1)
         {
-            //classForm = FindForm();
             InitializeComponent();
             this.canvas = canvas;
             this.main = main1;

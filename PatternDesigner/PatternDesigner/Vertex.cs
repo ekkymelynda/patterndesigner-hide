@@ -32,6 +32,11 @@ namespace PatternDesigner
             }
         }
 
+        public List<Edge> GetEdgeList()
+        {
+            return edge;
+        }
+
         public void Subscribe(IObserver o)
         {
             edge.Add((Edge)o);

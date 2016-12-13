@@ -145,6 +145,11 @@ namespace PatternDesigner
             return selectedObject;
         }
 
+        public List<DrawingObject> GetListDrawingObject()
+        {
+            return drawingObjects;
+        }
+
         public void DeselectAllObjects()
         {
             foreach (DrawingObject drawObj in drawingObjects)
