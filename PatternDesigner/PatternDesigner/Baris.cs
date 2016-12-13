@@ -7,9 +7,9 @@ using System.Windows.Forms;
 
 namespace PatternDesigner
 {
-    public class Baris: Control
+    public class Baris : Control
     {
-        private List<DefaultColom> kolom = new List<DefaultColom>();
+        public List<DefaultColom> kolom = new List<DefaultColom>();
         public int index;
         private TabPage tab { set; get; }
         private int startX, startY;
@@ -34,7 +34,19 @@ namespace PatternDesigner
             this.kolom.Add(kolomDitambah);
         }
 
-        public void HapusBaris(DefaultColom kolomDihapus)
+        public void HapusCol(DefaultColom kolomDihapus, DefaultColom kolomDihapus2, DefaultColom kolomDihapus3)
+        {
+            this.kolom.Remove(kolomDihapus);
+            kolomDihapus.Dispose();
+            this.kolom.Remove(kolomDihapus2);
+            kolomDihapus2.Dispose();
+            this.kolom.Remove(kolomDihapus3);
+            kolomDihapus3.Dispose();
+            this.Dispose();
+            Console.WriteLine("hapus");
+        }
+
+        public void HapusBaris()
         {
 
         }

@@ -10,12 +10,18 @@ namespace PatternDesigner.Colom
 {
     class KotakInput : DefaultColom
     {
-        private TextBox kotak;
-        public String nilai = null; 
+        public TextBox kotak;
+        public String nilai = null;
+        Attribute att = new Attribute();
 
         public KotakInput(TabPage tabParam)
         {
             tab = tabParam;
+            kotak = new TextBox();
+        }
+        public void setNama(String nama)
+        {
+            this.nama = nama;
         }
 
         public override void init(int lokasiX, int lokasiY)
@@ -32,12 +38,17 @@ namespace PatternDesigner.Colom
 
         public override void DrawColom()
         {
-            kotak = new TextBox();
-            //kotak.Text = this.objek.nama;
+            kotak.Text = this.nama;
+            kotak.TextAlign = HorizontalAlignment.Center;
             kotak.WordWrap = true;
             kotak.Location = new Point(posX, posY);
             kotak.Size = new Size(lebar, tinggi);
             tab.Controls.Add(kotak);
+        }
+
+        public String getNama()
+        {
+            return this.nama;
         }
     }
 }

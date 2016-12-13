@@ -11,6 +11,7 @@ namespace PatternDesigner
     {
         public int index;
         public int posX, posY, tinggi, lebar;
+        public String nama { set; get; }
         public TabPage tab { set; get; }
 
         public abstract void DrawColom();
