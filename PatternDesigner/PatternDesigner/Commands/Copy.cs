@@ -37,12 +37,7 @@ namespace PatternDesigner.Commands
 
                     ICommand command = new CreateClassCopy(canvas, choosenObject);
                     canvas.AddCopyCommand(command);
-                    Debug.WriteLine(canvas.GetCopyStack().Count());
                 }
-            }
-            else
-            {
-                Debug.WriteLine("nusaadsadasll");
             }
         }
 

@@ -116,6 +116,9 @@ namespace PatternDesigner.Tools
                         Vertex objectTerpilih = (Vertex)selectedObject;
                         Form main = Form.ActiveForm;
                         ClassProperties fm = new ClassProperties(canvas, objectTerpilih, main);
+                        main.Enabled = false;
+                        fm.Text = "Class Properties";
+                        fm.ControlBox = false;
                         fm.Show();
                     }
 
@@ -124,6 +127,9 @@ namespace PatternDesigner.Tools
                         Edge objectTerpilih = (Edge)selectedObject;
                         Form main = Form.ActiveForm;
                         RelationshipProperties fm = new RelationshipProperties(canvas, objectTerpilih, main);
+                        main.Enabled = false;
+                        fm.Text = "Relationship Properties";
+                        fm.ControlBox = false;
                         fm.Show();
                     }
                     id_object = selectedObject.ID;

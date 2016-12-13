@@ -16,7 +16,7 @@ namespace PatternDesigner
     {
         private ICanvas canvas;
         private Edge edge;
-        private Button applyButton;
+        private Button applyButton, cancelButton;
         private Form main;
         private Label relationshipNameLabel, relationLabel;
         private TextBox relationshipName, relationStart, relationEnd;
@@ -44,10 +44,16 @@ namespace PatternDesigner
             this.Controls.Add(relationshipName);
 
             applyButton = new Button();
-            applyButton.Text = "Apply";
+            applyButton.Text = "Ok";
             applyButton.Location = new Point(190, 110);
-            applyButton.Click += applyButton_Click;
+            applyButton.Click += ApplyButton_Click;
             this.Controls.Add(applyButton);
+
+            cancelButton = new Button();
+            cancelButton.Text = "Cancel";
+            cancelButton.Location = new Point(100, 110);
+            cancelButton.Click += CancelButton_Click;
+            this.Controls.Add(cancelButton);
 
             relationLabel = new Label();
             relationLabel.Text = "Jenis Relasi";
@@ -71,11 +77,20 @@ namespace PatternDesigner
 
         }
 
-        private void applyButton_Click(object sender, EventArgs e)
+        private void ApplyButton_Click(object sender, EventArgs e)
         {
             ICommand command = new ApplyRelationshipProperties(edge, edge.name, relationshipName.Text, edge.relationStart, relationStart.Text, edge.relationEnd, relationEnd.Text);
             canvas.AddCommand(command);
             command.Execute();
+            canvas.Repaint();
+            main.Enabled = true;
+            this.Close();
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            main.Enabled = true;
+            this.Close();
         }
     }
 }

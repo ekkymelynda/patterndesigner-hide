@@ -130,6 +130,8 @@ namespace PatternDesigner.Shapes
                 Point start2 = new Point(X, Y + 10 + (att.Count + 1) * 15);
                 Point end2 = new Point(X + Width, Y + 10 + (att.Count + 1) * 15);
                 this.Graphics.DrawLine(this.pen, start2, end2);
+                Broadcast();
+
             }
         }
 
@@ -232,6 +234,7 @@ namespace PatternDesigner.Shapes
                 Point start2 = new Point(X, Y + 10 + (att.Count + 1) * 15);
                 Point end2 = new Point(X + Width, Y + 10 + (att.Count + 1) * 15);
                 this.Graphics.DrawLine(this.pen, start2, end2);
+                Broadcast();
             }
         }
 

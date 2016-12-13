@@ -30,8 +30,6 @@ namespace PatternDesigner.Commands
             canvas.AddDrawingObject(rectangle);
             canvas.AddDrawingObject(rectangle);
             rectangle.Deselect();
-            choosenObject.Select();
-
 
             rectangle.nama = choosenObject.nama;
 
@@ -57,9 +55,7 @@ namespace PatternDesigner.Commands
 
         public void Unexecute()
         {
-            this.canvas.RemoveDrawingObject(rectangle);
-            this.canvas.RemoveDrawingObject(rectangle);
-            this.canvas.RemoveDrawingObject(rectangle);
+
         }
     }
 }

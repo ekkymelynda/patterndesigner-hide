@@ -56,6 +56,8 @@ namespace PatternDesigner.Commands
                     newMethod.Add(new Method() { visibility = newMethodBox[b].Text, nama = newNameMethodbox[b].Text, tipe = newTypeMethodBox[b].Text });
                 }
             }
+
+            
         }
 
         public void Execute()
@@ -103,6 +105,7 @@ namespace PatternDesigner.Commands
                     vertex.meth.Add(new Method() { visibility = b.visibility, nama = b.nama, tipe = b.tipe });
                 }
             }
+
         }
     }
 }
