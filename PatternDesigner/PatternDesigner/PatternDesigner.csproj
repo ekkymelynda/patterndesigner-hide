@@ -63,6 +63,7 @@
     <Compile Include="DefaultToolbar.Designer.cs">
       <DependentUpon>DefaultToolbar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Commands\GenerateFile.cs" />
     <Compile Include="IToolbar.cs" />
     <Compile Include="IToolbarItem.cs" />
     <Compile Include="ObjectProperties\ClassProperties.cs">
