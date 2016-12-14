@@ -286,7 +286,7 @@ namespace PatternDesigner.Shapes
                     File.Delete(newPath);
                 }
 
-                String isi = "public class " + this.nama + "() \n{";
+                String isi = "public class " + this.nama + " \n{";
                 foreach (Attribute atr in att)
                 {
                     isi += "\t " + atr.visibility + " " + atr.tipe + " " + atr.nama + ";\n";
