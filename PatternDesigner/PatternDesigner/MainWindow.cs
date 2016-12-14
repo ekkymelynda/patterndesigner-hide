@@ -184,13 +184,23 @@ namespace PatternDesigner
             SaveToolbarItem saveToolItem = new SaveToolbarItem(canvas);
             ExportToolItem exportToolItem = new ExportToolItem(canvas);
 
-            
+            OpenToolbarItem openToolItem = new OpenToolbarItem(canvas);
+            CutToolbarItem cutToolItem = new CutToolbarItem(canvas);
+            CopyToolbarItem copyToolItem = new CopyToolbarItem(canvas);
+            PasteToolbarItem pasteToolItem = new PasteToolbarItem(canvas);
+
+
 
             this.toolbar.AddToolbarItem(undoToolItem);
             this.toolbar.AddToolbarItem(redoToolItem);
             this.toolbar.AddSeparator();
             this.toolbar.AddToolbarItem(saveToolItem);
             this.toolbar.AddToolbarItem(exportToolItem);
+
+            this.toolbar.AddToolbarItem(openToolItem);
+            this.toolbar.AddToolbarItem(cutToolItem);
+            this.toolbar.AddToolbarItem(copyToolItem);
+            this.toolbar.AddToolbarItem(pasteToolItem);
 
 
             #endregion
