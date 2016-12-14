@@ -182,6 +182,7 @@ namespace PatternDesigner
             RedoToolItem redoToolItem = new RedoToolItem(canvas);
             redoToolItem.SetCommand(redo);
             SaveToolbarItem saveToolItem = new SaveToolbarItem(canvas);
+            ExportToolItem exportToolItem = new ExportToolItem(canvas);
 
             
 
@@ -189,6 +190,7 @@ namespace PatternDesigner
             this.toolbar.AddToolbarItem(redoToolItem);
             this.toolbar.AddSeparator();
             this.toolbar.AddToolbarItem(saveToolItem);
+            this.toolbar.AddToolbarItem(exportToolItem);
 
 
             #endregion

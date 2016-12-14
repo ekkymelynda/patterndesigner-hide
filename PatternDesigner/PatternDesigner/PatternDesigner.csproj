@@ -146,6 +146,12 @@
     <Compile Include="States\EditState.cs" />
     <Compile Include="States\PreviewState.cs" />
     <Compile Include="States\StaticState.cs" />
+    <Compile Include="ToolbarItems\ExportToolItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ToolbarItems\ExportToolItem.Designer.cs">
+      <DependentUpon>ExportToolItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="ToolbarItems\RedoToolItem.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -188,12 +194,6 @@
     <Compile Include="Tools\DirectedTool.Designer.cs">
       <DependentUpon>DirectedTool.cs</DependentUpon>
     </Compile>
-    <Compile Include="Tools\ExportTool.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Tools\ExportTool.Designer.cs">
-      <DependentUpon>ExportTool.cs</DependentUpon>
-    </Compile>
     <Compile Include="Tools\GeneralizationTool.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -205,12 +205,6 @@
     </Compile>
     <Compile Include="Tools\RealizationTool.Designer.cs">
       <DependentUpon>RealizationTool.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Tools\SaveTool.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Tools\SaveTool.Designer.cs">
-      <DependentUpon>SaveTool.cs</DependentUpon>
     </Compile>
     <Compile Include="Tools\SelectionTool.cs">
       <SubType>Component</SubType>
