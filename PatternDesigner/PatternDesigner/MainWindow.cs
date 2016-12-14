@@ -10,14 +10,16 @@ using System.Windows.Forms;
 using PatternDesigner.Tools;
 using System.Diagnostics;
 using PatternDesigner.Commands;
+using PatternDesigner.ToolbarItems;
+
 
 namespace PatternDesigner
 {
     public partial class MainWindow : Form
     {
-        private IToolbox toolbox;
+        private IToolbox toolbox, toolboxTop;
         private IEditor editor;
-        //private IToolbar toolbar;
+        private IToolbar toolbar;
         private IMenubar menubar;
 
         public MainWindow()
@@ -61,6 +63,7 @@ namespace PatternDesigner
             Redo redo = new Redo(canvas);
             Copy copy = new Copy(canvas);
             Paste paste = new Paste(canvas);
+   
 
             #endregion
 
@@ -133,30 +136,6 @@ namespace PatternDesigner
             editMenuItem.AddMenuItem(pasteItem);
 
 
-
-            /*DefaultMenuItem newMenuItem = new DefaultMenuItem("New");
-            fileMenuItem.AddMenuItem(newMenuItem);
-            fileMenuItem.AddSeparator();
-            DefaultMenuItem exitMenuItem = new DefaultMenuItem("Exit");
-            fileMenuItem.AddMenuItem(exitMenuItem);
-
-            DefaultMenuItem editMenuItem = new DefaultMenuItem("Edit");
-            this.menubar.AddMenuItem(editMenuItem);
-
-            DefaultMenuItem undoMenuItem = new DefaultMenuItem("Undo");
-            editMenuItem.AddMenuItem(undoMenuItem);
-            DefaultMenuItem redoMenuItem = new DefaultMenuItem("Redo");
-            editMenuItem.AddMenuItem(redoMenuItem);
-
-            DefaultMenuItem viewMenuItem = new DefaultMenuItem("View");
-            this.menubar.AddMenuItem(viewMenuItem);
-
-            DefaultMenuItem helpMenuItem = new DefaultMenuItem("Help");
-            this.menubar.AddMenuItem(helpMenuItem);
-
-            DefaultMenuItem aboutMenuItem = new DefaultMenuItem("About");
-            helpMenuItem.AddMenuItem(aboutMenuItem);*/
-
             #endregion
 
             #region Toolbox
@@ -167,9 +146,11 @@ namespace PatternDesigner
             this.toolStripContainer1.LeftToolStripPanel.Controls.Add((Control)this.toolbox);
             this.editor.Toolbox = toolbox;
 
+
             #endregion
 
             #region Tools
+
 
             // Initializing tools
             Debug.WriteLine("Loading tools...");
@@ -192,18 +173,23 @@ namespace PatternDesigner
             #region Toolbar
 
             // Initializing toolbar
-            /*Debug.WriteLine("Loading toolbar...");
+            Debug.WriteLine("Loading toolbar...");
             this.toolbar = new DefaultToolbar();
             this.toolStripContainer1.TopToolStripPanel.Controls.Add((Control)this.toolbar);
 
-            ExampleToolbarItem toolItem1 = new ExampleToolbarItem();
-            //toolItem1.SetCommand(whiteCanvasBgCmd);
-            ExampleToolbarItem toolItem2 = new ExampleToolbarItem();
-            //toolItem2.SetCommand(blackCanvasBgCmd);
+            UndoToolItem undoToolItem = new UndoToolItem(canvas);
+            undoToolItem.SetCommand(undo);
+            RedoToolItem redoToolItem = new RedoToolItem(canvas);
+            redoToolItem.SetCommand(redo);
+            SaveToolbarItem saveToolItem = new SaveToolbarItem(canvas);
 
-            this.toolbar.AddToolbarItem(toolItem1);
+            
+
+            this.toolbar.AddToolbarItem(undoToolItem);
+            this.toolbar.AddToolbarItem(redoToolItem);
             this.toolbar.AddSeparator();
-            this.toolbar.AddToolbarItem(toolItem2);*/
+            this.toolbar.AddToolbarItem(saveToolItem);
+
 
             #endregion
 

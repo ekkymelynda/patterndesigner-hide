@@ -93,6 +93,26 @@ namespace PatternDesigner {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap curve_arrow {
+            get {
+                object obj = ResourceManager.GetObject("curve_arrow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap curve_arrow__1_ {
+            get {
+                object obj = ResourceManager.GetObject("curve_arrow__1_", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap dependency {
             get {
                 object obj = ResourceManager.GetObject("dependency", resourceCulture);
@@ -116,6 +136,16 @@ namespace PatternDesigner {
         internal static System.Drawing.Bitmap diskette {
             get {
                 object obj = ResourceManager.GetObject("diskette", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap export {
+            get {
+                object obj = ResourceManager.GetObject("export", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -176,6 +206,16 @@ namespace PatternDesigner {
         internal static System.Drawing.Bitmap realization {
             get {
                 object obj = ResourceManager.GetObject("realization", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap save_icon_silhouette {
+            get {
+                object obj = ResourceManager.GetObject("save_icon_silhouette", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

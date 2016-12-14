@@ -56,6 +56,14 @@
     <Compile Include="Commands\CreateClass.cs" />
     <Compile Include="Commands\ApplyRelationshipProperties.cs" />
     <Compile Include="Commands\ApplyClassProperties.cs" />
+    <Compile Include="DefaultToolbar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DefaultToolbar.Designer.cs">
+      <DependentUpon>DefaultToolbar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IToolbar.cs" />
+    <Compile Include="IToolbarItem.cs" />
     <Compile Include="ObjectProperties\ClassProperties.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,6 +146,24 @@
     <Compile Include="States\EditState.cs" />
     <Compile Include="States\PreviewState.cs" />
     <Compile Include="States\StaticState.cs" />
+    <Compile Include="ToolbarItems\RedoToolItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ToolbarItems\RedoToolItem.Designer.cs">
+      <DependentUpon>RedoToolItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ToolbarItems\SaveToolbarItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ToolbarItems\SaveToolbarItem.Designer.cs">
+      <DependentUpon>SaveToolbarItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ToolbarItems\UndoToolItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ToolbarItems\UndoToolItem.Designer.cs">
+      <DependentUpon>UndoToolItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tools\AssociationTool.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -162,6 +188,12 @@
     <Compile Include="Tools\DirectedTool.Designer.cs">
       <DependentUpon>DirectedTool.cs</DependentUpon>
     </Compile>
+    <Compile Include="Tools\ExportTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Tools\ExportTool.Designer.cs">
+      <DependentUpon>ExportTool.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tools\GeneralizationTool.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -173,6 +205,12 @@
     </Compile>
     <Compile Include="Tools\RealizationTool.Designer.cs">
       <DependentUpon>RealizationTool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\SaveTool.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Tools\SaveTool.Designer.cs">
+      <DependentUpon>SaveTool.cs</DependentUpon>
     </Compile>
     <Compile Include="Tools\SelectionTool.cs">
       <SubType>Component</SubType>
@@ -250,8 +288,13 @@
     <Content Include="PatternSource\MementoPattern.txt" />
     <Content Include="PatternSource\FactoryPattern.txt" />
     <Content Include="PatternSource\TryPattern.txt" />
+    <None Include="Resources\save-icon-silhouette.png" />
+    <None Include="Resources\curve-arrow %281%29.png" />
+    <None Include="Resources\curve-arrow.png" />
+    <None Include="Resources\export.png" />
     <Content Include="Resources\multiply.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
