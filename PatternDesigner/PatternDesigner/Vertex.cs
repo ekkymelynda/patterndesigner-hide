@@ -57,6 +57,5 @@ namespace PatternDesigner
             return false;
         }
 
-
     }
 }

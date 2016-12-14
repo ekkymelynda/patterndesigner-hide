@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using PatternDesigner.Commands;
+using System.IO;
 
 namespace PatternDesigner.Shapes
 {
@@ -272,6 +273,42 @@ namespace PatternDesigner.Shapes
             {
                 widthTerkecil.Width = 100F;
             }
+        }
+
+        public void GenerateFile(string path)
+        {
+            if(this.nama != "")
+            {
+                string newPath = path + this.nama + ".cs";
+                //Debug.WriteLine(newPath);
+                if(File.Exists(newPath))
+                {
+                    File.Delete(newPath);
+                }
+
+                String isi = "public class " + this.nama + "() \n{";
+                foreach(Attribute atr in att)
+                {
+                    isi += "\t " + atr.visibility + " " + atr.tipe + " " + atr.nama + ";\n";
+                }
+
+                isi += "\n";
+
+                foreach (Method met in meth)
+                {
+                    isi += "\t " + met.visibility + " " + met.tipe + " " + met.nama + " {}\n";
+                }
+
+                using (FileStream fs = File.Create(newPath))
+                {
+                    Byte[] info = new UTF8Encoding(true).GetBytes(isi);
+                    // Add some information to the file.
+                    fs.Write(info, 0, info.Length);
+                }
+
+                isi += "}";
+            }
+
         }
     }
 }

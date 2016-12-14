@@ -56,6 +56,7 @@ namespace PatternDesigner
             AddFacadePattern addFacadePattern = new AddFacadePattern(canvas);
             AddMementoPattern addMementroPattern = new AddMementoPattern(canvas);
             AddSingletonPattern addSingletonPattern = new AddSingletonPattern(canvas);
+            GenerateFile addGenerateFile = new GenerateFile(canvas);
 
             Undo undo = new Undo(canvas);
             Redo redo = new Redo(canvas);
@@ -75,6 +76,10 @@ namespace PatternDesigner
 
             DefaultMenuItem eksportMenuItem = new DefaultMenuItem("Eksport");
             fileMenuItem.AddMenuItem(eksportMenuItem);
+
+            DefaultMenuItem generateFile = new DefaultMenuItem("Generate");
+            generateFile.SetCommand(addGenerateFile);
+            fileMenuItem.AddMenuItem(generateFile);
 
             DefaultMenuItem generateMenuItem = new DefaultMenuItem("Generate");
             this.menubar.AddMenuItem(generateMenuItem);

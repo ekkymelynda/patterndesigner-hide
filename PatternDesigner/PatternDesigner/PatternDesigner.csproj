@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attribute.cs" />
+    <Compile Include="Commands\GenerateFile.cs" />
     <Compile Include="Commands\DeleteClass.cs" />
     <Compile Include="Commands\DeleteRelationship.cs" />
     <Compile Include="Commands\Paste.cs" />
