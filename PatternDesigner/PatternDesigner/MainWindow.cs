@@ -192,7 +192,9 @@ namespace PatternDesigner
             OpenToolbarItem openToolItem = new OpenToolbarItem(canvas);
             CutToolbarItem cutToolItem = new CutToolbarItem(canvas);
             CopyToolbarItem copyToolItem = new CopyToolbarItem(canvas);
+            copyToolItem.SetCommand(copy);
             PasteToolbarItem pasteToolItem = new PasteToolbarItem(canvas);
+            pasteToolItem.SetCommand(paste);
 
 
 
