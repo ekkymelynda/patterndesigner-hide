@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using PatternDesigner.Commands;
 
 namespace PatternDesigner.Tools
 {
@@ -14,8 +15,8 @@ namespace PatternDesigner.Tools
         private DrawingObject selectedObject;
         private int xInitial;
         private int yInitial;
-        //private ClassProperties fm;
-        int count = 0;
+        private int xMouseDown;
+        private int yMouseDown;
         Guid id_object;
 
         public Cursor Cursor
@@ -56,12 +57,15 @@ namespace PatternDesigner.Tools
             {
                 canvas.DeselectAllObjects();
                 selectedObject = canvas.SelectObjectAt(e.X, e.Y);
-                //Debug.WriteLine("id sesudah" + selectedObject.ID.ToString());
-                incCount();
                 if (selectedObject != null)
                 {
+                    if(selectedObject is Vertex)
+                    {
+                        this.xMouseDown = e.X;
+                        this.yMouseDown = e.Y;
+                    }
+                    
                     id_object = selectedObject.ID;
-                    Debug.WriteLine("ID sebelum: " + selectedObject.ID.ToString());
                 }
             }
 
@@ -78,52 +82,60 @@ namespace PatternDesigner.Tools
                     xInitial = e.X;
                     yInitial = e.Y;
 
-                    selectedObject.Translate(e.X, e.Y, xAmount, yAmount);
+                    selectedObject.Translate(xAmount, yAmount);
                 }
             }
         }
-
-        
-        protected void incCount()
-        {
-            count++;
-            if (selectedObject != null)
-            {
-                if (id_object == selectedObject.ID)
-                {
-
-                    if (count == 2)
-                    {
-                        //MessageBox.Show("middle double click");
-                        Debug.WriteLine("count = 2");
-                        ClassProperties fm = new ClassProperties(selectedObject);
-                        Debug.WriteLine("fm show");
-                        fm.Show();
-                    }
-
-                    count = 0;
-                }
-            }
-            Debug.WriteLine("COUNTNYA " + count);
-        }
-        
 
         public void ToolMouseUp(object sender, MouseEventArgs e)
         {
-
+            if (selectedObject is Vertex)
+            {
+                if (!((int)e.X - (int)this.xMouseDown == 0 && (int)e.Y - (int)this.yMouseDown == 0))
+                {
+                    ICommand command = new TranslateVertex((Vertex)selectedObject, (int)(e.X - this.xMouseDown), (int)(e.Y - this.yMouseDown));
+                    canvas.AddCommand(command);
+                }
+            }
         }
 
-        
         public void ToolMouseDoubleClick(object sender, MouseEventArgs e)
         {
-            /*   
-            fm = new ClassProperties(id_object);
-            Debug.WriteLine("fm show");
-            Form af = Form.ActiveForm;
-            af.Enabled = false;
-            fm.Show();
-            */
+            this.xInitial = e.X;
+            this.yInitial = e.Y;
+
+            if (e.Button == MouseButtons.Left && canvas != null)
+            {
+                canvas.DeselectAllObjects();
+                selectedObject = canvas.SelectObjectAt(e.X, e.Y);
+
+                if (selectedObject != null)
+                {
+                    if (selectedObject is Vertex)
+                    {
+                        Vertex objectTerpilih = (Vertex)selectedObject;
+                        Form main = Form.ActiveForm;
+                        ClassProperties fm = new ClassProperties(canvas, objectTerpilih, main);
+                        main.Enabled = false;
+                        fm.Text = "Class Properties";
+                        fm.ControlBox = false;
+                        fm.Show();
+                    }
+
+                    else if (selectedObject is Edge)
+                    {
+                        Edge objectTerpilih = (Edge)selectedObject;
+                        Form main = Form.ActiveForm;
+                        RelationshipProperties fm = new RelationshipProperties(canvas, objectTerpilih, main);
+                        main.Enabled = false;
+                        fm.Text = "Relationship Properties";
+                        fm.ControlBox = false;
+                        fm.Show();
+                    }
+                    id_object = selectedObject.ID;
+                }
+            }
+
         }
-        
     }
 }

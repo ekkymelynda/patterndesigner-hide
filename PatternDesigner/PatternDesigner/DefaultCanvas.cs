@@ -5,13 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace PatternDesigner
 {
     public class DefaultCanvas : Control, ICanvas
     {
+        private Stack<ICommand> undoCommands = new Stack<ICommand>();
+        private Stack<ICommand> redoCommands = new Stack<ICommand>();
+        private Stack<ICommand> copyStack = new Stack<ICommand>();
+
         private ITool activeTool;
         private List<DrawingObject> drawingObjects;
+        private DrawingObject selectedObject;
 
         public DefaultCanvas()
         {
@@ -30,6 +36,7 @@ namespace PatternDesigner
             this.MouseDown += DefaultCanvas_MouseDown;
             this.MouseUp += DefaultCanvas_MouseUp;
             this.MouseMove += DefaultCanvas_MouseMove;
+            this.MouseDoubleClick += DefaultCanvas_DoubleClick;
 
         }
 
@@ -56,6 +63,15 @@ namespace PatternDesigner
             if (this.activeTool != null)
             {
                 this.activeTool.ToolMouseDown(sender, e);
+                this.Repaint();
+            }
+        }
+
+        private void DefaultCanvas_DoubleClick(object sender, MouseEventArgs e)
+        {
+            if (this.activeTool != null)
+            {
+                this.activeTool.ToolMouseDoubleClick(sender, e);
                 this.Repaint();
             }
         }
@@ -115,12 +131,23 @@ namespace PatternDesigner
         public DrawingObject SelectObjectAt(int x, int y)
         {
             DrawingObject obj = GetObjectAt(x, y);
+           
             if (obj != null)
             {
                 obj.Select();
+                this.selectedObject = obj;
             }
-
             return obj;
+        }
+
+        public DrawingObject GetSelectedObject()
+        {
+            return selectedObject;
+        }
+
+        public List<DrawingObject> GetListDrawingObject()
+        {
+            return drawingObjects;
         }
 
         public void DeselectAllObjects()
@@ -131,5 +158,36 @@ namespace PatternDesigner
             }
         }
 
+        public void SetSelectedObject(DrawingObject obj)
+        {
+            this.selectedObject = obj;
+        }
+
+        public void AddCommand(ICommand command)
+        {
+            undoCommands.Push(command);
+        }
+
+        public Stack<ICommand> GetUndoStack()
+        {
+            return undoCommands;
+        }
+
+        public Stack<ICommand> GetRedoStack()
+        {
+            return redoCommands;
+        }
+
+        public Stack<ICommand> GetCopyStack()
+        {
+            return copyStack;
+        }
+
+        public void AddCopyCommand(ICommand command)
+        {
+            copyStack.Push(command);
+        }
+
+       
     }
 }

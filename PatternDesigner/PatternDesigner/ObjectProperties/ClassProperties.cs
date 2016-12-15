@@ -8,15 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using PatternDesigner.Commands;
 
 namespace PatternDesigner
 {
     public partial class ClassProperties : Form
     {
+        //private Form classForm;
+        public ICanvas canvas;
         private TextBox txt, jenisLabel, namaLabel, tipeLabel, namaMethod, tipeMethod, visibilityMethod;
-        private DrawingObject objek;
+        private Vertex objek;
         private Button[] deleteButton = new Button[100];
-        private Button newButton, addAtributButton, cancelButton, addMethodButton;
+        private Button okButton, addAtributButton, cancelButton, addMethodButton;
         private TextBox[] atributBox = new TextBox[100];
         private TextBox[] nameAtributBox = new TextBox[100];
         private TextBox[] typeAtributBox = new TextBox[100];
@@ -26,15 +29,19 @@ namespace PatternDesigner
         private TextBox[] typemethodBox = new TextBox[100];
         Attribute att = new Attribute();
         Method meth = new Method();
-        private int xPos, yPos, i, j;
+        private int xPosAttribut, yPosAttribut, xPosMethod, yPosMethod, i, j;
 
         private TabControl addAtributTabControl;
         private TabPage Operation, Atribut, Method;
         private Label classNama;
+        
+        private Form main;
 
-        public ClassProperties(DrawingObject obj)
+        public ClassProperties(ICanvas canvas, Vertex obj, Form main1)
         {
             InitializeComponent();
+            this.canvas = canvas;
+            this.main = main1;
             this.objek = obj;
             this.Size = new Size(600, 400);
 
@@ -45,16 +52,18 @@ namespace PatternDesigner
             addAtributTabControl.Size = new Size(560, 300);
             this.Controls.Add(addAtributTabControl);
 
-            newButton = new Button();
-            newButton.Location = new Point(510, 320);
-            newButton.Size = new Size(50, 20);
-            newButton.Text = "OK";
-            this.Controls.Add(newButton);
+            okButton = new Button();
+            okButton.Location = new Point(510, 320);
+            okButton.Size = new Size(50, 20);
+            okButton.Text = "Ok";
+            okButton.Click += OkButton_Click;
+            this.Controls.Add(okButton);
 
             cancelButton = new Button();
             cancelButton.Location = new Point(440, 320);
             cancelButton.Size = new Size(50, 20);
             cancelButton.Text = "Cancel";
+            cancelButton.Click += CancelButton_Click;
             this.Controls.Add(cancelButton);
 
             string operation = "TabPage " + (addAtributTabControl.TabCount + 1).ToString();
@@ -84,12 +93,12 @@ namespace PatternDesigner
 
             //Atribut area start
             i = 1;
-            xPos = 10;
-            yPos = 60;
+            xPosAttribut = 10;
+            yPosAttribut = 60;
 
 
             jenisLabel = new TextBox();
-            jenisLabel.Location = new Point(xPos, yPos - 20);
+            jenisLabel.Location = new Point(xPosAttribut, yPosAttribut - 20);
             jenisLabel.Size = new Size(60, 45);
             jenisLabel.Text = "Visibility";
             jenisLabel.TextAlign = HorizontalAlignment.Center;
@@ -98,7 +107,7 @@ namespace PatternDesigner
             Atribut.Controls.Add(jenisLabel);
 
             namaLabel = new TextBox();
-            namaLabel.Location = new Point(xPos + 60, yPos - 20);
+            namaLabel.Location = new Point(xPosAttribut + 60, yPosAttribut - 20);
             namaLabel.Size = new Size(300, 45);
             namaLabel.Text = "Nama Atribut";
             namaLabel.TextAlign = HorizontalAlignment.Center;
@@ -107,7 +116,7 @@ namespace PatternDesigner
             Atribut.Controls.Add(namaLabel);
 
             tipeLabel = new TextBox();
-            tipeLabel.Location = new Point(xPos + 360, yPos - 20);
+            tipeLabel.Location = new Point(xPosAttribut + 360, yPosAttribut - 20);
             tipeLabel.Size = new Size(100, 45);
             tipeLabel.Text = "Tipe";
             tipeLabel.BackColor = Color.AliceBlue;
@@ -123,14 +132,14 @@ namespace PatternDesigner
                 this.nameAtributBox[1].Text = att.nama;
                 this.typeAtributBox[1].Text = att.tipe;
                 this.nameAtributBox[1].WordWrap = true;
-                this.atributBox[1].Location = new Point(xPos, yPos);
+                this.atributBox[1].Location = new Point(xPosAttribut, yPosAttribut);
                 this.atributBox[1].Size = new Size(60, 45);
-                this.nameAtributBox[1].Location = new Point(xPos + 60, yPos);
+                this.nameAtributBox[1].Location = new Point(xPosAttribut + 60, yPosAttribut);
                 this.nameAtributBox[1].Size = new Size(300, 45);
-                this.typeAtributBox[1].Location = new Point(xPos + 360, yPos);
+                this.typeAtributBox[1].Location = new Point(xPosAttribut + 360, yPosAttribut);
                 this.typeAtributBox[1].Size = new Size(100, 45);
                 deleteButton[1] = new Button();
-                deleteButton[1].Location = new Point(xPos + 460, yPos);
+                deleteButton[1].Location = new Point(xPosAttribut + 460, yPosAttribut);
                 deleteButton[1].Size = new Size(70, 20);
                 deleteButton[1].Text = "HAPUS";
                 Atribut.Controls.Add(this.atributBox[1]);
@@ -138,7 +147,7 @@ namespace PatternDesigner
                 Atribut.Controls.Add(this.typeAtributBox[1]);
                 Atribut.Controls.Add(deleteButton[1]);
                 deleteButton[i].Click += delegate (object s, EventArgs ee) { DeleteButton_Click(s, ee, i - 1); };
-                yPos += 20;
+                yPosAttribut += 20;
                 i++;
             }
             addAtributButton = new Button();
@@ -160,14 +169,14 @@ namespace PatternDesigner
                 this.nameAtributBox[i].Text = atte.nama;
                 this.typeAtributBox[i].Text = atte.tipe;
                 this.nameAtributBox[i].WordWrap = true;
-                this.atributBox[i].Location = new Point(xPos, yPos);
+                this.atributBox[i].Location = new Point(xPosAttribut, yPosAttribut);
                 this.atributBox[i].Size = new Size(60, 45);
-                this.nameAtributBox[i].Location = new Point(xPos + 60, yPos);
+                this.nameAtributBox[i].Location = new Point(xPosAttribut + 60, yPosAttribut);
                 this.nameAtributBox[i].Size = new Size(300, 45);
-                this.typeAtributBox[i].Location = new Point(xPos + 360, yPos);
+                this.typeAtributBox[i].Location = new Point(xPosAttribut + 360, yPosAttribut);
                 this.typeAtributBox[i].Size = new Size(100, 45);
                 deleteButton[i] = new Button();
-                deleteButton[i].Location = new Point(xPos + 460, yPos);
+                deleteButton[i].Location = new Point(xPosAttribut + 460, yPosAttribut);
                 deleteButton[i].Size = new Size(70, 20);
                 deleteButton[i].Text = "HAPUS";
                 Atribut.Controls.Add(this.atributBox[i]);
@@ -175,7 +184,7 @@ namespace PatternDesigner
                 Atribut.Controls.Add(this.typeAtributBox[i]);
                 Atribut.Controls.Add(deleteButton[i]);
                 deleteButton[i].Click += delegate (object s, EventArgs ee) { DeleteButton_Click(s, ee, i - 1); };
-                yPos += 20;
+                yPosAttribut += 20;
                 i++;
             }
 
@@ -183,16 +192,14 @@ namespace PatternDesigner
 
             //Atribut area end
 
-            newButton.Click += NewButton_Click;
-
 
             //method area start
             j = 1;
-            xPos = 10;
-            yPos = 60;
+            xPosMethod = 10;
+            yPosMethod = 60;
 
             visibilityMethod = new TextBox();
-            visibilityMethod.Location = new Point(xPos, yPos - 20);
+            visibilityMethod.Location = new Point(xPosMethod, yPosMethod - 20);
             visibilityMethod.Size = new Size(60, 45);
             visibilityMethod.Text = "Visibility";
             visibilityMethod.TextAlign = HorizontalAlignment.Center;
@@ -201,16 +208,16 @@ namespace PatternDesigner
             Method.Controls.Add(visibilityMethod);
 
             namaMethod = new TextBox();
-            namaMethod.Location = new Point(xPos + 60, yPos - 20);
+            namaMethod.Location = new Point(xPosMethod + 60, yPosMethod - 20);
             namaMethod.Size = new Size(300, 45);
-            namaMethod.Text = "Nama Mathod";
+            namaMethod.Text = "Nama Method";
             namaMethod.TextAlign = HorizontalAlignment.Center;
             namaMethod.BackColor = Color.AliceBlue;
             namaMethod.Enabled = false;
             Method.Controls.Add(namaMethod);
 
             tipeMethod = new TextBox();
-            tipeMethod.Location = new Point(xPos + 360, yPos - 20);
+            tipeMethod.Location = new Point(xPosMethod + 360, yPosMethod - 20);
             tipeMethod.Size = new Size(100, 45);
             tipeMethod.Text = "Tipe";
             tipeMethod.BackColor = Color.AliceBlue;
@@ -218,7 +225,7 @@ namespace PatternDesigner
             tipeMethod.Enabled = false;
             Method.Controls.Add(tipeMethod);
 
-            if(obj.meth.Count == 0)
+            if (obj.meth.Count == 0)
             {
                 this.methodBox[1] = new TextBox();
                 this.namemethodBox[1] = new TextBox();
@@ -227,25 +234,25 @@ namespace PatternDesigner
                 this.namemethodBox[1].Text = meth.nama;
                 this.typemethodBox[1].Text = meth.tipe;
                 this.namemethodBox[1].WordWrap = true;
-                this.methodBox[1].Location = new Point(xPos, yPos);
+                this.methodBox[1].Location = new Point(xPosMethod, yPosMethod);
                 this.methodBox[1].Size = new Size(60, 45);
-                this.namemethodBox[1].Location = new Point(xPos + 60, yPos);
+                this.namemethodBox[1].Location = new Point(xPosMethod + 60, yPosMethod);
                 this.namemethodBox[1].Size = new Size(300, 45);
-                this.typemethodBox[1].Location = new Point(xPos + 360, yPos);
+                this.typemethodBox[1].Location = new Point(xPosMethod + 360, yPosMethod);
                 this.typemethodBox[1].Size = new Size(100, 45);
-                /*deleteButton = new Button();
-                deleteButton.Location = new Point(xPos + 460, yPos);
-                deleteButton.Size = new Size(70, 20);
-                deleteButton.Text = "HAPUS";
-                Method.Controls.Add(deleteButton);*/
+                deleteButton[1] = new Button();
+                deleteButton[1].Location = new Point(xPosMethod + 460, yPosMethod);
+                deleteButton[1].Size = new Size(70, 20);
+                deleteButton[1].Text = "HAPUS";
+                Method.Controls.Add(deleteButton[1]);
 
-                //deleteButton.Click += deleteButton_C;
+               
 
                 Method.Controls.Add(this.methodBox[1]);
                 Method.Controls.Add(this.namemethodBox[1]);
                 Method.Controls.Add(this.typemethodBox[1]);
-                //Method.Controls.Add(deleteButton);
-                yPos += 20;
+               
+                yPosMethod += 20;
                 j++;
             }
 
@@ -264,61 +271,31 @@ namespace PatternDesigner
                 this.namemethodBox[j].Text = met.nama;
                 this.typemethodBox[j].Text = met.tipe;
                 this.namemethodBox[j].WordWrap = true;
-                this.methodBox[j].Location = new Point(xPos, yPos);
+                this.methodBox[j].Location = new Point(xPosMethod, yPosMethod);
                 this.methodBox[j].Size = new Size(60, 45);
-                this.namemethodBox[j].Location = new Point(xPos + 60, yPos);
+                this.namemethodBox[j].Location = new Point(xPosMethod + 60, yPosMethod);
                 this.namemethodBox[j].Size = new Size(300, 45);
-                //this.typemethodBox[j].Location = new Point(xPos + 360, yPos);
+                this.typemethodBox[j].Location = new Point(xPosMethod + 360, yPosMethod);
                 this.typemethodBox[j].Size = new Size(100, 45);
-                /*deleteButton = new Button();
-                deleteButton.Location = new Point(xPos + 460, yPos);
-                deleteButton.Size = new Size(70, 20);
-                deleteButton.Text = "HAPUS";*/
+                deleteButton[j] = new Button();
+                deleteButton[j].Location = new Point(xPosMethod + 460, yPosMethod);
+                deleteButton[j].Size = new Size(70, 20);
+                deleteButton[j].Text = "HAPUS";
                 Method.Controls.Add(this.methodBox[j]);
                 Method.Controls.Add(this.namemethodBox[j]);
                 Method.Controls.Add(this.typemethodBox[j]);
-                //Method.Controls.Add(deleteButton);
-                yPos += 20;
+                Method.Controls.Add(deleteButton[j]);
+                yPosMethod += 20;
                 j++;
             }
 
-            addMethodButton.Click += addMethodButton_C;
+            addMethodButton.Click += addMethodButton_Click;
 
             //method area end
 
-            newButton.Click += NewButton_Click;
-
         }
 
-
-        private void deleteButton_C(object sender, EventArgs e)
-        {
-            this.atributBox[j] = new TextBox();
-            this.nameAtributBox[j] = new TextBox();
-            this.typeAtributBox[j] = new TextBox();
-            this.atributBox[j].Text = meth.visibility;
-            this.nameAtributBox[j].Text = meth.nama;
-            this.typeAtributBox[j].Text = meth.tipe;
-            this.nameAtributBox[j].WordWrap = true;
-            this.atributBox[j].Location = new Point(xPos, yPos);
-            this.atributBox[j].Size = new Size(60, 45);
-            this.nameAtributBox[j].Location = new Point(xPos + 60, yPos);
-            this.nameAtributBox[j].Size = new Size(300, 45);
-            this.typeAtributBox[j].Location = new Point(xPos + 360, yPos);
-            this.typeAtributBox[j].Size = new Size(100, 45);
-            /*deleteButton = new Button();
-            deleteButton.Location = new Point(xPos + 460, yPos);
-            deleteButton.Size = new Size(70, 20);
-            deleteButton.Text = "HAPUS";*/
-            Method.Controls.Add(this.atributBox[j]);
-            Method.Controls.Add(this.nameAtributBox[j]);
-            Method.Controls.Add(this.typeAtributBox[j]);
-            //Method.Controls.Add(deleteButton);
-            yPos += 20;
-            j++;
-        }
-
-        private void addMethodButton_C(object sender, EventArgs e)
+        private void addMethodButton_Click(object sender, EventArgs e)
         {
             this.methodBox[j] = new TextBox();
             this.namemethodBox[j] = new TextBox();
@@ -327,25 +304,25 @@ namespace PatternDesigner
             this.namemethodBox[j].Text = meth.nama;
             this.typemethodBox[j].Text = meth.tipe;
             this.namemethodBox[j].WordWrap = true;
-            this.methodBox[j].Location = new Point(xPos, yPos);
+            this.methodBox[j].Location = new Point(xPosMethod, yPosMethod);
             this.methodBox[j].Size = new Size(60, 45);
-            this.namemethodBox[j].Location = new Point(xPos + 60, yPos);
+            this.namemethodBox[j].Location = new Point(xPosMethod + 60, yPosMethod);
             this.namemethodBox[j].Size = new Size(300, 45);
-            this.typemethodBox[j].Location = new Point(xPos + 360, yPos);
+            this.typemethodBox[j].Location = new Point(xPosMethod + 360, yPosMethod);
             this.typemethodBox[j].Size = new Size(100, 45);
-            /*deleteButton = new Button();
-            deleteButton.Location = new Point(xPos + 460, yPos);
-            deleteButton.Size = new Size(70, 20);
-            deleteButton.Text = "HAPUS";*/
+            deleteButton[j] = new Button();
+            deleteButton[j].Location = new Point(xPosMethod + 460, yPosMethod);
+            deleteButton[j].Size = new Size(70, 20);
+            deleteButton[j].Text = "HAPUS";
             Method.Controls.Add(this.methodBox[j]);
             Method.Controls.Add(this.namemethodBox[j]);
             Method.Controls.Add(this.typemethodBox[j]);
-            //Method.Controls.Add(deleteButton);
-            yPos += 20;
+            Method.Controls.Add(deleteButton[j]);
+            yPosMethod += 20;
             j++;
         }
 
-      
+
 
         private void AddAtributButton_Click(object sender, EventArgs e)
         {
@@ -356,14 +333,14 @@ namespace PatternDesigner
             this.nameAtributBox[i].Text = att.nama;
             this.typeAtributBox[i].Text = att.tipe;
             this.nameAtributBox[i].WordWrap = true;
-            this.atributBox[i].Location = new Point(xPos, yPos);
+            this.atributBox[i].Location = new Point(xPosAttribut, yPosAttribut);
             this.atributBox[i].Size = new Size(60, 45);
-            this.nameAtributBox[i].Location = new Point(xPos + 60, yPos);
+            this.nameAtributBox[i].Location = new Point(xPosAttribut + 60, yPosAttribut);
             this.nameAtributBox[i].Size = new Size(300, 45);
-            this.typeAtributBox[i].Location = new Point(xPos + 360, yPos);
+            this.typeAtributBox[i].Location = new Point(xPosAttribut + 360, yPosAttribut);
             this.typeAtributBox[i].Size = new Size(100, 45);
             deleteButton[i] = new Button();
-            deleteButton[i].Location = new Point(xPos + 460, yPos);
+            deleteButton[i].Location = new Point(xPosAttribut + 460, yPosAttribut);
             deleteButton[i].Size = new Size(70, 20);
             deleteButton[i].Text = "HAPUS";
             Atribut.Controls.Add(this.atributBox[i]);
@@ -371,13 +348,12 @@ namespace PatternDesigner
             Atribut.Controls.Add(this.typeAtributBox[i]);
             Atribut.Controls.Add(deleteButton[i]);
             deleteButton[i].Click += delegate (object s, EventArgs ee) { DeleteButton_Click(s, ee, i - 1); };
-            yPos += 20;
+            yPosAttribut += 20;
             i++;
         }
 
         private void DeleteButton_Click(object sender, EventArgs e, int index)
         {
-            //Console.WriteLine(atributBox[index]);
             this.Controls.Remove(atributBox[index]);
             atributBox[index].Dispose();
             this.Controls.Remove(nameAtributBox[index]);
@@ -388,45 +364,22 @@ namespace PatternDesigner
             deleteButton[index].Dispose();
         }
 
-        private void NewButton_Click(object sender, EventArgs e)
+        private void OkButton_Click(object sender, EventArgs e)
         {
-            if (this.txt != null)
-            {
-                Debug.WriteLine("haloo");
-                this.objek.nama = this.txt.Text;
-            }
-            objek.att.Clear();
-            for (int a = 1; a < i; a++)
-            {
-                if (this.atributBox[a].Text != "" && this.nameAtributBox[a].Text != "" && this.typeAtributBox[a].Text != "")
-                {
-                    this.objek.att.Add(new Attribute() { visibility = this.atributBox[a].Text, nama = this.nameAtributBox[a].Text, tipe = this.typeAtributBox[a].Text });
-                }
-            }
-
-            objek.meth.Clear();
-
-            for (int b = 1; b < j; b++)
-            {
-                if (this.methodBox[b].Text != "" && this.namemethodBox[b].Text != "" && this.typemethodBox[b].Text != "")
-                {
-                    this.objek.meth.Add(new Method() { visibility = this.methodBox[b].Text, nama = this.namemethodBox[b].Text, tipe = this.typemethodBox[b].Text });
-                }
-            }
+            ICommand command = new ApplyClassProperties(this.objek, txt.Text, this.objek.nama, this.objek.meth, this.objek.att, 
+                               this.atributBox, this.nameAtributBox, this.typeAtributBox, 
+                               this.methodBox, this.namemethodBox, this.typemethodBox, i , j);
+            canvas.AddCommand(command);
+            command.Execute();
+            canvas.Repaint();
+            main.Enabled = true;
+            this.Close();
         }
 
-
-        private void DisplayTextBox()
+        private void CancelButton_Click(object sender, EventArgs e)
         {
-           
-
+            main.Enabled = true;
+            this.Close();
         }
-
-        private void ClassProperties_Load(object sender, EventArgs e)
-        {
-
-        }
-
-       
     }
 }

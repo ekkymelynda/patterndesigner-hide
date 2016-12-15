@@ -9,15 +9,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using PatternDesigner.Tools;
 using System.Diagnostics;
-using DiagramToolkit.Commands;
+using PatternDesigner.Commands;
+using PatternDesigner.ToolbarItems;
+
 
 namespace PatternDesigner
 {
     public partial class MainWindow : Form
     {
-        private IToolbox toolbox;
+        private IToolbox toolbox, toolboxTop;
         private IEditor editor;
-        //private IToolbar toolbar;
+        private IToolbar toolbar;
         private IMenubar menubar;
 
         public MainWindow()
@@ -56,6 +58,13 @@ namespace PatternDesigner
             AddFacadePattern addFacadePattern = new AddFacadePattern(canvas);
             AddMementoPattern addMementroPattern = new AddMementoPattern(canvas);
             AddSingletonPattern addSingletonPattern = new AddSingletonPattern(canvas);
+            GenerateFile addGenerateFile = new GenerateFile(canvas);
+
+            Undo undo = new Undo(canvas);
+            Redo redo = new Redo(canvas);
+            Copy copy = new Copy(canvas);
+            Paste paste = new Paste(canvas);
+   
 
             #endregion
 
@@ -70,6 +79,10 @@ namespace PatternDesigner
 
             DefaultMenuItem eksportMenuItem = new DefaultMenuItem("Eksport");
             fileMenuItem.AddMenuItem(eksportMenuItem);
+
+            DefaultMenuItem generateFile = new DefaultMenuItem("Generate");
+            generateFile.SetCommand(addGenerateFile);
+            fileMenuItem.AddMenuItem(generateFile);
 
             DefaultMenuItem generateMenuItem = new DefaultMenuItem("Generate");
             this.menubar.AddMenuItem(generateMenuItem);
@@ -107,28 +120,26 @@ namespace PatternDesigner
             mementoMenuItem.SetCommand(addMementroPattern);
             behavioralSubMenu.AddMenuItem(mementoMenuItem);
 
-            /*DefaultMenuItem newMenuItem = new DefaultMenuItem("New");
-            fileMenuItem.AddMenuItem(newMenuItem);
-            fileMenuItem.AddSeparator();
-            DefaultMenuItem exitMenuItem = new DefaultMenuItem("Exit");
-            fileMenuItem.AddMenuItem(exitMenuItem);
 
             DefaultMenuItem editMenuItem = new DefaultMenuItem("Edit");
             this.menubar.AddMenuItem(editMenuItem);
 
-            DefaultMenuItem undoMenuItem = new DefaultMenuItem("Undo");
-            editMenuItem.AddMenuItem(undoMenuItem);
-            DefaultMenuItem redoMenuItem = new DefaultMenuItem("Redo");
-            editMenuItem.AddMenuItem(redoMenuItem);
+            DefaultMenuItem undoItem = new DefaultMenuItem("Undo");
+            undoItem.SetCommand(undo);
+            editMenuItem.AddMenuItem(undoItem);
 
-            DefaultMenuItem viewMenuItem = new DefaultMenuItem("View");
-            this.menubar.AddMenuItem(viewMenuItem);
+            DefaultMenuItem redoItem = new DefaultMenuItem("Redo");
+            redoItem.SetCommand(redo);
+            editMenuItem.AddMenuItem(redoItem);
 
-            DefaultMenuItem helpMenuItem = new DefaultMenuItem("Help");
-            this.menubar.AddMenuItem(helpMenuItem);
+            DefaultMenuItem copyItem = new DefaultMenuItem("Copy");
+            copyItem.SetCommand(copy);
+            editMenuItem.AddMenuItem(copyItem);
 
-            DefaultMenuItem aboutMenuItem = new DefaultMenuItem("About");
-            helpMenuItem.AddMenuItem(aboutMenuItem);*/
+            DefaultMenuItem pasteItem = new DefaultMenuItem("Paste");
+            pasteItem.SetCommand(paste);
+            editMenuItem.AddMenuItem(pasteItem);
+
 
             #endregion
 
@@ -140,9 +151,11 @@ namespace PatternDesigner
             this.toolStripContainer1.LeftToolStripPanel.Controls.Add((Control)this.toolbox);
             this.editor.Toolbox = toolbox;
 
+
             #endregion
 
             #region Tools
+
 
             // Initializing tools
             Debug.WriteLine("Loading tools...");
@@ -156,6 +169,8 @@ namespace PatternDesigner
             this.toolbox.AddTool(new GeneralizationTool());
             this.toolbox.AddTool(new DependencyTool());
             this.toolbox.AddTool(new RealizationTool());
+	        this.toolbox.AddSeparator();
+            this.toolbox.AddTool(new DeleteTool());
             this.toolbox.ToolSelected += Toolbox_ToolSelected;
 
             #endregion
@@ -163,18 +178,37 @@ namespace PatternDesigner
             #region Toolbar
 
             // Initializing toolbar
-            /*Debug.WriteLine("Loading toolbar...");
+            Debug.WriteLine("Loading toolbar...");
             this.toolbar = new DefaultToolbar();
             this.toolStripContainer1.TopToolStripPanel.Controls.Add((Control)this.toolbar);
 
-            ExampleToolbarItem toolItem1 = new ExampleToolbarItem();
-            //toolItem1.SetCommand(whiteCanvasBgCmd);
-            ExampleToolbarItem toolItem2 = new ExampleToolbarItem();
-            //toolItem2.SetCommand(blackCanvasBgCmd);
+            UndoToolItem undoToolItem = new UndoToolItem(canvas);
+            undoToolItem.SetCommand(undo);
+            RedoToolItem redoToolItem = new RedoToolItem(canvas);
+            redoToolItem.SetCommand(redo);
+            SaveToolbarItem saveToolItem = new SaveToolbarItem(canvas);
+            ExportToolItem exportToolItem = new ExportToolItem(canvas);
 
-            this.toolbar.AddToolbarItem(toolItem1);
+            OpenToolbarItem openToolItem = new OpenToolbarItem(canvas);
+            CutToolbarItem cutToolItem = new CutToolbarItem(canvas);
+            CopyToolbarItem copyToolItem = new CopyToolbarItem(canvas);
+            copyToolItem.SetCommand(copy);
+            PasteToolbarItem pasteToolItem = new PasteToolbarItem(canvas);
+            pasteToolItem.SetCommand(paste);
+
+
+
+            this.toolbar.AddToolbarItem(undoToolItem);
+            this.toolbar.AddToolbarItem(redoToolItem);
             this.toolbar.AddSeparator();
-            this.toolbar.AddToolbarItem(toolItem2);*/
+            this.toolbar.AddToolbarItem(saveToolItem);
+            this.toolbar.AddToolbarItem(exportToolItem);
+
+            this.toolbar.AddToolbarItem(openToolItem);
+            this.toolbar.AddToolbarItem(cutToolItem);
+            this.toolbar.AddToolbarItem(copyToolItem);
+            this.toolbar.AddToolbarItem(pasteToolItem);
+
 
             #endregion
 

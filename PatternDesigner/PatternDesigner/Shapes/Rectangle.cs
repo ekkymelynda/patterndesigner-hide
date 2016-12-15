@@ -6,19 +6,17 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using PatternDesigner.Commands;
+using System.IO;
 
 namespace PatternDesigner.Shapes
 {
-    public class Rectangle : DrawingObject
+    public class Rectangle : Vertex
     {
-        //public string nama { get; set; }
-        public int X { get; set; }
-        public int Y { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
-
         public Pen pen;
-
+        PointF ukuran = new PointF(100, 1);
+        private SizeF widthTerkecil;
+        
         public Rectangle()
         {
             this.pen = new Pen(Color.Black);
@@ -37,19 +35,10 @@ namespace PatternDesigner.Shapes
             this.Height = height;
         }
 
-        public override bool Intersect(int xTest, int yTest)
-        {
-            if ((xTest >= X && xTest <= X + Width) && (yTest >= Y && yTest <= Y + Height))
-            {
-                Debug.WriteLine("Object " + ID + " is selected.");
-                return true;
-            }
-            return false;
-        }
-
         public override void RenderOnStaticView()
         {
-            this.Height = 50 + this.att.Count * 15 + 10;
+            widthTerkecil = new SizeF(100F, 1F);
+            this.Height = 40 + this.att.Count * 15 + this.meth.Count * 15;
             this.pen.Color = Color.Black;
             this.pen.DashStyle = DashStyle.Solid;
             Font f = new Font("Arial", 12);
@@ -59,20 +48,15 @@ namespace PatternDesigner.Shapes
             //sf.LineAlignment = StringAlignment.Center;
             sf.Alignment = StringAlignment.Center;
 
-
             if (this.Graphics != null)
             {
-                Graphics.DrawRectangle(this.pen, X, Y, Width, Height);
+                
 
                 if (nama != null)
                 {
+                    UpdateMinWidth(this.nama, f);
                     this.Graphics.DrawString(this.nama, f, drawBrush, X + Width / 2, Y, sf);
                 }
-
-                this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                Point start1 = new Point(X, Y + 20);
-                Point end1 = new Point(X + Width, Y + 20);
-                this.Graphics.DrawLine(this.pen, start1, end1);
 
                 int posY = Y + 20;
 
@@ -81,55 +65,83 @@ namespace PatternDesigner.Shapes
                     foreach (Attribute atte in att)
                     {
                         if (atte.visibility == "private")
+                        {
+                            UpdateMinWidth("-" + atte.tipe + " " + atte.nama, f);
                             this.Graphics.DrawString("-" + atte.tipe + " " + atte.nama, f, drawBrush, X, posY);
+                        }
                         else if (atte.visibility == "protected")
+                        {
+                            UpdateMinWidth("#" + atte.tipe + " " + atte.nama, f);
                             this.Graphics.DrawString("#" + atte.tipe + " " + atte.nama, f, drawBrush, X, posY);
+                        }
                         else
+                        {
+                            UpdateMinWidth("+" + atte.tipe + " " + atte.nama, f);
                             this.Graphics.DrawString("+" + atte.tipe + " " + atte.nama, f, drawBrush, X, posY);
+                        }
 
                         posY += 15;
                     }
                 }
-
-                this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                Point start2 = new Point(X, Y + 10 + (att.Count + 1) * 15);
-                Point end2 = new Point(X + Width, Y + 10 + (att.Count + 1) * 15);
-                //Point start2 = new Point(X, Y + 30);
-                //Point end2 = new Point(X + Width, Y + 30);
-                this.Graphics.DrawLine(this.pen, start2, end2);
-
-
+                
                 //method tampil
-                int panjangY = Y + 30 +(att.Count) * 15;
+                int panjangY = Y + 30 + (att.Count) * 15;
 
-                if (meth.Count > 0 )
+                if (meth.Count > 0)
                 {
                     //Debug.WriteLine("ada");
                     foreach (Method mett in meth)
                     {
                         if (mett.visibility == "private")
+                        {
+                            UpdateMinWidth("-" + " " + mett.nama + ":" + mett.tipe, f);
                             this.Graphics.DrawString("-" + " " + mett.nama + ":" + mett.tipe, f, drawBrush, X, panjangY);
+                        }
                         else if (mett.visibility == "public")
+                        {
+                            UpdateMinWidth("+" + " " + mett.nama + ":" + mett.tipe, f);
                             this.Graphics.DrawString("+" + " " + mett.nama + ":" + mett.tipe, f, drawBrush, X, panjangY);
+                        }
                         else
+                        {
+                            UpdateMinWidth("#" + " " + mett.nama + ":" + mett.tipe, f);
                             this.Graphics.DrawString("#" + " " + mett.nama + ":" + mett.tipe, f, drawBrush, X, panjangY);
+                        }
                         panjangY += 15;
                     }
                 }
                 else
                 {
                     //Debug.WriteLine("kosong");
-                }   
-                this.Height = Y + 30 + (meth.Count) * 15 + (att.Count) * 15;
-                Console.WriteLine(Y + 30 + (meth.Count) * 15 + (att.Count) * 15);
+                }
+                
+
+                this.Width = (int)widthTerkecil.Width;
+
+                Graphics.DrawRectangle(this.pen, X, Y, Width, Height);
+
+                //separator nama dengan atribut
+                this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                Point start1 = new Point(X, Y + 20);
+                Point end1 = new Point(X + Width, Y + 20);
+                this.Graphics.DrawLine(this.pen, start1, end1);
+
+                //separator atribut dengan method
+                this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                Point start2 = new Point(X, Y + 10 + (att.Count + 1) * 15);
+                Point end2 = new Point(X + Width, Y + 10 + (att.Count + 1) * 15);
+                this.Graphics.DrawLine(this.pen, start2, end2);
+                Broadcast();
+
             }
         }
 
         public override void RenderOnEditingView()
         {
+            widthTerkecil = new SizeF(100F, 1F);
             this.pen.Color = Color.Blue;
             this.pen.DashStyle = DashStyle.Solid;
-            this.Height = 40 + this.att.Count * 15 + 10;
+            this.Height = 40 + this.att.Count * 15 + this.meth.Count * 15;
             this.pen.Color = Color.Blue;
             this.pen.DashStyle = DashStyle.Solid;
             Font f = new Font("Arial", 12);
@@ -142,17 +154,13 @@ namespace PatternDesigner.Shapes
 
             if (this.Graphics != null)
             {
-                Graphics.DrawRectangle(this.pen, X, Y, Width, Height);
+
 
                 if (nama != null)
                 {
+                    UpdateMinWidth(this.nama, f);
                     this.Graphics.DrawString(this.nama, f, drawBrush, X + Width / 2, Y, sf);
                 }
-
-                this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                Point start1 = new Point(X, Y + 20);
-                Point end1 = new Point(X + Width, Y + 20);
-                this.Graphics.DrawLine(this.pen, start1, end1);
 
                 int posY = Y + 20;
 
@@ -161,24 +169,24 @@ namespace PatternDesigner.Shapes
                     foreach (Attribute atte in att)
                     {
                         if (atte.visibility == "private")
+                        {
+                            UpdateMinWidth("-" + atte.tipe + " " + atte.nama, f);
                             this.Graphics.DrawString("-" + atte.tipe + " " + atte.nama, f, drawBrush, X, posY);
+                        }
                         else if (atte.visibility == "protected")
+                        {
+                            UpdateMinWidth("#" + atte.tipe + " " + atte.nama, f);
                             this.Graphics.DrawString("#" + atte.tipe + " " + atte.nama, f, drawBrush, X, posY);
+                        }
                         else
+                        {
+                            UpdateMinWidth("+" + atte.tipe + " " + atte.nama, f);
                             this.Graphics.DrawString("+" + atte.tipe + " " + atte.nama, f, drawBrush, X, posY);
+                        }
 
                         posY += 15;
                     }
                 }
-
-                this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-                Point start2 = new Point(X, Y + 10 + (att.Count + 1) * 15);
-                Point end2 = new Point(X + Width, Y + 10 + (att.Count + 1) * 15);
-                //Point start2 = new Point(X, Y + 30);
-                //Point end2 = new Point(X + Width, Y + 30);
-                this.Graphics.DrawLine(this.pen, start2, end2);
-
-
 
                 //method tampil
                 int panjangY = Y + 30 + (att.Count) * 15;
@@ -189,31 +197,45 @@ namespace PatternDesigner.Shapes
                     foreach (Method mett in meth)
                     {
                         if (mett.visibility == "private")
+                        {
+                            UpdateMinWidth("-" + " " + mett.nama + ":" + mett.tipe, f);
                             this.Graphics.DrawString("-" + " " + mett.nama + ":" + mett.tipe, f, drawBrush, X, panjangY);
+                        }
                         else if (mett.visibility == "public")
+                        {
+                            UpdateMinWidth("+" + " " + mett.nama + ":" + mett.tipe, f);
                             this.Graphics.DrawString("+" + " " + mett.nama + ":" + mett.tipe, f, drawBrush, X, panjangY);
+                        }
                         else
+                        {
+                            UpdateMinWidth("#" + " " + mett.nama + ":" + mett.tipe, f);
                             this.Graphics.DrawString("#" + " " + mett.nama + ":" + mett.tipe, f, drawBrush, X, panjangY);
+                        }
                         panjangY += 15;
-                    }
-                }
-
-                /*int posY = Y + 30;
-
-                if (method.Count > 0)
-                {
-                    //Debug.WriteLine("ada");
-                    foreach (Method meth in method)
-                    {
-
-                        this.Graphics.DrawString(meth.tipe + " " + meth.nama, f, drawBrush, X, posY);
-                        posY += 15;
                     }
                 }
                 else
                 {
                     //Debug.WriteLine("kosong");
-                }*/
+                }
+                
+
+                this.Width = (int)widthTerkecil.Width;
+
+                Graphics.DrawRectangle(this.pen, X, Y, Width, Height);
+
+                //separator nama dengan atribut
+                this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                Point start1 = new Point(X, Y + 20);
+                Point end1 = new Point(X + Width, Y + 20);
+                this.Graphics.DrawLine(this.pen, start1, end1);
+
+                //separator atribut dengan method
+                this.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+                Point start2 = new Point(X, Y + 10 + (att.Count + 1) * 15);
+                Point end2 = new Point(X + Width, Y + 10 + (att.Count + 1) * 15);
+                this.Graphics.DrawLine(this.pen, start2, end2);
+                Broadcast();
             }
         }
 
@@ -232,10 +254,61 @@ namespace PatternDesigner.Shapes
             this.Graphics.DrawLine(this.pen, start2, end2);
         }
 
-        public override void Translate(int x, int y, int xAmount, int yAmount)
+        public override void Translate(int xAmount, int yAmount)
         {
-            this.X += xAmount;
-            this.Y += yAmount;
+            ICommand command = new TranslateVertex(this, xAmount, yAmount);
+            command.Execute();
+        }
+
+        private void UpdateMinWidth(String text, Font f)
+        {
+            SizeF stringSize = new SizeF();
+            stringSize = this.Graphics.MeasureString(text, f);
+            if (stringSize.Width > widthTerkecil.Width)
+            {
+                widthTerkecil.Width = stringSize.Width;
+            }
+
+            if (widthTerkecil.Width < 100F)
+            {
+                widthTerkecil.Width = 100F;
+            }
+        }
+
+        public void GenerateFile(string path)
+        {
+            if (this.nama != "")
+            {
+                string newPath = path + this.nama + ".cs";
+                //Debug.WriteLine(newPath);
+                if (File.Exists(newPath))
+                {
+                    File.Delete(newPath);
+                }
+
+                String isi = "public class " + this.nama + " \n{";
+                foreach (Attribute atr in att)
+                {
+                    isi += "\t " + atr.visibility + " " + atr.tipe + " " + atr.nama + ";\n";
+                }
+
+                isi += "\n";
+
+                foreach (Method met in meth)
+                {
+                    isi += "\t " + met.visibility + " " + met.tipe + " " + met.nama + " {}\n";
+                }
+
+                isi += "}";
+
+                using (FileStream fs = File.Create(newPath))
+                {
+                    Byte[] info = new UTF8Encoding(true).GetBytes(isi);
+                    // Add some information to the file.
+                    fs.Write(info, 0, info.Length);
+                }
+            }
+
         }
     }
 }
