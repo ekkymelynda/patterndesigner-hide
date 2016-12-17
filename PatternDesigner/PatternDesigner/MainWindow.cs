@@ -21,6 +21,7 @@ namespace PatternDesigner
         private IEditor editor;
         private IToolbar toolbar;
         private IMenubar menubar;
+        ICanvas canvas1;
 
         public MainWindow()
         {
@@ -38,7 +39,7 @@ namespace PatternDesigner
             this.editor = new DefaultEditor();
             this.toolStripContainer1.ContentPanel.Controls.Add((Control)this.editor);
 
-            ICanvas canvas1 = new DefaultCanvas();
+            canvas1 = new DefaultCanvas();
             canvas1.Name = "Untitled-1";
             this.editor.AddCanvas(canvas1);
 
@@ -223,6 +224,65 @@ namespace PatternDesigner
                 canvas.SetActiveTool(tool);
                 tool.TargetCanvas = canvas;
             }
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == (Keys.Control | Keys.F))
+            {
+                MessageBox.Show("What the Ctrl+F?");
+                return true;
+            }
+            else if (keyData == (Keys.Control | Keys.Z))
+            {
+                if (canvas1.GetUndoStack().Count > 0)
+                {
+                    ICommand command = canvas1.GetUndoStack().Pop();
+                    command.Unexecute();
+                    canvas1.Repaint();
+                    canvas1.GetRedoStack().Push(command);
+                }
+            }
+            else if (keyData == (Keys.Control | Keys.Y))
+            {
+                if (canvas1.GetRedoStack().Count > 0)
+                {
+                    ICommand command = canvas1.GetRedoStack().Pop();
+                    command.Execute();
+                    canvas1.Repaint();
+                    canvas1.GetUndoStack().Push(command);
+                }
+            }
+            else if (keyData == (Keys.Control | Keys.C))
+            {
+                DrawingObject selectedObject = canvas1.GetSelectedObject();
+
+                if (selectedObject != null)
+                {
+                    if (selectedObject is Vertex)
+                    {
+                        Vertex choosenObject = (Vertex)selectedObject;
+
+                        while (canvas1.GetCopyStack().Count > 0)
+                        {
+                            canvas1.GetCopyStack().Pop();
+                        }
+
+                        ICommand command = new CreateClassCopy(canvas1, choosenObject);
+                        canvas1.AddCopyCommand(command);
+                    }
+                }
+            }
+            else if (keyData == (Keys.Control | Keys.V))
+            {
+                if (canvas1.GetCopyStack().Count > 0)
+                {
+                    ICommand command = canvas1.GetCopyStack().Peek();
+                    command.Execute();
+                    canvas1.Repaint();
+                }
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
         }
     }
 }

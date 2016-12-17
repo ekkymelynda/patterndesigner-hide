@@ -69,3 +69,11 @@ D:\SEMESTER 7\new\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesign
 D:\SEMESTER 7\new\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.IconSet.resources
 D:\SEMESTER 7\new\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.Properties.Resources.resources
 D:\SEMESTER 7\new\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.csproj.GenerateResource.Cache
+C:\Users\Administrator\Desktop\pdhide-properties\New folder\pdhide\PatternDesigner\PatternDesigner\bin\Debug\PatternDesigner.exe.config
+C:\Users\Administrator\Desktop\pdhide-properties\New folder\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.exe
+C:\Users\Administrator\Desktop\pdhide-properties\New folder\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.pdb
+C:\Users\Administrator\Desktop\pdhide-properties\New folder\pdhide\PatternDesigner\PatternDesigner\bin\Debug\PatternDesigner.exe
+C:\Users\Administrator\Desktop\pdhide-properties\New folder\pdhide\PatternDesigner\PatternDesigner\bin\Debug\PatternDesigner.pdb
+C:\Users\Administrator\Desktop\pdhide-properties\New folder\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.IconSet.resources
+C:\Users\Administrator\Desktop\pdhide-properties\New folder\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.Properties.Resources.resources
+C:\Users\Administrator\Desktop\pdhide-properties\New folder\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.csproj.GenerateResource.Cache
