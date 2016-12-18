@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attribute.cs" />
+    <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\Cut.cs" />
     <Compile Include="Commands\DeleteClass.cs" />
     <Compile Include="Commands\DeleteRelationship.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="Commands\CreateClass.cs" />
     <Compile Include="Commands\ApplyRelationshipProperties.cs" />
     <Compile Include="Commands\ApplyClassProperties.cs" />
+    <Compile Include="Commands\TranslateListVertex.cs" />
     <Compile Include="DefaultToolbar.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace PatternDesigner.Commands
 {
-    public class CreateClassCopy : ICommand
+    public class CreateClassCopy : Command
     {
-        private ICanvas canvas;
+        
         private Vertex choosenObject;
         private Rectangle rectangle;
 
@@ -19,10 +19,10 @@ namespace PatternDesigner.Commands
         public CreateClassCopy(ICanvas canvas)
         {
             this.canvas = canvas;
-            
+            removeRedoStack();
         }
 
-        public void Execute()
+        public override void Execute()
         {
             this.choosenObject = (Vertex)canvas.GetSelectedObject();
             
@@ -57,7 +57,7 @@ namespace PatternDesigner.Commands
             canvas.AddCommand(command);
         }
 
-        public void Unexecute()
+        public override void Unexecute()
         {
 
         }

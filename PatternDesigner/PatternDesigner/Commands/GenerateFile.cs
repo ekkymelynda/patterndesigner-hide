@@ -13,15 +13,17 @@ using System.Windows.Forms;
 
 namespace PatternDesigner.Commands
 {
-    public class GenerateFile : ICommand
+    public class GenerateFile : Command
     {
-        protected ICanvas canvas;
+
         //protected string path = @"d:\export\";
         protected string path = @"d:\export\";
 
         public GenerateFile(ICanvas canvas)
         {
+            
             setCanvas(canvas);
+            removeRedoStack();
         }
 
         private void setCanvas(ICanvas canvas)
@@ -29,7 +31,7 @@ namespace PatternDesigner.Commands
             this.canvas = canvas;
         }
 
-        public void Execute()
+        public override void Execute()
         {
             using (var folderDialog = new FolderBrowserDialog())
             {
@@ -66,7 +68,7 @@ namespace PatternDesigner.Commands
             popUp.Show();
         }
 
-        public void Unexecute()
+        public override void Unexecute()
         {
             
         }

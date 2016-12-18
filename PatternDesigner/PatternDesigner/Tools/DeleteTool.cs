@@ -78,5 +78,20 @@ namespace PatternDesigner.Tools
         {
             
         }
+
+        public void ToolKeyUp(object sender, KeyEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ToolKeyDown(object sender, KeyEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ToolHotKeysDown(object sender, Keys e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

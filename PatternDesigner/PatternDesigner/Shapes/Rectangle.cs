@@ -256,6 +256,7 @@ namespace PatternDesigner.Shapes
 
         public override void Translate(int xAmount, int yAmount)
         {
+            Debug.WriteLine(this.ID);
             ICommand command = new TranslateVertex(this, xAmount, yAmount);
             command.Execute();
         }

@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 
 namespace PatternDesigner.Commands
 {
-    public class Redo : ICommand
+    public class Redo : Command
     {
         protected ICanvas canvas;
 
         public Redo(ICanvas canvas)
         {
             this.canvas = canvas;
+            removeRedoStack();
         }
 
-        public void Execute()
+        public override void Execute()
         {
             if (canvas.GetRedoStack().Count > 0)
             {
@@ -26,7 +27,7 @@ namespace PatternDesigner.Commands
             }
         }
 
-        public void Unexecute()
+        public override void Unexecute()
         {
 
         }

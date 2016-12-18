@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace PatternDesigner.Commands
 {
-    public class Paste : ICommand
+    public class Paste : Command
     {
         private ICanvas canvas;
 
@@ -17,9 +17,10 @@ namespace PatternDesigner.Commands
         public Paste(ICanvas canvas)
         {
             this.canvas = canvas;
+            removeRedoStack();
         }
 
-        public void Execute()
+        public override void Execute()
         {
             if (canvas.GetCopyStack().Count > 0)
             {
@@ -29,7 +30,7 @@ namespace PatternDesigner.Commands
             }
         }
 
-        public void Unexecute()
+        public override void Unexecute()
         {
            
         }

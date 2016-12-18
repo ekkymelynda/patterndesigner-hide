@@ -9,19 +9,18 @@ using System.Windows.Forms;
 
 namespace PatternDesigner.Commands
 {
-    public class DeleteClass : ICommand
+    public class DeleteClass : Command
     {
         private Vertex vertex;
-        private ICanvas canvas;
-
 
         public DeleteClass(Vertex vertex, ICanvas canvas)
         {
             this.vertex = vertex;
             this.canvas = canvas;
+            removeRedoStack();
         }
 
-        public void Execute()
+        public override void Execute()
         {
             this.canvas.RemoveDrawingObject(vertex);
             this.canvas.RemoveDrawingObject(vertex);
@@ -35,7 +34,7 @@ namespace PatternDesigner.Commands
             }
         }
 
-        public void Unexecute()
+        public override void Unexecute()
         {
             this.canvas.AddDrawingObject(vertex);
             this.canvas.AddDrawingObject(vertex);

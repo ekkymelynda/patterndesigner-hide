@@ -50,13 +50,13 @@ namespace PatternDesigner
 
         public void Select()
         {
-            Debug.WriteLine("Object id=" + ID.ToString() + " is selected.");
+            //Debug.WriteLine("Object id=" + ID.ToString() + " is selected.");
             this.state.Select(this);
         }
 
         public void Deselect()
         {
-            Debug.WriteLine("Object id=" + ID.ToString() + " is deselected.");
+            //Debug.WriteLine("Object id=" + ID.ToString() + " is deselected.");
             this.state.Deselect(this);
         }
     }

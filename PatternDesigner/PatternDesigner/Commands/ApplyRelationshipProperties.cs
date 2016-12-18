@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace PatternDesigner.Commands
 {
-    public class ApplyRelationshipProperties : ICommand
+    public class ApplyRelationshipProperties : Command
     {
         private Edge edge;
         private string oldName;
@@ -28,16 +28,17 @@ namespace PatternDesigner.Commands
             this.newRelationStart = newRelationStart;
             this.oldRelationEnd = oldRelationEnd;
             this.newRelationEnd = newRelationEnd;
+            removeRedoStack();
         }
 
-        public void Execute()
+        public override void Execute()
         {
             edge.name = newName;
             edge.relationStart = newRelationStart;
             edge.relationEnd = newRelationEnd;  
         }
 
-        public void Unexecute()
+        public override void Unexecute()
         {
             edge.name = oldName;
             edge.relationStart = oldRelationStart;

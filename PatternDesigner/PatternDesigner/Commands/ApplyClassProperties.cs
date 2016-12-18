@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace PatternDesigner.Commands
 {
-    public class ApplyClassProperties : ICommand
+    public class ApplyClassProperties : Command
     {
         private Vertex vertex;
         private string oldName;
@@ -24,7 +24,6 @@ namespace PatternDesigner.Commands
             this.vertex = vertex;
             this.oldName = oldName;
             this.newName = newName;
-
             if (att.Count() != 0)
             {
                 foreach (Attribute a in att)
@@ -57,10 +56,10 @@ namespace PatternDesigner.Commands
                 }
             }
 
-            
+            removeRedoStack();
         }
 
-        public void Execute()
+        public override void Execute()
         {
             vertex.nama = newName;
 
@@ -83,7 +82,7 @@ namespace PatternDesigner.Commands
             }
         }
 
-        public void Unexecute()
+        public override void Unexecute()
         {
             vertex.nama = oldName;
     

@@ -9,18 +9,19 @@ using System.Windows.Forms;
 
 namespace PatternDesigner.Commands
 {
-    public class Copy : ICommand
+    public class Copy : Command
     {
-        private ICanvas canvas;
+        
         private DrawingObject selectedObject;
 
 
         public Copy(ICanvas canvas)
         {
             this.canvas = canvas;
+            removeRedoStack();
         }
 
-        public void Execute()
+        public override void Execute()
         {
             selectedObject = canvas.GetSelectedObject();
 
@@ -41,7 +42,7 @@ namespace PatternDesigner.Commands
             }
         }
 
-        public void Unexecute()
+        public override void Unexecute()
         {
            
         }

@@ -26,6 +26,7 @@ namespace PatternDesigner
 
         private void Init()
         {
+            
             this.drawingObjects = new List<DrawingObject>();
             this.DoubleBuffered = true;
 
@@ -37,7 +38,7 @@ namespace PatternDesigner
             this.MouseUp += DefaultCanvas_MouseUp;
             this.MouseMove += DefaultCanvas_MouseMove;
             this.MouseDoubleClick += DefaultCanvas_DoubleClick;
-
+            
         }
 
         private void DefaultCanvas_MouseMove(object sender, MouseEventArgs e)

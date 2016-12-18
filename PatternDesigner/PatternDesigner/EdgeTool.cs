@@ -89,13 +89,28 @@ namespace PatternDesigner
                         canvas.RemoveDrawingObject(this.line);
                     }
                 }
-                else if (e.Button == MouseButtons.Right)
+                /*else if (e.Button == MouseButtons.Right)
                 {
                     canvas.RemoveDrawingObject(this.line);
-                }
+                }*/
             }
         }
 
         public void ToolMouseDoubleClick(object sender, MouseEventArgs e){}
+
+        public void ToolKeyUp(object sender, KeyEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ToolKeyDown(object sender, KeyEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ToolHotKeysDown(object sender, Keys e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

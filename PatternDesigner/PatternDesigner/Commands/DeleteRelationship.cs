@@ -9,25 +9,27 @@ using System.Windows.Forms;
 
 namespace PatternDesigner.Commands
 {
-    public class DeleteRelationship : ICommand
+    public class DeleteRelationship : Command
     {
         private Edge edge;
-        private ICanvas canvas;
+        
 
         public DeleteRelationship(Edge edge, ICanvas canvas)
         {
+            
             this.edge = edge;
             this.canvas = canvas;
+            removeRedoStack();
         }
 
-        public void Execute()
+        public override void Execute()
         {
             canvas.RemoveDrawingObject(edge);
             edge.GetStartVertex().Unsubscribe(edge);
             edge.GetEndVertex().Unsubscribe(edge);
         }
 
-        public void Unexecute()
+        public override void Unexecute()
         {
             canvas.AddDrawingObject(edge);
             edge.GetStartVertex().Subscribe(edge);

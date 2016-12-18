@@ -9,26 +9,25 @@ using System.Windows.Forms;
 
 namespace PatternDesigner.Commands
 {
-    public class CreateClass : ICommand
+    public class CreateClass : Command
     {
         private Vertex objek;
-        private ICanvas canvas;
-
 
         public CreateClass(Vertex objek, ICanvas canvas)
         {
             this.objek = objek;
             this.canvas = canvas;
+            removeRedoStack();
         }
 
-        public void Execute()
+        public override void Execute()
         {
             this.canvas.AddDrawingObject(objek);
             this.canvas.AddDrawingObject(objek);
             this.canvas.AddDrawingObject(objek);
         }
 
-        public void Unexecute()
+        public override void Unexecute()
         {
             this.canvas.RemoveDrawingObject(objek);
             this.canvas.RemoveDrawingObject(objek);
