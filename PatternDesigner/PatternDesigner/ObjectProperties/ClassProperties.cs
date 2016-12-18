@@ -8,18 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using PatternDesigner.Colom;
 using PatternDesigner.Commands;
 
 namespace PatternDesigner
 {
     public partial class ClassProperties : Form
     {
-        //private Form classForm;
-        public ICanvas canvas;
         private TextBox txt, jenisLabel, namaLabel, tipeLabel, namaMethod, tipeMethod, visibilityMethod;
+        public ICanvas canvas;
         private Vertex objek;
         private Button[] deleteButton = new Button[100];
-        private Button okButton, addAtributButton, cancelButton, addMethodButton;
+        private Button newButton, addAtributButton, cancelButton, addMethodButton, deleteButton1, deleteMethodButton;
         private TextBox[] atributBox = new TextBox[100];
         private TextBox[] nameAtributBox = new TextBox[100];
         private TextBox[] typeAtributBox = new TextBox[100];
@@ -34,7 +34,28 @@ namespace PatternDesigner
         private TabControl addAtributTabControl;
         private TabPage Operation, Atribut, Method;
         private Label classNama;
-        
+
+        int idxBaris = 0;
+        int bar = 0;
+        int idxColl = 0;
+        int idxButtonCol = 0;
+        int xAtt = 10;
+        int yAtt = 65;
+
+        Baris baris;
+        List<Baris> listBaris = new List<Baris>();
+        List<ButtonColom> Tombol = new List<ButtonColom>();
+
+        int idxBarisMethod = 0;
+        int idxCollMethod = 0;
+        int idxButtonColMethod = 0;
+        int xMethod = 10;
+        int yMethod = 65;
+
+        Baris barisMethod;
+        List<Baris> listBarisMethod = new List<Baris>();
+        List<ButtonColom> TombolMethod = new List<ButtonColom>();
+
         private Form main;
 
         public ClassProperties(ICanvas canvas, Vertex obj, Form main1)
@@ -52,12 +73,12 @@ namespace PatternDesigner
             addAtributTabControl.Size = new Size(560, 300);
             this.Controls.Add(addAtributTabControl);
 
-            okButton = new Button();
-            okButton.Location = new Point(510, 320);
-            okButton.Size = new Size(50, 20);
-            okButton.Text = "Ok";
-            okButton.Click += OkButton_Click;
-            this.Controls.Add(okButton);
+            newButton = new Button();
+            newButton.Location = new Point(510, 320);
+            newButton.Size = new Size(50, 20);
+            newButton.Text = "OK";
+            newButton.Click += NewButton_Click;
+            this.Controls.Add(newButton);
 
             cancelButton = new Button();
             cancelButton.Location = new Point(440, 320);
@@ -91,293 +112,265 @@ namespace PatternDesigner
             txt.Size = new Size(150, 45);
             Operation.Controls.Add(txt);
 
-            //Atribut area start
-            i = 1;
-            xPosAttribut = 10;
-            yPosAttribut = 60;
 
+            Baris baris = new Baris(1, Atribut);
+            baris.Init(xAtt, 45);
 
-            jenisLabel = new TextBox();
-            jenisLabel.Location = new Point(xPosAttribut, yPosAttribut - 20);
-            jenisLabel.Size = new Size(60, 45);
-            jenisLabel.Text = "Visibility";
-            jenisLabel.TextAlign = HorizontalAlignment.Center;
-            jenisLabel.BackColor = Color.AliceBlue;
-            jenisLabel.Enabled = false;
-            Atribut.Controls.Add(jenisLabel);
+            KotakInput kotakVisibility = new KotakInput(Atribut);
+            kotakVisibility.setNama("Visibility");
+            kotakVisibility.setSize(60, 45);
+            baris.AddKolom(kotakVisibility);
 
-            namaLabel = new TextBox();
-            namaLabel.Location = new Point(xPosAttribut + 60, yPosAttribut - 20);
-            namaLabel.Size = new Size(300, 45);
-            namaLabel.Text = "Nama Atribut";
-            namaLabel.TextAlign = HorizontalAlignment.Center;
-            namaLabel.BackColor = Color.AliceBlue;
-            namaLabel.Enabled = false;
-            Atribut.Controls.Add(namaLabel);
+            KotakInput kotakNamaAtribut = new KotakInput(Atribut);
+            kotakNamaAtribut.setNama("Nama Atribut");
+            kotakNamaAtribut.setSize(300, 45);
+            baris.AddKolom(kotakNamaAtribut);
 
-            tipeLabel = new TextBox();
-            tipeLabel.Location = new Point(xPosAttribut + 360, yPosAttribut - 20);
-            tipeLabel.Size = new Size(100, 45);
-            tipeLabel.Text = "Tipe";
-            tipeLabel.BackColor = Color.AliceBlue;
-            tipeLabel.TextAlign = HorizontalAlignment.Center;
-            tipeLabel.Enabled = false;
-            Atribut.Controls.Add(tipeLabel);
-            if (obj.att.Count() == 0)
-            {
-                this.atributBox[1] = new TextBox();
-                this.nameAtributBox[1] = new TextBox();
-                this.typeAtributBox[1] = new TextBox();
-                this.atributBox[1].Text = att.visibility;
-                this.nameAtributBox[1].Text = att.nama;
-                this.typeAtributBox[1].Text = att.tipe;
-                this.nameAtributBox[1].WordWrap = true;
-                this.atributBox[1].Location = new Point(xPosAttribut, yPosAttribut);
-                this.atributBox[1].Size = new Size(60, 45);
-                this.nameAtributBox[1].Location = new Point(xPosAttribut + 60, yPosAttribut);
-                this.nameAtributBox[1].Size = new Size(300, 45);
-                this.typeAtributBox[1].Location = new Point(xPosAttribut + 360, yPosAttribut);
-                this.typeAtributBox[1].Size = new Size(100, 45);
-                deleteButton[1] = new Button();
-                deleteButton[1].Location = new Point(xPosAttribut + 460, yPosAttribut);
-                deleteButton[1].Size = new Size(70, 20);
-                deleteButton[1].Text = "HAPUS";
-                Atribut.Controls.Add(this.atributBox[1]);
-                Atribut.Controls.Add(this.nameAtributBox[1]);
-                Atribut.Controls.Add(this.typeAtributBox[1]);
-                Atribut.Controls.Add(deleteButton[1]);
-                deleteButton[i].Click += delegate (object s, EventArgs ee) { DeleteButton_Click(s, ee, i - 1); };
-                yPosAttribut += 20;
-                i++;
-            }
+            KotakInput kotakTipe = new KotakInput(Atribut);
+            kotakTipe.setNama("Tipe");
+            kotakTipe.setSize(100, 45);
+            baris.AddKolom(kotakTipe);
+
+            KotakInput kotakAction = new KotakInput(Atribut);
+            kotakAction.setNama("Action");
+            kotakAction.setSize(70, 45);
+            baris.AddKolom(kotakAction);
+
+            baris.DrawBaris();
+
             addAtributButton = new Button();
             addAtributButton.Location = new Point(10, 10);
             addAtributButton.Size = new Size(100, 20);
             addAtributButton.Text = "Tambah Atribut";
             Atribut.Controls.Add(addAtributButton);
+            addAtributButton.Click += AddAtributButton_Click;
 
-
-
+            deleteButton1 = new Button();
+            deleteButton1.Location = new Point(140, 10);
+            deleteButton1.Size = new Size(70, 20);
+            deleteButton1.Text = "HAPUS";
+            deleteButton1.Click += delegate (object s, EventArgs ee) { Delete_Click(s, ee, idxBaris); };
+            Atribut.Controls.Add(deleteButton1);
 
             foreach (Attribute atte in objek.att)
             {
-                Console.WriteLine(atte.nama);
-                this.atributBox[i] = new TextBox();
-                this.nameAtributBox[i] = new TextBox();
-                this.typeAtributBox[i] = new TextBox();
-                this.atributBox[i].Text = atte.visibility;
-                this.nameAtributBox[i].Text = atte.nama;
-                this.typeAtributBox[i].Text = atte.tipe;
-                this.nameAtributBox[i].WordWrap = true;
-                this.atributBox[i].Location = new Point(xPosAttribut, yPosAttribut);
-                this.atributBox[i].Size = new Size(60, 45);
-                this.nameAtributBox[i].Location = new Point(xPosAttribut + 60, yPosAttribut);
-                this.nameAtributBox[i].Size = new Size(300, 45);
-                this.typeAtributBox[i].Location = new Point(xPosAttribut + 360, yPosAttribut);
-                this.typeAtributBox[i].Size = new Size(100, 45);
-                deleteButton[i] = new Button();
-                deleteButton[i].Location = new Point(xPosAttribut + 460, yPosAttribut);
-                deleteButton[i].Size = new Size(70, 20);
-                deleteButton[i].Text = "HAPUS";
-                Atribut.Controls.Add(this.atributBox[i]);
-                Atribut.Controls.Add(this.nameAtributBox[i]);
-                Atribut.Controls.Add(this.typeAtributBox[i]);
-                Atribut.Controls.Add(deleteButton[i]);
-                deleteButton[i].Click += delegate (object s, EventArgs ee) { DeleteButton_Click(s, ee, i - 1); };
-                yPosAttribut += 20;
-                i++;
+                baris = new Baris(idxBaris, Atribut);
+                baris.Init(xAtt, yAtt);
+                KotakInput kotakAttribut = new KotakInput(Atribut);
+                KotakInput kotakAttribut1 = new KotakInput(Atribut);
+                KotakInput kotakAttribut2 = new KotakInput(Atribut);
+                kotakAttribut.setNama(atte.visibility);
+                kotakAttribut.kotak.Text = atte.visibility;
+                kotakAttribut1.setNama(atte.nama);
+                kotakAttribut1.kotak.Text = atte.nama;
+                kotakAttribut2.setNama(atte.tipe);
+                kotakAttribut2.kotak.Text = atte.tipe;
+                kotakAttribut.setSize(60, 45);
+                kotakAttribut1.setSize(300, 45);
+                kotakAttribut2.setSize(100, 45);
+                ButtonColom delete = new ButtonColom(Atribut, "HAPUS");
+                delete.setSize(70, 20);
+                delete.tombol.Click += delegate (object s, EventArgs ee) { Delete_Click(s, ee, idxBaris - 1); };
+                baris.AddKolom(kotakAttribut);
+                baris.AddKolom(kotakAttribut1);
+                baris.AddKolom(kotakAttribut2);
+                baris.AddKolom(delete);
+                baris.DrawBaris();
+
+                yAtt += 20;
+                listBaris.Add(baris);
+                idxBaris++;
             }
 
-            addAtributButton.Click += AddAtributButton_Click;
+            //method area
+            Baris barisMethod = new Baris(1, Method);
+            barisMethod.Init(xMethod, 45);
 
-            //Atribut area end
+            KotakInput kotakMethod = new KotakInput(Method);
+            kotakMethod.setSize(60, 45);
+            kotakMethod.setNama("Visibility");
+            barisMethod.AddKolom(kotakMethod);
 
+            KotakInput kotakMethod2 = new KotakInput(Method);
+            kotakMethod2.setSize(300, 45);
+            kotakMethod2.setNama("Nama");
+            barisMethod.AddKolom(kotakMethod2);
 
-            //method area start
-            j = 1;
-            xPosMethod = 10;
-            yPosMethod = 60;
+            KotakInput kotakMethod3 = new KotakInput(Method);
+            kotakMethod3.setSize(100, 45);
+            kotakMethod3.setNama("Tipe");
+            barisMethod.AddKolom(kotakMethod3);
 
-            visibilityMethod = new TextBox();
-            visibilityMethod.Location = new Point(xPosMethod, yPosMethod - 20);
-            visibilityMethod.Size = new Size(60, 45);
-            visibilityMethod.Text = "Visibility";
-            visibilityMethod.TextAlign = HorizontalAlignment.Center;
-            visibilityMethod.BackColor = Color.AliceBlue;
-            visibilityMethod.Enabled = false;
-            Method.Controls.Add(visibilityMethod);
-
-            namaMethod = new TextBox();
-            namaMethod.Location = new Point(xPosMethod + 60, yPosMethod - 20);
-            namaMethod.Size = new Size(300, 45);
-            namaMethod.Text = "Nama Method";
-            namaMethod.TextAlign = HorizontalAlignment.Center;
-            namaMethod.BackColor = Color.AliceBlue;
-            namaMethod.Enabled = false;
-            Method.Controls.Add(namaMethod);
-
-            tipeMethod = new TextBox();
-            tipeMethod.Location = new Point(xPosMethod + 360, yPosMethod - 20);
-            tipeMethod.Size = new Size(100, 45);
-            tipeMethod.Text = "Tipe";
-            tipeMethod.BackColor = Color.AliceBlue;
-            tipeMethod.TextAlign = HorizontalAlignment.Center;
-            tipeMethod.Enabled = false;
-            Method.Controls.Add(tipeMethod);
-
-            if (obj.meth.Count == 0)
-            {
-                this.methodBox[1] = new TextBox();
-                this.namemethodBox[1] = new TextBox();
-                this.typemethodBox[1] = new TextBox();
-                this.methodBox[1].Text = meth.visibility;
-                this.namemethodBox[1].Text = meth.nama;
-                this.typemethodBox[1].Text = meth.tipe;
-                this.namemethodBox[1].WordWrap = true;
-                this.methodBox[1].Location = new Point(xPosMethod, yPosMethod);
-                this.methodBox[1].Size = new Size(60, 45);
-                this.namemethodBox[1].Location = new Point(xPosMethod + 60, yPosMethod);
-                this.namemethodBox[1].Size = new Size(300, 45);
-                this.typemethodBox[1].Location = new Point(xPosMethod + 360, yPosMethod);
-                this.typemethodBox[1].Size = new Size(100, 45);
-                deleteButton[1] = new Button();
-                deleteButton[1].Location = new Point(xPosMethod + 460, yPosMethod);
-                deleteButton[1].Size = new Size(70, 20);
-                deleteButton[1].Text = "HAPUS";
-                Method.Controls.Add(deleteButton[1]);
-
-               
-
-                Method.Controls.Add(this.methodBox[1]);
-                Method.Controls.Add(this.namemethodBox[1]);
-                Method.Controls.Add(this.typemethodBox[1]);
-               
-                yPosMethod += 20;
-                j++;
-            }
+            barisMethod.DrawBaris();
 
             addMethodButton = new Button();
             addMethodButton.Location = new Point(10, 10);
             addMethodButton.Size = new Size(100, 20);
-            addMethodButton.Text = "Add Method";
+            addMethodButton.Text = "Tambah Method";
             Method.Controls.Add(addMethodButton);
+            addMethodButton.Click += AddMethodButton_Click;
 
-            foreach (Method met in objek.meth)
+            deleteMethodButton = new Button();
+            deleteMethodButton.Location = new Point(140, 10);
+            deleteMethodButton.Size = new Size(70, 20);
+            deleteMethodButton.Text = "HAPUS";
+            deleteMethodButton.Click += delegate (object s, EventArgs ee)
             {
-                this.methodBox[j] = new TextBox();
-                this.namemethodBox[j] = new TextBox();
-                this.typemethodBox[j] = new TextBox();
-                this.methodBox[j].Text = met.visibility;
-                this.namemethodBox[j].Text = met.nama;
-                this.typemethodBox[j].Text = met.tipe;
-                this.namemethodBox[j].WordWrap = true;
-                this.methodBox[j].Location = new Point(xPosMethod, yPosMethod);
-                this.methodBox[j].Size = new Size(60, 45);
-                this.namemethodBox[j].Location = new Point(xPosMethod + 60, yPosMethod);
-                this.namemethodBox[j].Size = new Size(300, 45);
-                this.typemethodBox[j].Location = new Point(xPosMethod + 360, yPosMethod);
-                this.typemethodBox[j].Size = new Size(100, 45);
-                deleteButton[j] = new Button();
-                deleteButton[j].Location = new Point(xPosMethod + 460, yPosMethod);
-                deleteButton[j].Size = new Size(70, 20);
-                deleteButton[j].Text = "HAPUS";
-                Method.Controls.Add(this.methodBox[j]);
-                Method.Controls.Add(this.namemethodBox[j]);
-                Method.Controls.Add(this.typemethodBox[j]);
-                Method.Controls.Add(deleteButton[j]);
-                yPosMethod += 20;
-                j++;
+                DeleteMethodButton_Click(s, ee, idxBarisMethod - 1);
+            };
+            
+            Method.Controls.Add(deleteMethodButton);
+
+            foreach (Method mtd in objek.meth)
+            {
+                barisMethod = new Baris(idxBarisMethod, Method);
+                barisMethod.Init(xMethod, yMethod);
+                KotakInput kotakMethodVisi = new KotakInput(Method);
+                KotakInput kotakMethodNama = new KotakInput(Method);
+                KotakInput kotakMethodTipe = new KotakInput(Method);
+                kotakMethodVisi.setNama(mtd.visibility);
+                kotakMethodVisi.kotak.Text = mtd.visibility;
+                kotakMethodVisi.setSize(60, 45);
+
+                kotakMethodNama.setNama(mtd.nama);
+                kotakMethodNama.kotak.Text = mtd.nama;
+                kotakMethodNama.setSize(300, 45);
+
+                kotakMethodTipe.setNama(mtd.tipe);
+                kotakMethodTipe.kotak.Text = mtd.tipe;
+                kotakMethodTipe.setSize(100, 45);
+
+                ButtonColom deleteMethodButton = new ButtonColom(Method, "HAPUS");
+                deleteMethodButton.setSize(70, 20);
+                deleteMethodButton.Click += delegate (object s, EventArgs ee)
+                {
+                    DeleteMethodButton_Click(s, ee, idxBarisMethod - 1);
+                };
+
+                barisMethod.AddKolom(kotakMethodVisi);
+                barisMethod.AddKolom(kotakMethodNama);
+                barisMethod.AddKolom(kotakMethodTipe);
+                barisMethod.AddKolom(deleteMethodButton);
+                barisMethod.DrawBaris();
+
+                yMethod += 20;
+                listBarisMethod.Add(barisMethod);
+                idxBarisMethod++;
             }
-
-            addMethodButton.Click += addMethodButton_Click;
-
-            //method area end
-
-        }
-
-        private void addMethodButton_Click(object sender, EventArgs e)
-        {
-            this.methodBox[j] = new TextBox();
-            this.namemethodBox[j] = new TextBox();
-            this.typemethodBox[j] = new TextBox();
-            this.methodBox[j].Text = meth.visibility;
-            this.namemethodBox[j].Text = meth.nama;
-            this.typemethodBox[j].Text = meth.tipe;
-            this.namemethodBox[j].WordWrap = true;
-            this.methodBox[j].Location = new Point(xPosMethod, yPosMethod);
-            this.methodBox[j].Size = new Size(60, 45);
-            this.namemethodBox[j].Location = new Point(xPosMethod + 60, yPosMethod);
-            this.namemethodBox[j].Size = new Size(300, 45);
-            this.typemethodBox[j].Location = new Point(xPosMethod + 360, yPosMethod);
-            this.typemethodBox[j].Size = new Size(100, 45);
-            deleteButton[j] = new Button();
-            deleteButton[j].Location = new Point(xPosMethod + 460, yPosMethod);
-            deleteButton[j].Size = new Size(70, 20);
-            deleteButton[j].Text = "HAPUS";
-            Method.Controls.Add(this.methodBox[j]);
-            Method.Controls.Add(this.namemethodBox[j]);
-            Method.Controls.Add(this.typemethodBox[j]);
-            Method.Controls.Add(deleteButton[j]);
-            yPosMethod += 20;
-            j++;
-        }
-
-
-
-        private void AddAtributButton_Click(object sender, EventArgs e)
-        {
-            this.atributBox[i] = new TextBox();
-            this.nameAtributBox[i] = new TextBox();
-            this.typeAtributBox[i] = new TextBox();
-            this.atributBox[i].Text = att.visibility;
-            this.nameAtributBox[i].Text = att.nama;
-            this.typeAtributBox[i].Text = att.tipe;
-            this.nameAtributBox[i].WordWrap = true;
-            this.atributBox[i].Location = new Point(xPosAttribut, yPosAttribut);
-            this.atributBox[i].Size = new Size(60, 45);
-            this.nameAtributBox[i].Location = new Point(xPosAttribut + 60, yPosAttribut);
-            this.nameAtributBox[i].Size = new Size(300, 45);
-            this.typeAtributBox[i].Location = new Point(xPosAttribut + 360, yPosAttribut);
-            this.typeAtributBox[i].Size = new Size(100, 45);
-            deleteButton[i] = new Button();
-            deleteButton[i].Location = new Point(xPosAttribut + 460, yPosAttribut);
-            deleteButton[i].Size = new Size(70, 20);
-            deleteButton[i].Text = "HAPUS";
-            Atribut.Controls.Add(this.atributBox[i]);
-            Atribut.Controls.Add(this.nameAtributBox[i]);
-            Atribut.Controls.Add(this.typeAtributBox[i]);
-            Atribut.Controls.Add(deleteButton[i]);
-            deleteButton[i].Click += delegate (object s, EventArgs ee) { DeleteButton_Click(s, ee, i - 1); };
-            yPosAttribut += 20;
-            i++;
-        }
-
-        private void DeleteButton_Click(object sender, EventArgs e, int index)
-        {
-            this.Controls.Remove(atributBox[index]);
-            atributBox[index].Dispose();
-            this.Controls.Remove(nameAtributBox[index]);
-            nameAtributBox[index].Dispose();
-            this.Controls.Remove(typeAtributBox[index]);
-            typeAtributBox[index].Dispose();
-            this.Controls.Remove(deleteButton[index]);
-            deleteButton[index].Dispose();
-        }
-
-        private void OkButton_Click(object sender, EventArgs e)
-        {
-            ICommand command = new ApplyClassProperties(this.objek, txt.Text, this.objek.nama, this.objek.meth, this.objek.att, 
-                               this.atributBox, this.nameAtributBox, this.typeAtributBox, 
-                               this.methodBox, this.namemethodBox, this.typemethodBox, i , j);
-            canvas.AddCommand(command);
-            command.Execute();
-            canvas.Repaint();
-            main.Enabled = true;
-            this.Close();
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
+            main.Enabled = true;
+            this.Close();
+        }
+
+        private void DeleteMethodButton_Click(object sender, EventArgs e, int index)
+        {
+
+        }
+
+        private void AddMethodButton_Click(object sender, EventArgs e)
+        {
+            barisMethod = new Baris(idxBarisMethod, Method);
+            Debug.WriteLine("ID BARIS METHOD :" + idxBarisMethod);
+            barisMethod.Init(xMethod, yMethod);
+
+            KotakInput kotakMethodVisi = new KotakInput(Method);
+            kotakMethodVisi.setSize(60, 45);
+            barisMethod.AddKolom(kotakMethodVisi);
+
+            KotakInput kotakMethodNama = new KotakInput(Method);
+            kotakMethodNama.setSize(300, 45);
+            barisMethod.AddKolom(kotakMethodNama);
+
+
+            KotakInput kotakMethodTipe = new KotakInput(Method);
+            kotakMethodTipe.setSize(100, 45);
+            barisMethod.AddKolom(kotakMethodTipe);
+
+            ButtonColom deleteMethodButton = new ButtonColom(Method, "HAPUS");
+            deleteMethodButton.setSize(70, 20);
+            Tombol.Add(deleteMethodButton);
+            deleteMethodButton.Click += delegate (object s, EventArgs ee)
+            {
+                DeleteMethodButton_Click(s, ee, idxBarisMethod - 1);
+            };
+            barisMethod.AddKolom(deleteMethodButton);
+
+            barisMethod.DrawBaris();
+            yMethod += 20;
+            listBarisMethod.Add(barisMethod);
+            idxBarisMethod++;
+
+
+        }
+
+        private void Delete_Click(object sender, EventArgs e, int indexBaris)
+        {
+            /*
+                this.listBaris.Remove(listBaris[0]);
+                listBaris[0].Dispose();
+                Debug.WriteLine("MASUK DELETE");
+                idxBaris--; //dibuat link list
+                foreach(Baris baris in listBaris)
+                {
+                    baris.DrawBaris();
+                }
+            */
+        }
+
+        private void AddAtributButton_Click(object sender, EventArgs e)
+        {
+            baris = new Baris(idxBaris, Atribut);
+            Debug.WriteLine("ID BARIS :" + idxBaris);
+            baris.Init(xAtt, yAtt);
+
+            KotakInput kotakAttribut = new KotakInput(Atribut);
+            kotakAttribut.setSize(60, 45);
+            baris.AddKolom(kotakAttribut);
+
+            KotakInput kotakAttribut1 = new KotakInput(Atribut);
+            kotakAttribut1.setSize(300, 45);
+            baris.AddKolom(kotakAttribut1);
+
+
+            KotakInput kotakAttribut2 = new KotakInput(Atribut);
+            kotakAttribut2.setSize(100, 45);
+            baris.AddKolom(kotakAttribut2);
+
+            ButtonColom delete = new ButtonColom(Atribut, "HAPUS");
+            delete.setSize(70, 20);
+            Tombol.Add(delete);
+            delete.tombol.Click += delegate (object s, EventArgs ee) { Delete_click(s, ee, idxBaris - 1); } ;
+            baris.AddKolom(delete);
+
+            baris.DrawBaris();
+            yAtt += 20;
+            listBaris.Add(baris);
+            idxBaris++;
+        }
+
+        private void Delete_click(object sender, EventArgs e, int indexBaris)
+        {
+            /*
+            this.listBaris.Remove(listBaris[0]);
+            listBaris[0].Dispose();
+            Debug.WriteLine("MASUK DELETE");
+            idxBaris--; //dibuat link list
+            foreach(Baris baris in listBaris)
+            {
+                baris.DrawBaris();
+            }*/
+        }
+
+        private void NewButton_Click(object sender, EventArgs e)
+        {
+            ICommand command = new ApplyClassProperties(this.objek, txt.Text, this.objek.nama, this.objek.meth, this.objek.att,
+                               this.listBaris, this.listBarisMethod, idxBaris, idxBarisMethod);
+            canvas.AddCommand(command);
+            command.Execute();
+            canvas.Repaint();
             main.Enabled = true;
             this.Close();
         }

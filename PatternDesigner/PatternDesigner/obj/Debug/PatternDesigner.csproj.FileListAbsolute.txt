@@ -51,3 +51,21 @@ C:\Users\USER\Documents\Visual Studio 2015\Projects\Pattern Designer Hide\Patter
 C:\Users\USER\Documents\Visual Studio 2015\Projects\Pattern Designer Hide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.exe
 C:\Users\USER\Documents\Visual Studio 2015\Projects\Pattern Designer Hide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.pdb
 C:\Users\USER\Documents\Visual Studio 2015\Projects\Pattern Designer Hide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\pdhide-properties\pdhide\PatternDesigner\PatternDesigner\bin\Debug\PatternDesigner.exe.config
+C:\Users\Administrator\Desktop\pdhide-properties\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.exe
+C:\Users\Administrator\Desktop\pdhide-properties\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.pdb
+C:\Users\Administrator\Desktop\pdhide-properties\pdhide\PatternDesigner\PatternDesigner\bin\Debug\PatternDesigner.exe
+C:\Users\Administrator\Desktop\pdhide-properties\pdhide\PatternDesigner\PatternDesigner\bin\Debug\PatternDesigner.pdb
+C:\Users\Administrator\Desktop\pdhide-properties\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\pdhide-properties\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.IconSet.resources
+C:\Users\Administrator\Desktop\pdhide-properties\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.Properties.Resources.resources
+C:\Users\Administrator\Desktop\pdhide-properties\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.csproj.GenerateResource.Cache
+D:\SEMESTER 7\new\pdhide\PatternDesigner\PatternDesigner\bin\Debug\PatternDesigner.exe.config
+D:\SEMESTER 7\new\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.exe
+D:\SEMESTER 7\new\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.pdb
+D:\SEMESTER 7\new\pdhide\PatternDesigner\PatternDesigner\bin\Debug\PatternDesigner.exe
+D:\SEMESTER 7\new\pdhide\PatternDesigner\PatternDesigner\bin\Debug\PatternDesigner.pdb
+D:\SEMESTER 7\new\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.csprojResolveAssemblyReference.cache
+D:\SEMESTER 7\new\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.IconSet.resources
+D:\SEMESTER 7\new\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.Properties.Resources.resources
+D:\SEMESTER 7\new\pdhide\PatternDesigner\PatternDesigner\obj\Debug\PatternDesigner.csproj.GenerateResource.Cache

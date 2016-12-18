@@ -277,17 +277,17 @@ namespace PatternDesigner.Shapes
 
         public void GenerateFile(string path)
         {
-            if(this.nama != "")
+            if (this.nama != "")
             {
                 string newPath = path + this.nama + ".cs";
                 //Debug.WriteLine(newPath);
-                if(File.Exists(newPath))
+                if (File.Exists(newPath))
                 {
                     File.Delete(newPath);
                 }
 
-                String isi = "public class " + this.nama + "() \n{";
-                foreach(Attribute atr in att)
+                String isi = "public class " + this.nama + " \n{";
+                foreach (Attribute atr in att)
                 {
                     isi += "\t " + atr.visibility + " " + atr.tipe + " " + atr.nama + ";\n";
                 }
@@ -299,14 +299,14 @@ namespace PatternDesigner.Shapes
                     isi += "\t " + met.visibility + " " + met.tipe + " " + met.nama + " {}\n";
                 }
 
+                isi += "}";
+
                 using (FileStream fs = File.Create(newPath))
                 {
                     Byte[] info = new UTF8Encoding(true).GetBytes(isi);
                     // Add some information to the file.
                     fs.Write(info, 0, info.Length);
                 }
-
-                isi += "}";
             }
 
         }
