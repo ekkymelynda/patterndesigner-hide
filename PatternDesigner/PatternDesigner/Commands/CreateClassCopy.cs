@@ -16,20 +16,21 @@ namespace PatternDesigner.Commands
         private Rectangle rectangle;
 
 
-        public CreateClassCopy(ICanvas canvas, Vertex choosenObject)
+        public CreateClassCopy(ICanvas canvas)
         {
             this.canvas = canvas;
-            this.choosenObject = choosenObject;
+            
         }
 
         public void Execute()
         {
-            rectangle = new Rectangle(choosenObject.X + 10, choosenObject.Y + 10, choosenObject.Width, choosenObject.Height);
+            this.choosenObject = (Vertex)canvas.GetSelectedObject();
+            
+            rectangle = new Rectangle(choosenObject.X + 10 + choosenObject.Width, choosenObject.Y, choosenObject.Width, choosenObject.Height);
 
             canvas.AddDrawingObject(rectangle);
             canvas.AddDrawingObject(rectangle);
             canvas.AddDrawingObject(rectangle);
-            rectangle.Deselect();
 
             rectangle.nama = choosenObject.nama;
 
@@ -49,6 +50,9 @@ namespace PatternDesigner.Commands
                 }
             }
 
+            choosenObject.Deselect();
+            rectangle.Select();
+            canvas.SetSelectedObject(rectangle);
             ICommand command = new CreateClass(rectangle,canvas);
             canvas.AddCommand(command);
         }

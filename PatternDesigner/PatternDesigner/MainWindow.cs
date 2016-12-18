@@ -268,7 +268,7 @@ namespace PatternDesigner
                             canvas1.GetCopyStack().Pop();
                         }
 
-                        ICommand command = new CreateClassCopy(canvas1, choosenObject);
+                        ICommand command = new CreateClassCopy(canvas1);
                         canvas1.AddCopyCommand(command);
                     }
                 }
