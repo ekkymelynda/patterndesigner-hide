@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PatternDesigner.Colom;
 
 namespace PatternDesigner.Commands
 {
@@ -18,12 +19,14 @@ namespace PatternDesigner.Commands
         private List<Method> newMethod = new List<Method>();
         private List<Attribute> newAttribute = new List<Attribute>();
 
-
-        public ApplyClassProperties(Vertex vertex, string newName, string oldName, List<Method> meth, List<Attribute> att,  TextBox[] newAttributeBox, TextBox[] newNameAttributebox, TextBox[] newTypeAttributeBox, TextBox[] newMethodBox, TextBox[] newNameMethodbox, TextBox[] newTypeMethodBox, int i, int j)
+        //public ApplyClassProperties(Vertex vertex, string newName, string oldName, List<Method> meth, List<Attribute> att,  TextBox[] newAttributeBox, TextBox[] newNameAttributebox, TextBox[] newTypeAttributeBox, TextBox[] newMethodBox, TextBox[] newNameMethodbox, TextBox[] newTypeMethodBox, int i, int j)
+        public ApplyClassProperties(Vertex vertex, string newName, string oldName, List<Method> meth, List<Attribute> att, List<Baris> listBaris, List<Baris> listBarisMethod , int i, int j)
         {
             this.vertex = vertex;
             this.oldName = oldName;
             this.newName = newName;
+
+            Debug.WriteLine("i,j = " + i + j);
 
             if (att.Count() != 0)
             {
@@ -43,17 +46,17 @@ namespace PatternDesigner.Commands
 
             if (i > 0)
             {
-                for (int a = 1; a < i; a++)
+                for (int a = 0; a < i; a++)
                 {
-                    newAttribute.Add(new Attribute() { visibility = newAttributeBox[a].Text, nama = newNameAttributebox[a].Text, tipe = newTypeAttributeBox[a].Text });
+                    newAttribute.Add(new Attribute() { visibility = ((KotakInput)listBaris[a].kolom[0]).kotak.Text, nama = ((KotakInput)listBaris[a].kolom[1]).kotak.Text, tipe = ((KotakInput)listBaris[a].kolom[2]).kotak.Text });
                 }
             }
 
             if (j > 0)
             {
-                for (int b = 1; b < j; b++)
+                for (int b = 0; b < j; b++)
                 {
-                    newMethod.Add(new Method() { visibility = newMethodBox[b].Text, nama = newNameMethodbox[b].Text, tipe = newTypeMethodBox[b].Text });
+                    newMethod.Add(new Method() { visibility = ((KotakInput)listBarisMethod[b].kolom[0]).kotak.Text, nama = ((KotakInput)listBarisMethod[b].kolom[1]).kotak.Text, tipe = ((KotakInput)listBarisMethod[b].kolom[2]).kotak.Text });
                 }
             }
 

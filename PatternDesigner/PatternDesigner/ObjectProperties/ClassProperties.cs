@@ -8,15 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using PatternDesigner.Colom;
 using PatternDesigner.Commands;
 
 namespace PatternDesigner
 {
     public partial class ClassProperties : Form
     {
-        //private Form classForm;
-        public ICanvas canvas;
         private TextBox txt, jenisLabel, namaLabel, tipeLabel, namaMethod, tipeMethod, visibilityMethod;
+        public ICanvas canvas;
         private Vertex objek;
         private Button[] deleteButton = new Button[100];
         private Button newButton, addAtributButton, cancelButton, addMethodButton, deleteButton1, deleteMethodButton;
@@ -58,9 +58,10 @@ namespace PatternDesigner
 
         private Form main;
 
-        public ClassProperties(Vertex obj, Form main1)
+        public ClassProperties(ICanvas canvas, Vertex obj, Form main1)
         {
             InitializeComponent();
+            this.canvas = canvas;
             this.main = main1;
             this.objek = obj;
             this.Size = new Size(600, 400);
@@ -83,6 +84,7 @@ namespace PatternDesigner
             cancelButton.Location = new Point(440, 320);
             cancelButton.Size = new Size(50, 20);
             cancelButton.Text = "Cancel";
+            cancelButton.Click += CancelButton_Click;
             this.Controls.Add(cancelButton);
 
             string operation = "TabPage " + (addAtributTabControl.TabCount + 1).ToString();
@@ -180,8 +182,6 @@ namespace PatternDesigner
                 idxBaris++;
             }
 
-
-
             //method area
             Baris barisMethod = new Baris(1, Method);
             barisMethod.Init(xMethod, 45);
@@ -259,6 +259,17 @@ namespace PatternDesigner
             }
         }
 
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            main.Enabled = true;
+            this.Close();
+        }
+
+        private void DeleteMethodButton_Click(object sender, EventArgs e, int index)
+        {
+
+        }
+
         private void AddMethodButton_Click(object sender, EventArgs e)
         {
             barisMethod = new Baris(idxBarisMethod, Method);
@@ -295,9 +306,18 @@ namespace PatternDesigner
 
         }
 
-        private void DeleteMethodButton_Click(object sender, EventArgs e, int index)
+        private void Delete_Click(object sender, EventArgs e, int indexBaris)
         {
-            
+            /*
+                this.listBaris.Remove(listBaris[0]);
+                listBaris[0].Dispose();
+                Debug.WriteLine("MASUK DELETE");
+                idxBaris--; //dibuat link list
+                foreach(Baris baris in listBaris)
+                {
+                    baris.DrawBaris();
+                }
+            */
         }
 
         private void AddAtributButton_Click(object sender, EventArgs e)
@@ -322,7 +342,7 @@ namespace PatternDesigner
             ButtonColom delete = new ButtonColom(Atribut, "HAPUS");
             delete.setSize(70, 20);
             Tombol.Add(delete);
-            delete.tombol.Click += delegate (object s, EventArgs ee) { Delete_Click(s, ee, idxBaris - 1); };
+            delete.tombol.Click += delegate (object s, EventArgs ee) { Delete_click(s, ee, idxBaris - 1); } ;
             baris.AddKolom(delete);
 
             baris.DrawBaris();
@@ -331,8 +351,9 @@ namespace PatternDesigner
             idxBaris++;
         }
 
-        private void Delete_Click(object sender, EventArgs e, int indexBaris)
-        {/*
+        private void Delete_click(object sender, EventArgs e, int indexBaris)
+        {
+            /*
             this.listBaris.Remove(listBaris[0]);
             listBaris[0].Dispose();
             Debug.WriteLine("MASUK DELETE");
@@ -341,38 +362,17 @@ namespace PatternDesigner
             {
                 baris.DrawBaris();
             }*/
-
         }
 
-        private void OkButton_Click(object sender, EventArgs e)
+        private void NewButton_Click(object sender, EventArgs e)
         {
-            ICommand command = new ApplyClassProperties(this.objek, txt.Text, this.objek.nama, this.objek.meth, this.objek.att, 
-                               this.atributBox, this.nameAtributBox, this.typeAtributBox, 
-                               this.methodBox, this.namemethodBox, this.typemethodBox, i , j);
+            ICommand command = new ApplyClassProperties(this.objek, txt.Text, this.objek.nama, this.objek.meth, this.objek.att,
+                               this.listBaris, this.listBarisMethod, idxBaris, idxBarisMethod);
             canvas.AddCommand(command);
             command.Execute();
             canvas.Repaint();
             main.Enabled = true;
             this.Close();
         }
-
-            //method area
-            objek.meth.Clear();
-
-            for (int b = 0; b < idxBarisMethod; b++)
-            {
-                if (((KotakInput)listBarisMethod[b].kolom[0]).kotak.Text != "" && ((KotakInput)listBarisMethod[b].kolom[1]).kotak.Text != "" && ((KotakInput)listBarisMethod[b].kolom[2]).kotak.Text != "")
-                {
-                    this.objek.meth.Add(new Method() { visibility = ((KotakInput)listBarisMethod[b].kolom[0]).kotak.Text, nama = ((KotakInput)listBarisMethod[b].kolom[1]).kotak.Text, tipe = ((KotakInput)listBarisMethod[b].kolom[2]).kotak.Text });
-                }
-            }
-
-        private void CancelButton_Click(object sender, EventArgs e)
-        {
-            main.Enabled = true;
-            this.Close();
-        }
-        }
-
     }
 }
