@@ -13,7 +13,7 @@ namespace PatternDesigner.Tools
     class DeleteTool : ToolStripButton, ITool
     {
         private ICanvas canvas;
-        private DrawingObject selectedObject;
+        private List<DrawingObject> selectedObject;
         Guid id_object;
         private int xInitial;
         private int yInitial;
@@ -52,14 +52,14 @@ namespace PatternDesigner.Tools
             if (e.Button == MouseButtons.Left && canvas != null)
             {
                 canvas.DeselectAllObjects();
-                selectedObject = canvas.SelectObjectAt(e.X, e.Y);
-                if (selectedObject != null)
+                selectedObject.Add(canvas.SelectObjectAt(e.X, e.Y));
+                if (selectedObject.First() != null)
                 {
                     Form main = Form.ActiveForm;
-                    DialogDelete fm = new DialogDelete(selectedObject, main, canvas);
-                    main.Enabled = false;
-                    fm.ControlBox = false;
-                    fm.Show();
+                    //DialogDelete fm = new DialogDelete(selectedObject.Cast<Vertex>().ToList(), main, canvas);
+                    //main.Enabled = false;
+                    //fm.ControlBox = false;
+                    //fm.Show();
                 }
             }
         }

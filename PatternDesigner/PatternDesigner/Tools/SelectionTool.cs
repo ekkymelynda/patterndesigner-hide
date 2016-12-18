@@ -70,6 +70,8 @@ namespace PatternDesigner.Tools
                 }
             } else if(e.Button == MouseButtons.Right && canvas != null)
             {
+                if (listSelectedObject.Count == 0)
+                    canvas.DeselectAllObjects();
 
                 selectedObject = canvas.SelectObjectAt(e.X, e.Y);
                 if (selectedObject != null && selectedObject is Vertex && !listSelectedObject.Contains(selectedObject))
@@ -78,6 +80,18 @@ namespace PatternDesigner.Tools
                     this.yMouseDown = e.Y;
                     listSelectedObject.Add(selectedObject);
                 }
+            } else
+            {
+                if(listSelectedObject.Count > 0)
+                {
+                    foreach(Vertex tempVertexToDeselect in listSelectedObject)
+                    {
+                        tempVertexToDeselect.Deselect();
+                    }
+                    listSelectedObject.Clear();
+                    canvas.EmptyListSelectedObject();
+                }
+                
             }
         }
 
@@ -102,10 +116,11 @@ namespace PatternDesigner.Tools
         {
             if(!((e.X - this.xMouseDown) == 0 && (e.Y -this.yMouseDown) == 0) && listSelectedObject.Count > 0)
             {
+                Debug.WriteLine("add command");
                 ICommand command = new TranslateListVertex(listSelectedObject.Cast<Vertex>().ToList(), (int)(e.X - this.xMouseDown), (int)(e.Y - this.yMouseDown));
                 canvas.AddCommand(command);
-                listSelectedObject.Clear();
             }
+            canvas.SetListSelectedObecjt(listSelectedObject);
         }
 
         public void ToolMouseDoubleClick(object sender, MouseEventArgs e)

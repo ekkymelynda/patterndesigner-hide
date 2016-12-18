@@ -46,6 +46,7 @@ namespace PatternDesigner
                 {
                     StartingObject = (Vertex)canvas.GetObjectAt(e.X, e.Y);
                     MakeLine();
+                    
                     line.Endpoint = new System.Drawing.Point(e.X, e.Y);
                     canvas.AddDrawingObject(line);
                 }
@@ -72,17 +73,30 @@ namespace PatternDesigner
                     if (canvas.GetObjectAt(e.X, e.Y) is Vertex)
                     {
                         EndingObject = (Vertex)canvas.GetObjectAt(e.X, e.Y);
-                        line.Endpoint = new System.Drawing.Point(EndingObject.X, (EndingObject.Height / 2) + EndingObject.Y);
-                        line.Select();
+                        foreach(Edge edge in StartingObject.GetEdgeList()) {
+                            if(edge.GetEndVertex() == EndingObject || edge.GetStartVertex() == EndingObject)
+                            {
+                                canvas.RemoveDrawingObject(line);
+                                
+                                line = null;
+                                break;
+                            }
+                        }
+                        if(line != null)
+                        {
+                            line.Endpoint = new System.Drawing.Point(EndingObject.X, (EndingObject.Height / 2) + EndingObject.Y);
+                            line.Select();
 
-                        StartingObject.Subscribe(line);
-                        line.AddVertex(StartingObject);
+                            StartingObject.Subscribe(line);
+                            line.AddVertex(StartingObject);
 
-                        EndingObject.Subscribe(line);
-                        line.AddVertex(EndingObject);
+                            EndingObject.Subscribe(line);
+                            line.AddVertex(EndingObject);
 
-                        ICommand command = new CreateRelationship(line, canvas);
-                        canvas.AddCommand(command);
+                            ICommand command = new CreateRelationship(line, canvas);
+                            canvas.AddCommand(command);
+                        }
+                        
                     }
                     else
                     {

@@ -64,9 +64,9 @@ namespace PatternDesigner.ObjectProperties
             if(this.objek is Vertex)
             {
                 Vertex deletedClass = (Vertex)this.objek;
-                ICommand command = new DeleteClass(deletedClass, canvas);
-                canvas.AddCommand(command);
-                command.Execute();
+                //ICommand command = new DeleteClass(deletedClass, canvas);
+                //canvas.AddCommand(command);
+                //command.Execute();
             }
             else if(this.objek is Edge)
             {

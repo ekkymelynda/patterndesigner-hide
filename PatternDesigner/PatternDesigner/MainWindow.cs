@@ -169,7 +169,7 @@ namespace PatternDesigner
             this.toolbox.AddTool(new DependencyTool());
             this.toolbox.AddTool(new RealizationTool());
 	        this.toolbox.AddSeparator();
-            this.toolbox.AddTool(new DeleteTool());
+            //this.toolbox.AddTool(new DeleteTool());
             this.toolbox.ToolSelected += Toolbox_ToolSelected;
 
             #endregion
@@ -218,10 +218,6 @@ namespace PatternDesigner
             ICanvas canvas = this.editor.GetSelectedCanvas();
             switch (keyData)
             {
-                case Keys.Shift:
-                    MessageBox.Show("sdfsdf");
-                    break;
-
                 case Keys.Control | Keys.Z:
                     if (canvas.GetUndoStack().Count > 0)
                     {
@@ -270,10 +266,10 @@ namespace PatternDesigner
                 case Keys.Delete:
                     if(canvas != null)
                     {
-                        Vertex deletedVertex = (Vertex)canvas.GetSelectedObject();
-                        if(deletedVertex != null)
+                        List<DrawingObject> listSelectedObject = canvas.GetListSelectedObject();
+                        if(listSelectedObject.Count > 0)
                         {
-                            ICommand command = new DeleteClass(deletedVertex, canvas);
+                            ICommand command = new DeleteClass(listSelectedObject.Cast<Vertex>().ToList(), canvas);
                             canvas.AddCommand(command);
                             command.Execute();
                             canvas.Repaint();

@@ -11,42 +11,49 @@ namespace PatternDesigner.Commands
 {
     public class DeleteClass : Command
     {
-        private Vertex vertex;
-
-        public DeleteClass(Vertex vertex, ICanvas canvas)
+        //private Vertex vertex;
+        private List<Vertex> vertexs;
+        public DeleteClass(List<Vertex> vertexs, ICanvas canvas)
         {
-            this.vertex = vertex;
+            this.vertexs = vertexs;
             this.canvas = canvas;
             removeRedoStack();
         }
 
         public override void Execute()
         {
-            this.canvas.RemoveDrawingObject(vertex);
-            this.canvas.RemoveDrawingObject(vertex);
-            this.canvas.RemoveDrawingObject(vertex);
-
-            foreach(Edge edge in vertex.GetEdgeList())
+            foreach(Vertex vertex in vertexs)
             {
-               
-                this.canvas.RemoveDrawingObject(edge);
-                
+                this.canvas.RemoveDrawingObject(vertex);
+                this.canvas.RemoveDrawingObject(vertex);
+                this.canvas.RemoveDrawingObject(vertex);
+
+                foreach (Edge edge in vertex.GetEdgeList())
+                {
+
+                    this.canvas.RemoveDrawingObject(edge);
+
+                }
             }
         }
 
         public override void Unexecute()
         {
-            this.canvas.AddDrawingObject(vertex);
-            this.canvas.AddDrawingObject(vertex);
-            this.canvas.AddDrawingObject(vertex);
-
-            foreach (Edge edge in vertex.GetEdgeList())
+            foreach (Vertex vertex in vertexs)
             {
-                if (canvas.GetListDrawingObject().Contains(edge.GetStartVertex()) && canvas.GetListDrawingObject().Contains(edge.GetEndVertex()))
+                this.canvas.AddDrawingObject(vertex);
+                this.canvas.AddDrawingObject(vertex);
+                this.canvas.AddDrawingObject(vertex);
+
+                foreach (Edge edge in vertex.GetEdgeList())
                 {
-                    this.canvas.AddDrawingObject(edge);
+                    if (canvas.GetListDrawingObject().Contains(edge.GetStartVertex()) && canvas.GetListDrawingObject().Contains(edge.GetEndVertex()))
+                    {
+                        this.canvas.AddDrawingObject(edge);
+                    }
                 }
             }
+            
         }
     }
 }
