@@ -67,6 +67,7 @@
     <Compile Include="Commands\DeleteClass.cs" />
     <Compile Include="Commands\DeleteObject.cs" />
     <Compile Include="Commands\DeleteRelationship.cs" />
+    <Compile Include="Commands\Exit.cs" />
     <Compile Include="Commands\Paste.cs" />
     <Compile Include="Commands\CreateClassCopy.cs" />
     <Compile Include="Commands\Copy.cs" />

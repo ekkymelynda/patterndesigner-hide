@@ -64,6 +64,7 @@ namespace PatternDesigner
             Redo redo = new Redo(canvas);
             Copy copy = new Copy(canvas);
             Paste paste = new Paste(canvas);
+            Exit exit = new Exit();
    
 
             #endregion
@@ -86,6 +87,12 @@ namespace PatternDesigner
 
             DefaultMenuItem generateMenuItem = new DefaultMenuItem("Generate");
             this.menubar.AddMenuItem(generateMenuItem);
+
+            fileMenuItem.AddSeparator();
+
+            DefaultMenuItem exitMenuItem = new DefaultMenuItem("Exit");
+            exitMenuItem.SetCommand(exit);
+            fileMenuItem.AddMenuItem(exitMenuItem);
 
             DefaultMenuItem creationalSubMenu = new DefaultMenuItem("Creational Pattern");
             generateMenuItem.AddMenuItem(creationalSubMenu);
