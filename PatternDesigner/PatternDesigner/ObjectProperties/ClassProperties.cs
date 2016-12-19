@@ -366,7 +366,7 @@ namespace PatternDesigner
 
         private void OkButton_Click(object sender, EventArgs e)
         {
-            ICommand command = new ApplyClassProperties(this.objek, txt.Text, this.objek.nama, this.objek.meth, this.objek.att, 
+            ICommand command = new ApplyClassProperties(this.canvas, this.objek, txt.Text, this.objek.nama, this.objek.meth, this.objek.att, 
                                this.atributBox, this.nameAtributBox, this.typeAtributBox, 
                                this.methodBox, this.namemethodBox, this.typemethodBox, i , j);
             canvas.AddCommand(command);

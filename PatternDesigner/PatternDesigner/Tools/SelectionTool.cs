@@ -62,10 +62,13 @@ namespace PatternDesigner.Tools
                 canvas.DeselectAllObjects();
                 
                 selectedObject = canvas.SelectObjectAt(e.X, e.Y);
-                if (selectedObject != null && selectedObject is Vertex)
+                if (selectedObject != null)
                 {
-                    this.xMouseDown = e.X;
-                    this.yMouseDown = e.Y;
+                    if(selectedObject is Vertex)
+                    {
+                        this.xMouseDown = e.X;
+                        this.yMouseDown = e.Y;
+                    }
                     listSelectedObject.Add(selectedObject);
                 }
             } else if(e.Button == MouseButtons.Right && canvas != null)
@@ -74,19 +77,22 @@ namespace PatternDesigner.Tools
                     canvas.DeselectAllObjects();
 
                 selectedObject = canvas.SelectObjectAt(e.X, e.Y);
-                if (selectedObject != null && selectedObject is Vertex && !listSelectedObject.Contains(selectedObject))
+                if (selectedObject != null && !listSelectedObject.Contains(selectedObject))
                 {
-                    this.xMouseDown = e.X;
-                    this.yMouseDown = e.Y;
+                    if(selectedObject is Vertex)
+                    {
+                        this.xMouseDown = e.X;
+                        this.yMouseDown = e.Y;
+                    }
                     listSelectedObject.Add(selectedObject);
                 }
             } else
             {
                 if(listSelectedObject.Count > 0)
                 {
-                    foreach(Vertex tempVertexToDeselect in listSelectedObject)
+                    foreach(DrawingObject tempObjectToDeselect in listSelectedObject)
                     {
-                        tempVertexToDeselect.Deselect();
+                        tempObjectToDeselect.Deselect();
                     }
                     listSelectedObject.Clear();
                     canvas.EmptyListSelectedObject();
@@ -106,19 +112,29 @@ namespace PatternDesigner.Tools
             {
                 foreach (DrawingObject rectangle in listSelectedObject)
                 {
-                    Vertex curVertex = (Vertex)rectangle;
-                    curVertex.Translate(xAmount, yAmount);
+                    if(rectangle is Vertex)
+                    {
+                        Vertex curVertex = (Vertex)rectangle;
+                        curVertex.Translate(xAmount, yAmount);
+                    }
                 }
             }
         }
 
         public void ToolMouseUp(object sender, MouseEventArgs e)
         {
-            if(!((e.X - this.xMouseDown) == 0 && (e.Y -this.yMouseDown) == 0) && listSelectedObject.Count > 0)
+            if (!((e.X - this.xMouseDown) == 0 && (e.Y - this.yMouseDown) == 0) && listSelectedObject.Count > 0)
             {
-                Debug.WriteLine("add command");
-                ICommand command = new TranslateListVertex(listSelectedObject.Cast<Vertex>().ToList(), (int)(e.X - this.xMouseDown), (int)(e.Y - this.yMouseDown));
-                canvas.AddCommand(command);
+                foreach(DrawingObject obj in listSelectedObject)
+                {
+                    if(obj is Vertex)
+                    {
+                        Debug.WriteLine("add command");
+                        ICommand command = new TranslateListVertex(listSelectedObject.Cast<Vertex>().ToList(), (int)(e.X - this.xMouseDown), (int)(e.Y - this.yMouseDown));
+                        canvas.AddCommand(command);
+                        break;
+                    }
+                }
             }
             canvas.SetListSelectedObecjt(listSelectedObject);
         }

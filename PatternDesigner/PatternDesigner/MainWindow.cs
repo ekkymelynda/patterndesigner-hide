@@ -269,7 +269,7 @@ namespace PatternDesigner
                         List<DrawingObject> listSelectedObject = canvas.GetListSelectedObject();
                         if(listSelectedObject.Count > 0)
                         {
-                            ICommand command = new DeleteClass(listSelectedObject.Cast<Vertex>().ToList(), canvas);
+                            ICommand command = new DeleteObject(listSelectedObject, canvas);
                             canvas.AddCommand(command);
                             command.Execute();
                             canvas.Repaint();

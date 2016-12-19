@@ -70,7 +70,7 @@ namespace PatternDesigner
             {
                 if (e.Button == MouseButtons.Left)
                 {
-                    if (canvas.GetObjectAt(e.X, e.Y) is Vertex)
+                    if (canvas.GetObjectAt(e.X, e.Y) is Vertex && canvas.GetObjectAt(e.X, e.Y) != StartingObject)
                     {
                         EndingObject = (Vertex)canvas.GetObjectAt(e.X, e.Y);
                         foreach(Edge edge in StartingObject.GetEdgeList()) {
@@ -95,13 +95,18 @@ namespace PatternDesigner
 
                             ICommand command = new CreateRelationship(line, canvas);
                             canvas.AddCommand(command);
+                            canvas.SetSelectedObject(line);
+                            canvas.DeselectAllObjects();
+                            line.Select();
                         }
                         
                     }
-                    else
+                    else if(!(canvas.GetSelectedObject() is Edge) || !(canvas.GetObjectAt(e.X, e.Y) is Vertex))
                     {
-                        canvas.RemoveDrawingObject(this.line);
+                        if(line != null)
+                            canvas.RemoveDrawingObject(this.line);
                     }
+                    line = null;
                 }
                 /*else if (e.Button == MouseButtons.Right)
                 {
