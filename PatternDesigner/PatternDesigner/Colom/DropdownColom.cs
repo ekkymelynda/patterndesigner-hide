@@ -15,18 +15,17 @@ namespace PatternDesigner.Colom
         public DropdownColom(TabPage tabParam)
         {
             tab = tabParam;
-            //nama = name;
             dropDown = new ComboBox();
-            dropDown.SelectedIndexChanged += dynamicDDL_SelectedIndexChanged;
             dropDown.Items.Add("public");
             dropDown.Items.Add("private");
             dropDown.Items.Add("protected");
+            String name = this.dropDown.GetItemText(this.dropDown.SelectedItem);
+            nama = name;
         }
 
-        protected void dynamicDDL_SelectedIndexChanged(object sender, EventArgs e)
+        public void setNama(String nama)
         {
-            //do something here
-            string strINeedABreakPoint = string.Empty;
+            this.nama = nama;
         }
 
         public override void init(int lokasiX, int lokasiY)

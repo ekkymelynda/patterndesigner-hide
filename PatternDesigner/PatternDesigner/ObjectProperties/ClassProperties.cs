@@ -153,11 +153,11 @@ namespace PatternDesigner
             {
                 baris = new Baris(idxBaris, Atribut);
                 baris.Init(xAtt, yAtt);
-                KotakInput kotakAttribut = new KotakInput(Atribut);
+                DropdownColom kotakAttribut = new DropdownColom(Atribut);
                 KotakInput kotakAttribut1 = new KotakInput(Atribut);
                 KotakInput kotakAttribut2 = new KotakInput(Atribut);
                 kotakAttribut.setNama(atte.visibility);
-                kotakAttribut.kotak.Text = atte.visibility;
+                kotakAttribut.dropDown.Text = atte.visibility;
                 kotakAttribut1.setNama(atte.nama);
                 kotakAttribut1.kotak.Text = atte.nama;
                 kotakAttribut2.setNama(atte.tipe);

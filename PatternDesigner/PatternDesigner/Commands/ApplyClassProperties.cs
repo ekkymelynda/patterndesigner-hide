@@ -46,7 +46,7 @@ namespace PatternDesigner.Commands
             {
                 for (int a = 0; a < i; a++)
                 {
-                    newAttribute.Add(new Attribute() { visibility = ((KotakInput)listBaris[a].kolom[0]).kotak.Text, nama = ((KotakInput)listBaris[a].kolom[1]).kotak.Text, tipe = ((KotakInput)listBaris[a].kolom[2]).kotak.Text });
+                    newAttribute.Add(new Attribute() { visibility = ((DropdownColom)listBaris[a].kolom[0]).dropDown.Text, nama = ((KotakInput)listBaris[a].kolom[1]).kotak.Text, tipe = ((KotakInput)listBaris[a].kolom[2]).kotak.Text });
                 }
             }
 
