@@ -19,9 +19,10 @@ namespace PatternDesigner.Commands
         private string newRelationEnd;
 
 
-        public ApplyRelationshipProperties(Edge edge, string oldName, string newName, string oldRelationStart, string newRelationStart, string oldRelationEnd, string newRelationEnd)
+        public ApplyRelationshipProperties(ICanvas canvas, Edge edge, string oldName, string newName, string oldRelationStart, string newRelationStart, string oldRelationEnd, string newRelationEnd)
         {
-            this.edge = edge;
+            this.canvas = canvas;
+            this.edge   = edge;
             this.oldName = oldName;
             this.newName = newName;
             this.oldRelationStart = oldRelationStart;

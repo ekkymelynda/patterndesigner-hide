@@ -79,7 +79,7 @@ namespace PatternDesigner
 
         private void ApplyButton_Click(object sender, EventArgs e)
         {
-            ICommand command = new ApplyRelationshipProperties(edge, edge.name, relationshipName.Text, edge.relationStart, relationStart.Text, edge.relationEnd, relationEnd.Text);
+            ICommand command = new ApplyRelationshipProperties(canvas, edge, edge.name, relationshipName.Text, edge.relationStart, relationStart.Text, edge.relationEnd, relationEnd.Text);
             canvas.AddCommand(command);
             command.Execute();
             canvas.Repaint();
