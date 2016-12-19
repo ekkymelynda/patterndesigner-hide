@@ -80,7 +80,9 @@ namespace PatternDesigner.Tools
             {
                 if (e.Button == MouseButtons.Left)
                 {
-                    ICommand command = new CreateClass(this.rectangle, canvas);
+                    List<Vertex> newVertexs = new List<Vertex>();
+                    newVertexs.Add(rectangle);
+                    ICommand command = new CreateClass(newVertexs, canvas);
                     canvas.AddCommand(command);
                     canvas.DeselectAllObjects();
                     this.rectangle.Select();
