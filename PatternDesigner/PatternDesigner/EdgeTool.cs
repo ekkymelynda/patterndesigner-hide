@@ -46,8 +46,10 @@ namespace PatternDesigner
                 {
                     StartingObject = (Vertex)canvas.GetObjectAt(e.X, e.Y);
                     MakeLine();
+                    
                     line.Endpoint = new System.Drawing.Point(e.X, e.Y);
                     canvas.AddDrawingObject(line);
+                    canvas.GetListSelectedObject().Clear();
                 }
             }
         }
@@ -69,33 +71,66 @@ namespace PatternDesigner
             {
                 if (e.Button == MouseButtons.Left)
                 {
-                    if (canvas.GetObjectAt(e.X, e.Y) is Vertex)
+                    if (canvas.GetObjectAt(e.X, e.Y) is Vertex && canvas.GetObjectAt(e.X, e.Y) != StartingObject)
                     {
                         EndingObject = (Vertex)canvas.GetObjectAt(e.X, e.Y);
-                        line.Endpoint = new System.Drawing.Point(EndingObject.X, (EndingObject.Height / 2) + EndingObject.Y);
-                        line.Select();
+                        foreach(Edge edge in StartingObject.GetEdgeList()) {
+                            if(edge.GetEndVertex() == EndingObject || edge.GetStartVertex() == EndingObject)
+                            {
+                                canvas.RemoveDrawingObject(line);
+                                
+                                line = null;
+                                break;
+                            }
+                        }
+                        if(line != null)
+                        {
+                            line.Endpoint = new System.Drawing.Point(EndingObject.X, (EndingObject.Height / 2) + EndingObject.Y);
+                            line.Select();
 
-                        StartingObject.Subscribe(line);
-                        line.AddVertex(StartingObject);
+                            StartingObject.Subscribe(line);
+                            line.AddVertex(StartingObject);
 
-                        EndingObject.Subscribe(line);
-                        line.AddVertex(EndingObject);
+                            EndingObject.Subscribe(line);
+                            line.AddVertex(EndingObject);
 
-                        ICommand command = new CreateRelationship(line, canvas);
-                        canvas.AddCommand(command);
+                            ICommand command = new CreateRelationship(line, canvas);
+                            canvas.AddCommand(command);
+                            canvas.SetSelectedObject(line);
+                            canvas.DeselectAllObjects();
+                            line.Select();
+                        }
+                        
                     }
-                    else
+                    else if(!(canvas.GetSelectedObject() is Edge) || !(canvas.GetObjectAt(e.X, e.Y) is Vertex))
                     {
-                        canvas.RemoveDrawingObject(this.line);
+                        if(line != null)
+                            canvas.RemoveDrawingObject(this.line);
                     }
+                    line = null;
                 }
-                else if (e.Button == MouseButtons.Right)
+                /*else if (e.Button == MouseButtons.Right)
                 {
                     canvas.RemoveDrawingObject(this.line);
-                }
+                }*/
             }
         }
 
         public void ToolMouseDoubleClick(object sender, MouseEventArgs e){}
+
+        public void ToolKeyUp(object sender, KeyEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ToolKeyDown(object sender, KeyEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ToolHotKeysDown(object sender, Keys e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

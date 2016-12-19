@@ -17,10 +17,11 @@ namespace PatternDesigner
 {
     public partial class MainWindow : Form
     {
-        private IToolbox toolbox, toolboxTop;
+        private IToolbox toolbox;
         private IEditor editor;
         private IToolbar toolbar;
         private IMenubar menubar;
+        
 
         public MainWindow()
         {
@@ -38,9 +39,9 @@ namespace PatternDesigner
             this.editor = new DefaultEditor();
             this.toolStripContainer1.ContentPanel.Controls.Add((Control)this.editor);
 
-            ICanvas canvas1 = new DefaultCanvas();
-            canvas1.Name = "Untitled-1";
-            this.editor.AddCanvas(canvas1);
+            ICanvas canvas = new DefaultCanvas();
+            canvas.Name = "Untitled-1";
+            this.editor.AddCanvas(canvas);
 
             /*ICanvas canvas2 = new DefaultCanvas();
             canvas2.Name = "Untitled-2";
@@ -49,8 +50,7 @@ namespace PatternDesigner
             #endregion
 
             #region Commands
-
-            ICanvas canvas = this.editor.GetSelectedCanvas();
+            
             AddPattern1 addPattern1 = new AddPattern1(canvas);
             AddFactoryPattern addFactoryPattern = new AddFactoryPattern(canvas);
             AddCommandPattern addCommandPattern = new AddCommandPattern(canvas);
@@ -151,7 +151,6 @@ namespace PatternDesigner
             this.toolStripContainer1.LeftToolStripPanel.Controls.Add((Control)this.toolbox);
             this.editor.Toolbox = toolbox;
 
-
             #endregion
 
             #region Tools
@@ -170,7 +169,7 @@ namespace PatternDesigner
             this.toolbox.AddTool(new DependencyTool());
             this.toolbox.AddTool(new RealizationTool());
 	        this.toolbox.AddSeparator();
-            this.toolbox.AddTool(new DeleteTool());
+            //this.toolbox.AddTool(new DeleteTool());
             this.toolbox.ToolSelected += Toolbox_ToolSelected;
 
             #endregion
@@ -212,6 +211,75 @@ namespace PatternDesigner
 
             #endregion
 
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            ICanvas canvas = this.editor.GetSelectedCanvas();
+            switch (keyData)
+            {
+                case Keys.Control | Keys.Z:
+                    if (canvas.GetUndoStack().Count > 0)
+                    {
+                        ICommand command = canvas.GetUndoStack().Pop();
+                        command.Unexecute();
+                        canvas.Repaint();
+                        canvas.GetRedoStack().Push(command);
+                    }
+                    break;
+                case Keys.Control | Keys.Y:
+                    if (canvas.GetRedoStack().Count > 0)
+                    {
+                        ICommand command = canvas.GetRedoStack().Pop();
+                        command.Execute();
+                        canvas.Repaint();
+                        canvas.GetUndoStack().Push(command);
+                    }
+                    break;
+                case Keys.Control | Keys.C:
+                    DrawingObject selectedObject = canvas.GetSelectedObject();
+
+                    if (selectedObject != null)
+                    {
+                        if (selectedObject is Vertex)
+                        {
+                            Vertex choosenObject = (Vertex)selectedObject;
+
+                            while (canvas.GetCopyStack().Count > 0)
+                            {
+                                canvas.GetCopyStack().Pop();
+                            }
+
+                            ICommand command = new Commands.CreateClassCopy(canvas);
+                            canvas.AddCopyCommand(command);
+                        }
+                    }
+                    break;
+                case Keys.Control | Keys.V:
+                    if (canvas.GetCopyStack().Count > 0)
+                    {
+                        ICommand command = canvas.GetCopyStack().Peek();
+                        command.Execute();
+                        canvas.Repaint();
+                    }
+                    break;
+                case Keys.Delete:
+                    if(canvas != null)
+                    {
+                        List<DrawingObject> listSelectedObject = canvas.GetListSelectedObject();
+                        if(listSelectedObject.Count > 0)
+                        {
+                            ICommand command = new DeleteObject(listSelectedObject, canvas);
+                            canvas.AddCommand(command);
+                            command.Execute();
+                            canvas.Repaint();
+                        }
+                    }
+                    break;
+                
+            }
+
+            return base.ProcessCmdKey(ref msg, keyData);
         }
 
         private void Toolbox_ToolSelected(ITool tool)

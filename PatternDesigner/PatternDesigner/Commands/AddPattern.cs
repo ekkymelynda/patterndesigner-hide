@@ -10,15 +10,15 @@ using System.Threading.Tasks;
 
 namespace PatternDesigner.Commands
 {
-    public class AddPattern : ICommand
+    public class AddPattern : Command
     {
-        protected ICanvas canvas;
         protected Pen pen;
         //protected Edge line;
 
         public AddPattern(ICanvas canvas) 
         {
             this.canvas = canvas;
+            removeRedoStack();
         }
 
         public void setCanvas(ICanvas canvas)
@@ -197,12 +197,12 @@ namespace PatternDesigner.Commands
             directTools.line.AddVertex(directTools.EndingObject);
         }
 
-        public virtual void Execute()
+        public override void Execute()
         {
             
         }
 
-        public void Unexecute()
+        public override void Unexecute()
         {
             throw new NotImplementedException();
         }

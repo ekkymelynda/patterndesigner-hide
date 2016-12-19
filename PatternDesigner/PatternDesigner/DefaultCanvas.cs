@@ -18,6 +18,7 @@ namespace PatternDesigner
         private ITool activeTool;
         private List<DrawingObject> drawingObjects;
         private DrawingObject selectedObject;
+        public List<DrawingObject> listSelectedObject;
 
         public DefaultCanvas()
         {
@@ -26,7 +27,9 @@ namespace PatternDesigner
 
         private void Init()
         {
+            
             this.drawingObjects = new List<DrawingObject>();
+            this.listSelectedObject = new List<DrawingObject>();
             this.DoubleBuffered = true;
 
             this.BackColor = Color.White;
@@ -37,7 +40,7 @@ namespace PatternDesigner
             this.MouseUp += DefaultCanvas_MouseUp;
             this.MouseMove += DefaultCanvas_MouseMove;
             this.MouseDoubleClick += DefaultCanvas_DoubleClick;
-
+            
         }
 
         private void DefaultCanvas_MouseMove(object sender, MouseEventArgs e)
@@ -145,6 +148,11 @@ namespace PatternDesigner
             return selectedObject;
         }
 
+        public List<DrawingObject> GetListSelectedObject()
+        {
+            return listSelectedObject;
+        }
+
         public List<DrawingObject> GetListDrawingObject()
         {
             return drawingObjects;
@@ -188,6 +196,15 @@ namespace PatternDesigner
             copyStack.Push(command);
         }
 
-       
+        public void SetListSelectedObecjt(List<DrawingObject> listObj)
+        {
+            this.listSelectedObject = listObj;
+        }
+
+
+        public void EmptyListSelectedObject()
+        {
+            this.listSelectedObject.Clear();
+        }
     }
 }

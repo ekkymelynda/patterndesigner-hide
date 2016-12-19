@@ -52,6 +52,7 @@ namespace PatternDesigner.Tools
                 this.canvas.AddDrawingObject(this.rectangle);
                 this.canvas.AddDrawingObject(this.rectangle);
                 this.canvas.AddDrawingObject(this.rectangle);
+                canvas.GetListSelectedObject().Clear();
             }
         }
 
@@ -79,24 +80,43 @@ namespace PatternDesigner.Tools
             {
                 if (e.Button == MouseButtons.Left)
                 {
-                    ICommand command = new CreateClass(this.rectangle, canvas);
+                    List<Vertex> newVertexs = new List<Vertex>();
+                    newVertexs.Add(rectangle);
+                    ICommand command = new CreateClass(newVertexs, canvas);
                     canvas.AddCommand(command);
                     canvas.DeselectAllObjects();
                     this.rectangle.Select();
                     canvas.SetSelectedObject(this.rectangle);
+                    canvas.GetListSelectedObject().Add(this.rectangle);
+                    
                 }
-                else if (e.Button == MouseButtons.Right)
+                /*else if (e.Button == MouseButtons.Right)
                 {
                     canvas.RemoveDrawingObject(this.rectangle);
                     canvas.RemoveDrawingObject(this.rectangle);
                     canvas.RemoveDrawingObject(this.rectangle);
-                }
+                }*/
             }
         }
 
         public void ToolMouseDoubleClick(object sender, MouseEventArgs e)
         {
             
+        }
+
+        public void ToolKeyUp(object sender, KeyEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ToolKeyDown(object sender, KeyEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ToolHotKeysDown(object sender, Keys e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

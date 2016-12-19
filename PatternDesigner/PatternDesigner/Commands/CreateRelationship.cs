@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace PatternDesigner.Commands
 {
-    public class CreateRelationship : ICommand
+    public class CreateRelationship : Command
     {
         private Edge objek;
         private ICanvas canvas;
@@ -19,15 +19,16 @@ namespace PatternDesigner.Commands
         {
             this.objek = objek;
             this.canvas = canvas;
+            removeRedoStack();
         }
 
-        public void Execute()
+        public override void Execute()
         {
             this.canvas.AddDrawingObject(objek);
             objek.Update();
         }
 
-        public void Unexecute()
+        public override void Unexecute()
         {
             this.canvas.RemoveDrawingObject(objek);
         }

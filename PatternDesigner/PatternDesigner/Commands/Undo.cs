@@ -7,16 +7,17 @@ using System.Threading.Tasks;
 
 namespace PatternDesigner.Commands
 {
-    public class Undo : ICommand
+    public class Undo : Command
     {
         protected ICanvas canvas;
 
         public Undo(ICanvas canvas)
         {
             this.canvas = canvas;
+            removeRedoStack();
         }
 
-        public void Execute()
+        public override void Execute()
         {
             if (canvas.GetUndoStack().Count > 0)
             {
@@ -27,7 +28,7 @@ namespace PatternDesigner.Commands
             }
         }
 
-        public void Unexecute()
+        public override void Unexecute()
         {
            
         }

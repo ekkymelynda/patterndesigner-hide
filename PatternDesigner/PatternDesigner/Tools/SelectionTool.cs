@@ -12,6 +12,8 @@ namespace PatternDesigner.Tools
     public class SelectionTool : ToolStripButton, ITool
     {
         private ICanvas canvas;
+        private List<DrawingObject> listSelectedObject;
+        //private List<List<float>> coordinateListSelectedObject;
         private DrawingObject selectedObject;
         private int xInitial;
         private int yInitial;
@@ -46,16 +48,19 @@ namespace PatternDesigner.Tools
             this.ToolTipText = "Selection tool";
             this.Image = IconSet.cursor;
             this.CheckOnClick = true;
+            listSelectedObject = new List<DrawingObject>();
         }
 
         public void ToolMouseDown(object sender, MouseEventArgs e)
         {
             this.xInitial = e.X;
             this.yInitial = e.Y;
-
+            
             if (e.Button == MouseButtons.Left && canvas != null)
             {
+                listSelectedObject.Clear();
                 canvas.DeselectAllObjects();
+                
                 selectedObject = canvas.SelectObjectAt(e.X, e.Y);
                 if (selectedObject != null)
                 {
@@ -64,39 +69,74 @@ namespace PatternDesigner.Tools
                         this.xMouseDown = e.X;
                         this.yMouseDown = e.Y;
                     }
-                    
-                    id_object = selectedObject.ID;
+                    listSelectedObject.Add(selectedObject);
                 }
-            }
+            } else if(e.Button == MouseButtons.Right && canvas != null)
+            {
+                if (listSelectedObject.Count == 0)
+                    canvas.DeselectAllObjects();
 
+                selectedObject = canvas.SelectObjectAt(e.X, e.Y);
+                if (selectedObject != null && !listSelectedObject.Contains(selectedObject))
+                {
+                    if(selectedObject is Vertex)
+                    {
+                        this.xMouseDown = e.X;
+                        this.yMouseDown = e.Y;
+                    }
+                    listSelectedObject.Add(selectedObject);
+                }
+            } else
+            {
+                if(listSelectedObject.Count > 0)
+                {
+                    foreach(DrawingObject tempObjectToDeselect in listSelectedObject)
+                    {
+                        tempObjectToDeselect.Deselect();
+                    }
+                    listSelectedObject.Clear();
+                    canvas.EmptyListSelectedObject();
+                }
+                
+            }
         }
 
         public void ToolMouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left && canvas != null)
-            {
-                if (selectedObject != null)
-                {
-                    int xAmount = e.X - xInitial;
-                    int yAmount = e.Y - yInitial;
-                    xInitial = e.X;
-                    yInitial = e.Y;
+            int xAmount = e.X - xInitial;
+            int yAmount = e.Y - yInitial;
+            xInitial = e.X;
+            yInitial = e.Y;
 
-                    selectedObject.Translate(xAmount, yAmount);
+            if( (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right) && listSelectedObject.Count > 0 )
+            {
+                foreach (DrawingObject rectangle in listSelectedObject)
+                {
+                    if(rectangle is Vertex)
+                    {
+                        Vertex curVertex = (Vertex)rectangle;
+                        curVertex.Translate(xAmount, yAmount);
+                    }
                 }
             }
         }
 
         public void ToolMouseUp(object sender, MouseEventArgs e)
         {
-            if (selectedObject is Vertex)
+            if (!((e.X - this.xMouseDown) == 0 && (e.Y - this.yMouseDown) == 0) && listSelectedObject.Count > 0)
             {
-                if (!((int)e.X - (int)this.xMouseDown == 0 && (int)e.Y - (int)this.yMouseDown == 0))
+                foreach(DrawingObject obj in listSelectedObject)
                 {
-                    ICommand command = new TranslateVertex((Vertex)selectedObject, (int)(e.X - this.xMouseDown), (int)(e.Y - this.yMouseDown));
-                    canvas.AddCommand(command);
+                    if(obj is Vertex)
+                    {
+                        Debug.WriteLine("add command");
+                        ICommand command = new TranslateListVertex(listSelectedObject.Cast<Vertex>().ToList(), (int)(e.X - this.xMouseDown), (int)(e.Y - this.yMouseDown));
+                        canvas.AddCommand(command);
+                        break;
+                    }
                 }
             }
+            canvas.SetListSelectedObecjt(listSelectedObject);
         }
 
         public void ToolMouseDoubleClick(object sender, MouseEventArgs e)
@@ -136,6 +176,21 @@ namespace PatternDesigner.Tools
                 }
             }
 
+        }
+
+        public void ToolKeyUp(object sender, KeyEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ToolKeyDown(object sender, KeyEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ToolHotKeysDown(object sender, Keys e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

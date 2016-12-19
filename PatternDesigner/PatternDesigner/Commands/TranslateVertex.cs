@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PatternDesigner.Commands
 {
-    public class TranslateVertex : ICommand
+    public class TranslateVertex : Command
     {
         private Vertex vertex;
         private int xAmount;
@@ -17,16 +17,17 @@ namespace PatternDesigner.Commands
             this.vertex = vertex;
             this.xAmount = xAmount;
             this.yAmount = yAmount;
+            removeRedoStack();
         }
 
-        public void Execute()
+        public override void Execute()
         {
             vertex.X += xAmount;
             vertex.Y += yAmount;
             vertex.Broadcast();
         }
 
-        public void Unexecute()
+        public override void Unexecute()
         {
             vertex.X -= xAmount;
             vertex.Y -= yAmount;

@@ -11,6 +11,7 @@ namespace PatternDesigner
     {
         String Name { get; set; }
         ITool GetActiveTool();
+        
         void SetActiveTool(ITool tool);
         void Repaint();
         void SetBackgroundColor(Color color);
@@ -21,8 +22,11 @@ namespace PatternDesigner
         DrawingObject GetObjectAt(int x, int y);
         DrawingObject SelectObjectAt(int x, int y);
         DrawingObject GetSelectedObject();
+        List<DrawingObject> GetListSelectedObject();
         List<DrawingObject> GetListDrawingObject();
         void SetSelectedObject(DrawingObject obj);
+        void SetListSelectedObecjt(List<DrawingObject> listObj);
+        void EmptyListSelectedObject();
         void DeselectAllObjects();
         Stack<ICommand> GetUndoStack();
         Stack<ICommand> GetRedoStack();

@@ -9,39 +9,43 @@ using System.Windows.Forms;
 
 namespace PatternDesigner.Commands
 {
-    public class Copy : ICommand
+    public class Copy : Command
     {
-        private ICanvas canvas;
-        private DrawingObject selectedObject;
+        
+        private List<DrawingObject> selectedObject;
 
 
         public Copy(ICanvas canvas)
         {
             this.canvas = canvas;
+            removeRedoStack();
         }
 
-        public void Execute()
+        public override void Execute()
         {
-            selectedObject = canvas.GetSelectedObject();
-
-            if (selectedObject != null)
+            selectedObject = canvas.GetListSelectedObject();
+            foreach(DrawingObject obj in selectedObject)
             {
-                if (selectedObject is Vertex)
+                if (obj != null)
                 {
-                    Vertex choosenObject = (Vertex)selectedObject;
-
-                    while(canvas.GetCopyStack().Count > 0)
+                    if (obj is Vertex)
                     {
-                        canvas.GetCopyStack().Pop();
-                    }
+                        Vertex choosenObject = (Vertex)obj;
 
-                    ICommand command = new CreateClassCopy(canvas, choosenObject);
-                    canvas.AddCopyCommand(command);
+                        while (canvas.GetCopyStack().Count > 0)
+                        {
+                            canvas.GetCopyStack().Pop();
+                        }
+
+                        ICommand command = new CreateClassCopy(canvas);
+                        canvas.AddCopyCommand(command);
+                        //canvas.AddCommand(command);
+                    }
                 }
             }
         }
 
-        public void Unexecute()
+        public override void Unexecute()
         {
            
         }
