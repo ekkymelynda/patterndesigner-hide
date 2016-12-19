@@ -20,6 +20,7 @@ namespace PatternDesigner
         public string relationEnd { get; set; }
         public int stringX;
         public int stringY;
+        int startPointX, startPointY, endPointX, endPointY;
 
         public const double EPSILON = 15.0;
         public Pen pen;
@@ -67,6 +68,28 @@ namespace PatternDesigner
             return endVertex;
         }
 
+        public int GetStartPointX()
+        {
+            return startPointX;
+        }
+
+
+        public int GetStartPointY()
+        {
+            return startPointY;
+        }
+
+        public int GetEndPointX()
+        {
+            return endPointX;
+        }
+
+        public int GetEndPointY()
+        {
+            return endPointY;
+        }
+
+
         public void DrawName()
         {
             Font arialFont = new Font("Arial", 10, FontStyle.Bold);
@@ -74,7 +97,7 @@ namespace PatternDesigner
             StringFormat stringFormat = new StringFormat();
             stringFormat.Alignment = StringAlignment.Center;
 
-            int startPointX, startPointY, endPointX, endPointY;
+         //   int startPointX, startPointY, endPointX, endPointY;
             int startVertexMin, startVertexMax, endVertexMin, endVertexMax;
             startVertexMin = startVertex.X;
             startVertexMax = startVertex.X + startVertex.Width;

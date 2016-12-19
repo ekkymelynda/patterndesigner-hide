@@ -86,17 +86,27 @@ namespace PatternDesigner.Shapes
                 file = (XElement)doc.LastNode;
             }
 
-            file.Add(new XElement("relation",
+            if (this.name == null)
+            {
+                file.Add(new XElement("relation"));
+            }
+            else
+            {
+                file.Add(new XElement("relation",
                 new XAttribute("id", this.ID.ToString()),
-                new XAttribute("kelas1", this.GetStartVertex().ID.ToString()),
-                new XAttribute("kelas2", this.GetEndVertex().ID.ToString()),
+                new XAttribute("startPointX", this.GetStartPointX()),
+                new XAttribute("startPointY", this.GetStartPointY()),
+                new XAttribute("startEndX", this.GetEndPointX()),
+                new XAttribute("startEndY", this.GetEndPointY()),
                 new XAttribute("tipe", "Directed Association")));
 
-            file = (XElement)file.LastNode;
+                file = (XElement)file.LastNode;
 
-            file.Add(new XElement("nama", this.name));
-            file.Add(new XElement("jenisRelasiAsal", this.relationStart));
-            file.Add(new XElement("jenisRelasiTujuan", this.relationEnd));
+                file.Add(new XElement("nama", this.name));
+                file.Add(new XElement("jenisRelasiAsal", this.relationStart));
+                file.Add(new XElement("jenisRelasiTujuan", this.relationEnd));
+            }
+
 
             doc.Save(path);
         }

@@ -59,8 +59,8 @@ namespace PatternDesigner
             AddMementoPattern addMementroPattern = new AddMementoPattern(canvas);
             AddSingletonPattern addSingletonPattern = new AddSingletonPattern(canvas);
             GenerateFile addGenerateFile = new GenerateFile(canvas);
-            EksporXML addEksporXML = new EksporXML(canvas);
 
+            Save save = new Save(canvas);
             Undo undo = new Undo(canvas);
             Redo redo = new Redo(canvas);
             Copy copy = new Copy(canvas);
@@ -81,9 +81,9 @@ namespace PatternDesigner
             DefaultMenuItem eksportMenuItem = new DefaultMenuItem("Eksport");
             fileMenuItem.AddMenuItem(eksportMenuItem);
 
-            DefaultMenuItem eksporXML = new DefaultMenuItem("Eksport XML");
-            eksporXML.SetCommand(addEksporXML);
-            fileMenuItem.AddMenuItem(eksporXML);
+            DefaultMenuItem savediagram  = new DefaultMenuItem("Save Diagram");
+            savediagram.SetCommand(save);
+            fileMenuItem.AddMenuItem(savediagram);
 
             DefaultMenuItem generateFile = new DefaultMenuItem("Generate");
             generateFile.SetCommand(addGenerateFile);
@@ -191,6 +191,7 @@ namespace PatternDesigner
             RedoToolItem redoToolItem = new RedoToolItem(canvas);
             redoToolItem.SetCommand(redo);
             SaveToolbarItem saveToolItem = new SaveToolbarItem(canvas);
+            saveToolItem.SetCommand(save);
             ExportToolItem exportToolItem = new ExportToolItem(canvas);
             
 

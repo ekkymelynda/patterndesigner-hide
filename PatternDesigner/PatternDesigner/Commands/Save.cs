@@ -10,17 +10,17 @@ using System.Xml;
 
 namespace PatternDesigner.Commands
 {
-    class EksporXML : ICommand
+    public class Save : Command
     {
         private ICanvas canvas;
         protected string path = @"d:\export\";
 
-        public EksporXML(ICanvas canvas)
+        public Save(ICanvas canvas)
         {
             this.canvas = canvas;
         }
 
-        public void Execute()
+        public override void Execute()
         {
             using (var SaveFileDialog = new SaveFileDialog())
             {
@@ -93,7 +93,7 @@ namespace PatternDesigner.Commands
             }
         }
 
-        public void Unexecute()
+        public override void Unexecute()
         {
             throw new NotImplementedException();
         }
