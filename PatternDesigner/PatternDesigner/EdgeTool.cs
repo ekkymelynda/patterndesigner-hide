@@ -49,6 +49,7 @@ namespace PatternDesigner
                     
                     line.Endpoint = new System.Drawing.Point(e.X, e.Y);
                     canvas.AddDrawingObject(line);
+                    canvas.GetListSelectedObject().Clear();
                 }
             }
         }
