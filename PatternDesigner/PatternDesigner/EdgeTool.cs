@@ -19,7 +19,7 @@ namespace PatternDesigner
         {
             get
             {
-                return Cursors.Arrow;
+                return Cursors.Cross;
             }
         }
 
@@ -40,6 +40,7 @@ namespace PatternDesigner
 
         public void ToolMouseDown(object sender, MouseEventArgs e)
         {
+            Cursor.Current = Cursor;
             if (e.Button == MouseButtons.Left)
             {
                 if (canvas.GetObjectAt(e.X, e.Y) is Vertex)

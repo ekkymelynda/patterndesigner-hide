@@ -19,7 +19,7 @@ namespace PatternDesigner.Tools
         {
             get
             {
-                return Cursors.Arrow;
+                return Cursors.Cross;
             }
         }
 
@@ -46,6 +46,7 @@ namespace PatternDesigner.Tools
 
         public void ToolMouseDown(object sender, MouseEventArgs e)
         {
+            Cursor.Current = Cursor;
             if (e.Button == MouseButtons.Left)
             {
                 this.rectangle = new Rectangle(e.X, e.Y);
