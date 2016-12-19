@@ -52,6 +52,7 @@ namespace PatternDesigner.Tools
                 this.canvas.AddDrawingObject(this.rectangle);
                 this.canvas.AddDrawingObject(this.rectangle);
                 this.canvas.AddDrawingObject(this.rectangle);
+                canvas.GetListSelectedObject().Clear();
             }
         }
 
@@ -84,6 +85,8 @@ namespace PatternDesigner.Tools
                     canvas.DeselectAllObjects();
                     this.rectangle.Select();
                     canvas.SetSelectedObject(this.rectangle);
+                    canvas.GetListSelectedObject().Add(this.rectangle);
+                    
                 }
                 /*else if (e.Button == MouseButtons.Right)
                 {
