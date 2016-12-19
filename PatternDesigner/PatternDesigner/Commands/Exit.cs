@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PatternDesigner.ObjectProperties;
 
 namespace PatternDesigner.Commands
 {
@@ -18,7 +19,10 @@ namespace PatternDesigner.Commands
 
         public override void Execute()
         {
-            Application.Exit();
+            Form main = Form.ActiveForm;
+            DialogExit fm = new DialogExit(main, canvas);
+            fm.ControlBox = false;
+            fm.Show();
         }
 
         public override void Unexecute()
