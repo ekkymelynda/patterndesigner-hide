@@ -47,6 +47,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attribute.cs" />
+    <Compile Include="Baris.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Colom\ButtonColom.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Colom\DropdownColom.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Colom\DropdownColom.Designer.cs">
+      <DependentUpon>DropdownColom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Colom\KotakInput.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Commands\Command.cs" />
     <Compile Include="Commands\Cut.cs" />
     <Compile Include="Commands\DeleteClass.cs" />
@@ -60,6 +75,9 @@
     <Compile Include="Commands\ApplyRelationshipProperties.cs" />
     <Compile Include="Commands\ApplyClassProperties.cs" />
     <Compile Include="Commands\TranslateListVertex.cs" />
+    <Compile Include="DefaultColom.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DefaultToolbar.cs">
       <SubType>Component</SubType>
     </Compile>

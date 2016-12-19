@@ -323,7 +323,7 @@ namespace PatternDesigner
             Debug.WriteLine("ID BARIS :" + idxBaris);
             baris.Init(xAtt, yAtt);
 
-            KotakInput kotakAttribut = new KotakInput(Atribut);
+            DropdownColom kotakAttribut = new DropdownColom(Atribut);
             kotakAttribut.setSize(60, 45);
             baris.AddKolom(kotakAttribut);
 
