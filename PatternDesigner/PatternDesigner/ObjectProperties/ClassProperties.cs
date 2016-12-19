@@ -119,21 +119,25 @@ namespace PatternDesigner
             KotakInput kotakVisibility = new KotakInput(Atribut);
             kotakVisibility.setNama("Visibility");
             kotakVisibility.setSize(60, 45);
+            kotakVisibility.kotak.ReadOnly = true;
             baris.AddKolom(kotakVisibility);
 
             KotakInput kotakNamaAtribut = new KotakInput(Atribut);
             kotakNamaAtribut.setNama("Nama Atribut");
             kotakNamaAtribut.setSize(300, 45);
+            kotakNamaAtribut.kotak.ReadOnly = true;
             baris.AddKolom(kotakNamaAtribut);
 
             KotakInput kotakTipe = new KotakInput(Atribut);
             kotakTipe.setNama("Tipe");
             kotakTipe.setSize(100, 45);
+            kotakTipe.kotak.ReadOnly = true;
             baris.AddKolom(kotakTipe);
 
             KotakInput kotakAction = new KotakInput(Atribut);
             kotakAction.setNama("Action");
             kotakAction.setSize(70, 45);
+            kotakAction.kotak.ReadOnly = true;
             baris.AddKolom(kotakAction);
 
             baris.DrawBaris();
@@ -144,13 +148,6 @@ namespace PatternDesigner
             addAtributButton.Text = "Tambah Atribut";
             Atribut.Controls.Add(addAtributButton);
             addAtributButton.Click += AddAtributButton_Click;
-
-            deleteButton1 = new Button();
-            deleteButton1.Location = new Point(140, 10);
-            deleteButton1.Size = new Size(70, 20);
-            deleteButton1.Text = "HAPUS";
-            deleteButton1.Click += delegate (object s, EventArgs ee) { Delete_Click(s, ee, idxBaris); };
-            Atribut.Controls.Add(deleteButton1);
 
             foreach (Attribute atte in objek.att)
             {
