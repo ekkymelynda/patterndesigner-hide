@@ -18,7 +18,7 @@ namespace PatternDesigner.Commands
         private List<Attribute> oldAttribute =  new List<Attribute>();
         private List<Method> newMethod = new List<Method>();
         private List<Attribute> newAttribute = new List<Attribute>();
-        public ApplyClassProperties(ICanvas canvas, Vertex vertex, string newName, string oldName, List<Method> meth, List<Attribute> att,  TextBox[] newAttributeBox, TextBox[] newNameAttributebox, TextBox[] newTypeAttributeBox, TextBox[] newMethodBox, TextBox[] newNameMethodbox, TextBox[] newTypeMethodBox, int i, int j)
+        public ApplyClassProperties(ICanvas canvas, Vertex vertex, string newName, string oldName, List<Method> meth, List<Attribute> att, List<Baris> listBaris, List<Baris> listBarisMethod, int i, int j)
         {
             this.vertex = vertex;
             this.canvas = canvas;
