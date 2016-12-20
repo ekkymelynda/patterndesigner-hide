@@ -83,11 +83,11 @@ namespace PatternDesigner
             DefaultMenuItem fileMenuItem = new DefaultMenuItem("File");
             this.menubar.AddMenuItem(fileMenuItem);
 
-            DefaultMenuItem generateFile = new DefaultMenuItem("Generate");
+            DefaultMenuItem generateFile = new DefaultMenuItem("Generate Class File");
             generateFile.SetCommand(addGenerateFile);
             fileMenuItem.AddMenuItem(generateFile);
 
-            DefaultMenuItem saveItem = new DefaultMenuItem("Save Diagram");
+            DefaultMenuItem saveItem = new DefaultMenuItem("Save");
             saveItem.SetCommand(save);
             fileMenuItem.AddMenuItem(saveItem);
 
@@ -201,25 +201,19 @@ namespace PatternDesigner
             SaveToolbarItem saveToolItem = new SaveToolbarItem(canvas);
             saveToolItem.SetCommand(save);
 
-            ExportToolItem exportToolItem = new ExportToolItem(canvas);
-
             OpenToolbarItem openToolItem = new OpenToolbarItem(canvas);
-            CutToolbarItem cutToolItem = new CutToolbarItem(canvas);
             CopyToolbarItem copyToolItem = new CopyToolbarItem(canvas);
             copyToolItem.SetCommand(copy);
             PasteToolbarItem pasteToolItem = new PasteToolbarItem(canvas);
             pasteToolItem.SetCommand(paste);
 
 
-
+            this.toolbar.AddToolbarItem(openToolItem);
+            this.toolbar.AddToolbarItem(saveToolItem);
+            this.toolbar.AddSeparator();
             this.toolbar.AddToolbarItem(undoToolItem);
             this.toolbar.AddToolbarItem(redoToolItem);
             this.toolbar.AddSeparator();
-            this.toolbar.AddToolbarItem(saveToolItem);
-            this.toolbar.AddToolbarItem(exportToolItem);
-
-            this.toolbar.AddToolbarItem(openToolItem);
-            this.toolbar.AddToolbarItem(cutToolItem);
             this.toolbar.AddToolbarItem(copyToolItem);
             this.toolbar.AddToolbarItem(pasteToolItem);
 
