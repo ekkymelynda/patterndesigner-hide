@@ -25,7 +25,7 @@ namespace PatternDesigner.Commands
             {
                 string fileName;
                 fileName = openFileDialog.FileName;
-                MessageBox.Show(fileName);
+                //MessageBox.Show(fileName);
 
                 List<DrawingObject> DrawingObject = this.canvas.GetListDrawingObject();
                 DrawingObject.Clear();

@@ -88,6 +88,10 @@ namespace PatternDesigner
             generateFile.SetCommand(addGenerateFile);
             fileMenuItem.AddMenuItem(generateFile);
 
+            DefaultMenuItem openItem = new DefaultMenuItem("Open");
+            openItem.SetCommand(open);
+            fileMenuItem.AddMenuItem(openItem);
+
             DefaultMenuItem saveItem = new DefaultMenuItem("Save");
             saveItem.SetCommand(save);
             fileMenuItem.AddMenuItem(saveItem);
