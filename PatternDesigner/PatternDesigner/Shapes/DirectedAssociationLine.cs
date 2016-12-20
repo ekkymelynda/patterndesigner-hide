@@ -97,8 +97,10 @@ namespace PatternDesigner.Shapes
 
                 file.Add(new XElement("relation",
                     new XAttribute("id", this.ID.ToString()),
-                    new XAttribute("kelas1", this.GetStartVertex().ID.ToString()),
-                    new XAttribute("kelas2", this.GetEndVertex().ID.ToString()),
+                    new XAttribute("StartPointX", this.GetStartPointX()),
+                    new XAttribute("StartPointY", this.GetStartPointY()),
+                    new XAttribute("EndPointX", this.GetEndPointX()),
+                    new XAttribute("EndPointY", this.GetEndPointY()),
                     new XAttribute("tipe", "Directed Association")));
 
                 file = (XElement)file.LastNode;
