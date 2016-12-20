@@ -186,17 +186,26 @@ namespace PatternDesigner
             KotakInput kotakMethod = new KotakInput(Method);
             kotakMethod.setSize(60, 45);
             kotakMethod.setNama("Visibility");
+            kotakMethod.kotak.ReadOnly = true;
             barisMethod.AddKolom(kotakMethod);
 
             KotakInput kotakMethod2 = new KotakInput(Method);
             kotakMethod2.setSize(300, 45);
             kotakMethod2.setNama("Nama");
+            kotakMethod2.kotak.ReadOnly = true;
             barisMethod.AddKolom(kotakMethod2);
 
             KotakInput kotakMethod3 = new KotakInput(Method);
             kotakMethod3.setSize(100, 45);
             kotakMethod3.setNama("Tipe");
+            kotakMethod3.kotak.ReadOnly = true;
             barisMethod.AddKolom(kotakMethod3);
+
+            KotakInput kotakActionMethod = new KotakInput(Method);
+            kotakActionMethod.setSize(70, 45);
+            kotakActionMethod.setNama("Action");
+            kotakActionMethod.kotak.ReadOnly = true;
+            barisMethod.AddKolom(kotakActionMethod);
 
             barisMethod.DrawBaris();
 
@@ -206,27 +215,19 @@ namespace PatternDesigner
             addMethodButton.Text = "Tambah Method";
             Method.Controls.Add(addMethodButton);
             addMethodButton.Click += AddMethodButton_Click;
-
-            deleteMethodButton = new Button();
-            deleteMethodButton.Location = new Point(140, 10);
-            deleteMethodButton.Size = new Size(70, 20);
-            deleteMethodButton.Text = "HAPUS";
-            deleteMethodButton.Click += delegate (object s, EventArgs ee)
-            {
-                DeleteMethodButton_Click(s, ee, idxBarisMethod - 1);
-            };
             
-            Method.Controls.Add(deleteMethodButton);
-
+            //jika terdapat method di class method
             foreach (Method mtd in objek.meth)
             {
                 barisMethod = new Baris(idxBarisMethod, Method);
                 barisMethod.Init(xMethod, yMethod);
-                KotakInput kotakMethodVisi = new KotakInput(Method);
+
+                DropdownColom kotakMethodVisi = new DropdownColom(Atribut);
                 KotakInput kotakMethodNama = new KotakInput(Method);
                 KotakInput kotakMethodTipe = new KotakInput(Method);
-                kotakMethodVisi.setNama(mtd.visibility);
-                kotakMethodVisi.kotak.Text = mtd.visibility;
+
+                kotakMethodVisi.setNama(meth.visibility);
+                kotakMethodVisi.dropDown.Text = meth.visibility;
                 kotakMethodVisi.setSize(60, 45);
 
                 kotakMethodNama.setNama(mtd.nama);
@@ -273,7 +274,7 @@ namespace PatternDesigner
             Debug.WriteLine("ID BARIS METHOD :" + idxBarisMethod);
             barisMethod.Init(xMethod, yMethod);
 
-            KotakInput kotakMethodVisi = new KotakInput(Method);
+            DropdownColom kotakMethodVisi = new DropdownColom(Atribut);
             kotakMethodVisi.setSize(60, 45);
             barisMethod.AddKolom(kotakMethodVisi);
 
@@ -305,16 +306,7 @@ namespace PatternDesigner
 
         private void Delete_Click(object sender, EventArgs e, int indexBaris)
         {
-            /*
-                this.listBaris.Remove(listBaris[0]);
-                listBaris[0].Dispose();
-                Debug.WriteLine("MASUK DELETE");
-                idxBaris--; //dibuat link list
-                foreach(Baris baris in listBaris)
-                {
-                    baris.DrawBaris();
-                }
-            */
+            
         }
 
         private void AddAtributButton_Click(object sender, EventArgs e)

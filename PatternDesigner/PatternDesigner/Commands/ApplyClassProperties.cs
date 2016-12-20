@@ -54,7 +54,7 @@ namespace PatternDesigner.Commands
             {
                 for (int b = 0; b < j; b++)
                 {
-                    newMethod.Add(new Method() { visibility = ((KotakInput)listBarisMethod[b].kolom[0]).kotak.Text, nama = ((KotakInput)listBarisMethod[b].kolom[1]).kotak.Text, tipe = ((KotakInput)listBarisMethod[b].kolom[2]).kotak.Text });
+                    newMethod.Add(new Method() { visibility = ((DropdownColom)listBarisMethod[b].kolom[0]).dropDown.Text, nama = ((KotakInput)listBarisMethod[b].kolom[1]).kotak.Text, tipe = ((KotakInput)listBarisMethod[b].kolom[2]).kotak.Text });
                 }
             }
 
