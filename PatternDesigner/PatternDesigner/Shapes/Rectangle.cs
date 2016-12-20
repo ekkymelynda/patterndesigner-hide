@@ -324,27 +324,37 @@ namespace PatternDesigner.Shapes
                 file = (XElement)doc.LastNode;
             }
 
-            file.Add(new XElement("class",
+
+            if (this.nama == null)
+            {
+                file.Add(new XElement("class"));
+            }
+
+            else
+            {
+                file.Add(new XElement("class",
                 new XAttribute("id", this.ID.ToString()),
                 new XAttribute("nama", this.nama),
                 new XAttribute("posX", this.X.ToString()),
                 new XAttribute("posY", this.Y.ToString())));
 
-            file = (XElement)file.LastNode;
+                file = (XElement)file.LastNode;
 
-            foreach (Attribute temp in this.att)
-            {
-                file.Add(new XElement("attribute", new XElement("visibility", temp.visibility),
-                    new XElement("type", temp.tipe),
-                    new XElement("nama", temp.nama)));
-            }
+                foreach (Attribute temp in this.att)
+                {
+                    file.Add(new XElement("attribute", new XElement("visibility", temp.visibility),
+                        new XElement("type", temp.tipe),
+                        new XElement("nama", temp.nama)));
+                }
 
-            foreach (Method temp in this.meth)
-            {
-                file.Add(new XElement("method", new XElement("visibility", temp.visibility),
-                    new XElement("return", temp.tipe),
-                    new XElement("nama", temp.nama)));
+                foreach (Method temp in this.meth)
+                {
+                    file.Add(new XElement("method", new XElement("visibility", temp.visibility),
+                        new XElement("return", temp.tipe),
+                        new XElement("nama", temp.nama)));
+                }
             }
+            
 
             doc.Save(path);
         }

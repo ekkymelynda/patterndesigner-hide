@@ -71,6 +71,7 @@ namespace PatternDesigner.Shapes
 
         public void Serialize(string path)
         {
+
             XDocument doc = XDocument.Load(path);
             XElement file = doc.Root;
             Console.WriteLine(file);
@@ -93,6 +94,7 @@ namespace PatternDesigner.Shapes
             file.Add(new XElement("jenisRelasiTujuan", this.relationEnd));
 
             doc.Save(path);
+
         }
 
         public List<DrawingObject> Unserialize(string path)

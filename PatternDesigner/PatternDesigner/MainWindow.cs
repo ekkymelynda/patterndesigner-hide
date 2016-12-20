@@ -301,6 +301,15 @@ namespace PatternDesigner
                     }
                     break;
 
+                case Keys.Control | Keys.S:
+                    if (canvas != null)
+                    {
+                        ICommand command = new Save(canvas);
+                        command.Execute();
+                        canvas.Repaint();
+                    }
+                    break;
+
             }
 
             return base.ProcessCmdKey(ref msg, keyData);

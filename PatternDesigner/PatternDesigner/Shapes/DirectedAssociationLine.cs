@@ -77,6 +77,7 @@ namespace PatternDesigner.Shapes
 
         public void Serialize(string path)
         {
+
             XDocument doc = XDocument.Load(path);
             XElement file = doc.Root;
             Console.WriteLine(file);
@@ -86,19 +87,30 @@ namespace PatternDesigner.Shapes
                 file = (XElement)doc.LastNode;
             }
 
-            file.Add(new XElement("relation",
-                new XAttribute("id", this.ID.ToString()),
-                new XAttribute("kelas1", this.GetStartVertex().ID.ToString()),
-                new XAttribute("kelas2", this.GetEndVertex().ID.ToString()),
-                new XAttribute("tipe", "Directed Association")));
+            if (this.name == null)
+            {
+                file.Add(new XElement("relation"));
+            }
 
-            file = (XElement)file.LastNode;
+            else
+            {
 
-            file.Add(new XElement("nama", this.name));
-            file.Add(new XElement("jenisRelasiAsal", this.relationStart));
-            file.Add(new XElement("jenisRelasiTujuan", this.relationEnd));
+                file.Add(new XElement("relation",
+                    new XAttribute("id", this.ID.ToString()),
+                    new XAttribute("kelas1", this.GetStartVertex().ID.ToString()),
+                    new XAttribute("kelas2", this.GetEndVertex().ID.ToString()),
+                    new XAttribute("tipe", "Directed Association")));
+
+                file = (XElement)file.LastNode;
+
+                file.Add(new XElement("nama", this.name));
+                file.Add(new XElement("jenisRelasiAsal", this.relationStart));
+                file.Add(new XElement("jenisRelasiTujuan", this.relationEnd));
+            }
+
 
             doc.Save(path);
+
         }
 
         public List<DrawingObject> Unserialize(string path)
