@@ -21,6 +21,8 @@ namespace PatternDesigner
         public int startPointX, startPointY, endPointX, endPointY;
         public int stringX;
         public int stringY;
+        public string idStartVertex = null;
+        public string idEndVertex = null;
 
         public const double EPSILON = 15.0;
         public Pen pen;

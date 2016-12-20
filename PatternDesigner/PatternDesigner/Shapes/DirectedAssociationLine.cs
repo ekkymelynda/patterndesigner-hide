@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace PatternDesigner.Shapes
@@ -87,37 +88,119 @@ namespace PatternDesigner.Shapes
                 file = (XElement)doc.LastNode;
             }
 
-            if (this.name == null)
-            {
-                file.Add(new XElement("relation"));
-            }
+            file.Add(new XElement("relation",
+                new XAttribute("id", this.ID.ToString()),
+                new XAttribute("StartPointX", this.GetStartPointX()),
+                new XAttribute("StartPointY", this.GetStartPointY()),
+                new XAttribute("EndPointX", this.GetEndPointX()),
+                new XAttribute("EndPointY", this.GetEndPointY()),
+                new XAttribute("StartVertex", this.GetStartVertex().ID.ToString()),
+                new XAttribute("EndVertex", this.GetEndVertex().ID.ToString()),
+                new XAttribute("tipe", "Directed Association")));
 
-            else
-            {
+            file = (XElement)file.LastNode;
 
-                file.Add(new XElement("relation",
-                    new XAttribute("id", this.ID.ToString()),
-                    new XAttribute("StartPointX", this.GetStartPointX()),
-                    new XAttribute("StartPointY", this.GetStartPointY()),
-                    new XAttribute("EndPointX", this.GetEndPointX()),
-                    new XAttribute("EndPointY", this.GetEndPointY()),
-                    new XAttribute("tipe", "Directed Association")));
-
-                file = (XElement)file.LastNode;
-
-                file.Add(new XElement("nama", this.name));
-                file.Add(new XElement("jenisRelasiAsal", this.relationStart));
-                file.Add(new XElement("jenisRelasiTujuan", this.relationEnd));
-            }
-
+            file.Add(new XElement("nama", this.name));
+            file.Add(new XElement("jenisRelasiAsal", this.relationStart));
+            file.Add(new XElement("jenisRelasiTujuan", this.relationEnd));
 
             doc.Save(path);
-
         }
 
         public List<DrawingObject> Unserialize(string path)
         {
-            throw new NotImplementedException();
+            List<DrawingObject> DrawingObject = new List<DrawingObject>();
+
+            Edge line = null;
+            string startVertex = null, endVertex = null;
+            int StartPointX = 0, StartPointY = 0, EndPointX = 0, EndPointY = 0;
+            string id = null;
+            string tipe = null, nama = null, jenisRelasiAsal = null, jenisRelasiTujuan = null;
+
+            XmlTextReader reader = new XmlTextReader(path);
+            reader.MoveToContent();
+
+            try
+            {
+                if (reader.Name.Equals("diagram"))
+                {
+                    while (reader.Read())
+                    {
+                        if (reader.Name.Equals("relation"))
+                        {
+                            Boolean flag = true;
+
+                            reader.MoveToFirstAttribute();
+                            id = reader.Value;
+                            reader.MoveToNextAttribute();
+                            StartPointX = Int32.Parse(reader.Value);
+                            reader.MoveToNextAttribute();
+                            StartPointY = Int32.Parse(reader.Value);
+                            reader.MoveToNextAttribute();
+                            EndPointX = Int32.Parse(reader.Value);
+                            reader.MoveToNextAttribute();
+                            EndPointY = Int32.Parse(reader.Value);
+                            reader.MoveToNextAttribute();
+                            startVertex = reader.Value;
+                            reader.MoveToNextAttribute();
+                            endVertex = reader.Value;
+                            reader.MoveToNextAttribute();
+                            tipe = reader.Value;
+                            reader.MoveToElement();
+
+                            while (reader.Read() && flag)
+                            {
+                                reader.MoveToContent();
+                                flag = true;
+                                if (reader.Name.Equals("nama"))
+                                {
+                                    nama = reader.Value;
+                                }
+                                else if (reader.Name.Equals("jenisRelasiAsal"))
+                                {
+                                    jenisRelasiAsal = reader.Value;
+                                }
+                                else if (reader.Name.Equals("jenisRelasiTujuan"))
+                                {
+                                    jenisRelasiTujuan = reader.Value;
+                                }
+                                else if (reader.Name.Equals("relation"))
+                                {
+                                    flag = false;
+                                }
+                            }
+                            if (id != null && tipe.Equals("Directed Association"))
+                            {
+                                Console.WriteLine("StartVertex: " + startVertex);
+                                Console.WriteLine("EndVertex: " + endVertex);
+
+                                Point start = new Point(StartPointX, StartPointY);
+                                Point end = new Point(EndPointX, EndPointY);
+                                Console.WriteLine("Directed Association : " + id);
+
+                                DirectedAssociationLine tempLine = new DirectedAssociationLine(start, end);
+                                tempLine.ID = new Guid(id);
+                                tempLine.idStartVertex = startVertex;
+                                tempLine.idEndVertex = endVertex;
+                                tempLine.relationStart = jenisRelasiAsal;
+                                tempLine.relationEnd = jenisRelasiTujuan;
+
+                                DrawingObject.Add(tempLine);
+
+                            }
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Unserialize Association: " + ex);
+            }
+
+            reader.Close();
+            return DrawingObject;
+
         }
     }
 }
