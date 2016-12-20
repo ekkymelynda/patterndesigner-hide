@@ -44,12 +44,8 @@ namespace PatternDesigner
             this.toolStripContainer1.ContentPanel.Controls.Add((Control)this.editor);
 
             ICanvas canvas = new DefaultCanvas();
-            canvas.Name = "Untitled-1";
+            canvas.Name = "Pattern Design";
             this.editor.AddCanvas(canvas);
-
-            /*ICanvas canvas2 = new DefaultCanvas();
-            canvas2.Name = "Untitled-2";
-            this.editor.AddCanvas(canvas2);*/
 
             #endregion
 
