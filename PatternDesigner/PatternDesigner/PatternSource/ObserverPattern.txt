@@ -1,9 +1,0 @@
-Kelas 10 10 100 100
-Kelas 200 10 100 100
-Kelas 400 10 100 100
-Kelas 150 160 100 100
-Kelas 300 160 100 100
-DirectedAssociation 110 60 200 60
-Generalization 200 160 250 110
-Generalization 350 160 250 110
-DirectedAssociation 350 160 450 110

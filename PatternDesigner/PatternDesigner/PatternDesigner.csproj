@@ -57,13 +57,6 @@
     <Compile Include="ObjectProperties\ClassProperties.Designer.cs">
       <DependentUpon>ClassProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Commands\AddSingletonPattern.cs" />
-    <Compile Include="Commands\AddCompositePattern.cs" />
-    <Compile Include="Commands\AddFacadePattern.cs" />
-    <Compile Include="Commands\AddMementoPattern.cs" />
-    <Compile Include="Commands\AddPattern.cs" />
-    <Compile Include="Commands\AddFactoryPattern.cs" />
-    <Compile Include="Commands\AddPattern1.cs" />
     <Compile Include="Commands\Redo.cs" />
     <Compile Include="Commands\TranslateVertex.cs" />
     <Compile Include="Commands\Undo.cs" />

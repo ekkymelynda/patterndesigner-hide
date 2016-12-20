@@ -1,3 +1,0 @@
-Kelas 10 10 100 100
-Kelas 180 10 100 100
-DirectedAssociation 10 10 180 10

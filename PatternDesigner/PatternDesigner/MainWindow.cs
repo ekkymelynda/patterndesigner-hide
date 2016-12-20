@@ -96,12 +96,6 @@ namespace PatternDesigner
             #region Commands
 
             ICanvas canvas = this.editor.GetSelectedCanvas();
-            AddPattern1 addPattern1 = new AddPattern1(canvas);
-            AddFactoryPattern addFactoryPattern = new AddFactoryPattern(canvas);
-            AddCompositePattern addCompositePattern = new AddCompositePattern(canvas);
-            AddFacadePattern addFacadePattern = new AddFacadePattern(canvas);
-            AddMementoPattern addMementroPattern = new AddMementoPattern(canvas);
-            AddSingletonPattern addSingletonPattern = new AddSingletonPattern(canvas);
             Undo undo = new Undo(canvas);
             Redo redo = new Redo(canvas);
 
@@ -121,26 +115,6 @@ namespace PatternDesigner
 
             DefaultMenuItem generateMenuItem = new DefaultMenuItem("Generate");
             this.menubar.AddMenuItem(generateMenuItem);
-
-            DefaultMenuItem factoryMenuItem = new DefaultMenuItem("Factory Pattern");
-            factoryMenuItem.SetCommand(addFactoryPattern);
-            generateMenuItem.AddMenuItem(factoryMenuItem);
-
-            DefaultMenuItem singletonMenuItem = new DefaultMenuItem("Singleton Pattern");
-            singletonMenuItem.SetCommand(addSingletonPattern);
-            generateMenuItem.AddMenuItem(singletonMenuItem);
-
-            DefaultMenuItem compositeMenuItem = new DefaultMenuItem("Composite Pattern");
-            compositeMenuItem.SetCommand(addCompositePattern);
-            generateMenuItem.AddMenuItem(compositeMenuItem);
-
-            DefaultMenuItem facadeMenuItem = new DefaultMenuItem("Facade Pattern");
-            facadeMenuItem.SetCommand(addFacadePattern);
-            generateMenuItem.AddMenuItem(facadeMenuItem);
-
-            DefaultMenuItem mementoMenuItem = new DefaultMenuItem("Memento Pattern");
-            mementoMenuItem.SetCommand(addMementroPattern);
-            generateMenuItem.AddMenuItem(mementoMenuItem);
 
             DefaultMenuItem undoItem = new DefaultMenuItem("Undo");
             undoItem.SetCommand(undo);
