@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Xml.Linq;
 
 namespace PatternDesigner.Shapes
 {
-    class DirectedAssociationLine : Edge
+    class DirectedAssociationLine : Edge, IPersistance
     {
         public DirectedAssociationLine()
         {
@@ -71,6 +73,37 @@ namespace PatternDesigner.Shapes
                 this.Graphics.DrawLine(pen, this.Startpoint, this.Endpoint);
                 //DrawName();
             }
+        }
+
+        public void Serialize(string path)
+        {
+            XDocument doc = XDocument.Load(path);
+            XElement file = doc.Root;
+            Console.WriteLine(file);
+
+            if (doc.Root.LastNode != null)
+            {
+                file = (XElement)doc.LastNode;
+            }
+
+            file.Add(new XElement("relation",
+                new XAttribute("id", this.ID.ToString()),
+                new XAttribute("kelas1", this.GetStartVertex().ID.ToString()),
+                new XAttribute("kelas2", this.GetEndVertex().ID.ToString()),
+                new XAttribute("tipe", "Directed Association")));
+
+            file = (XElement)file.LastNode;
+
+            file.Add(new XElement("nama", this.name));
+            file.Add(new XElement("jenisRelasiAsal", this.relationStart));
+            file.Add(new XElement("jenisRelasiTujuan", this.relationEnd));
+
+            doc.Save(path);
+        }
+
+        public List<DrawingObject> Unserialize(string path)
+        {
+            throw new NotImplementedException();
         }
     }
 }

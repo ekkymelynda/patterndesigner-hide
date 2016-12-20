@@ -8,10 +8,11 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using PatternDesigner.Commands;
 using System.IO;
+using System.Xml.Linq;
 
 namespace PatternDesigner.Shapes
 {
-    public class Rectangle : Vertex
+    public class Rectangle : Vertex, IPersistance
     {
         public Pen pen;
         PointF ukuran = new PointF(100, 1);
@@ -310,6 +311,47 @@ namespace PatternDesigner.Shapes
                 }
             }
 
+        }
+
+        public void Serialize(string path)
+        {
+            XDocument doc = XDocument.Load(path);
+            XElement file = doc.Root;
+            Console.WriteLine(file);
+
+            if (doc.Root.LastNode != null)
+            {
+                file = (XElement)doc.LastNode;
+            }
+
+            file.Add(new XElement("class",
+                new XAttribute("id", this.ID.ToString()),
+                new XAttribute("nama", this.nama),
+                new XAttribute("posX", this.X.ToString()),
+                new XAttribute("posY", this.Y.ToString())));
+
+            file = (XElement)file.LastNode;
+
+            foreach (Attribute temp in this.att)
+            {
+                file.Add(new XElement("attribute", new XElement("visibility", temp.visibility),
+                    new XElement("type", temp.tipe),
+                    new XElement("nama", temp.nama)));
+            }
+
+            foreach (Method temp in this.meth)
+            {
+                file.Add(new XElement("method", new XElement("visibility", temp.visibility),
+                    new XElement("return", temp.tipe),
+                    new XElement("nama", temp.nama)));
+            }
+
+            doc.Save(path);
+        }
+
+        public List<DrawingObject> Unserialize(string path)
+        {
+            throw new NotImplementedException();
         }
     }
 }

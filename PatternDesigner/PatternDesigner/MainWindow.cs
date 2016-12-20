@@ -53,6 +53,7 @@ namespace PatternDesigner
 
             //command di menubar file
             GenerateFile addGenerateFile = new GenerateFile(canvas);
+            Save save = new Save(canvas);
             Exit exit = new Exit();
 
             //command di menubar edit
@@ -82,12 +83,13 @@ namespace PatternDesigner
             DefaultMenuItem fileMenuItem = new DefaultMenuItem("File");
             this.menubar.AddMenuItem(fileMenuItem);
 
-            DefaultMenuItem eksportMenuItem = new DefaultMenuItem("Eksport");
-            fileMenuItem.AddMenuItem(eksportMenuItem);
-
             DefaultMenuItem generateFile = new DefaultMenuItem("Generate");
             generateFile.SetCommand(addGenerateFile);
             fileMenuItem.AddMenuItem(generateFile);
+
+            DefaultMenuItem saveItem = new DefaultMenuItem("Save Diagram");
+            saveItem.SetCommand(save);
+            fileMenuItem.AddMenuItem(saveItem);
 
             fileMenuItem.AddSeparator();
 
@@ -197,6 +199,8 @@ namespace PatternDesigner
             RedoToolItem redoToolItem = new RedoToolItem(canvas);
             redoToolItem.SetCommand(redo);
             SaveToolbarItem saveToolItem = new SaveToolbarItem(canvas);
+            saveToolItem.SetCommand(save);
+
             ExportToolItem exportToolItem = new ExportToolItem(canvas);
 
             OpenToolbarItem openToolItem = new OpenToolbarItem(canvas);

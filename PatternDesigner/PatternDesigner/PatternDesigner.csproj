@@ -75,6 +75,7 @@
     <Compile Include="Commands\CreateClass.cs" />
     <Compile Include="Commands\ApplyRelationshipProperties.cs" />
     <Compile Include="Commands\ApplyClassProperties.cs" />
+    <Compile Include="Commands\Save.cs" />
     <Compile Include="Commands\TranslateListVertex.cs" />
     <Compile Include="DefaultColom.cs">
       <SubType>Component</SubType>
@@ -86,6 +87,7 @@
       <DependentUpon>DefaultToolbar.cs</DependentUpon>
     </Compile>
     <Compile Include="Commands\GenerateFile.cs" />
+    <Compile Include="IPersistance.cs" />
     <Compile Include="IToolbar.cs" />
     <Compile Include="IToolbarItem.cs" />
     <Compile Include="ObjectProperties\ClassProperties.cs">
