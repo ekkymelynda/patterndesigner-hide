@@ -226,8 +226,8 @@ namespace PatternDesigner
                 KotakInput kotakMethodNama = new KotakInput(Method);
                 KotakInput kotakMethodTipe = new KotakInput(Method);
 
-                kotakMethodVisi.setNama(meth.visibility);
-                kotakMethodVisi.dropDown.Text = meth.visibility;
+                kotakMethodVisi.setNama(mtd.visibility);
+                kotakMethodVisi.dropDown.Text = mtd.visibility;
                 kotakMethodVisi.setSize(60, 45);
 
                 kotakMethodNama.setNama(mtd.nama);

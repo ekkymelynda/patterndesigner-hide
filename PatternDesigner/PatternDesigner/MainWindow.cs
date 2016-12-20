@@ -54,6 +54,7 @@ namespace PatternDesigner
             //command di menubar file
             GenerateFile addGenerateFile = new GenerateFile(canvas);
             Save save = new Save(canvas);
+            OpenFile open = new OpenFile(canvas);
             Exit exit = new Exit();
 
             //command di menubar edit
@@ -202,6 +203,8 @@ namespace PatternDesigner
             saveToolItem.SetCommand(save);
 
             OpenToolbarItem openToolItem = new OpenToolbarItem(canvas);
+            openToolItem.SetCommand(open);
+
             CopyToolbarItem copyToolItem = new CopyToolbarItem(canvas);
             copyToolItem.SetCommand(copy);
             PasteToolbarItem pasteToolItem = new PasteToolbarItem(canvas);

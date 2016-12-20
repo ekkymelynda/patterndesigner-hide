@@ -9,6 +9,7 @@ using System.Drawing.Drawing2D;
 using PatternDesigner.Commands;
 using System.IO;
 using System.Xml.Linq;
+using System.Xml;
 
 namespace PatternDesigner.Shapes
 {
@@ -336,7 +337,9 @@ namespace PatternDesigner.Shapes
                 new XAttribute("id", this.ID.ToString()),
                 new XAttribute("nama", this.nama),
                 new XAttribute("posX", this.X.ToString()),
-                new XAttribute("posY", this.Y.ToString())));
+                new XAttribute("posY", this.Y.ToString()),
+                new XAttribute("width", this.Width.ToString()),
+                new XAttribute("height", this.Height.ToString())));
 
                 file = (XElement)file.LastNode;
 
@@ -361,7 +364,182 @@ namespace PatternDesigner.Shapes
 
         public List<DrawingObject> Unserialize(string path)
         {
-            throw new NotImplementedException();
+            List<DrawingObject> DrawingObject = new List<DrawingObject>();
+            List<Attribute> Attribute = new List<Attribute>();
+            List<Method> Method = new List<Method>();
+            Rectangle rectangle = null;
+            int x = 0, y = 0, width = 0, height = 0;
+            string id = null;
+            Boolean flag = true;
+            int flagAtr = 0;
+            string nama = null;
+
+            XmlTextReader reader = new XmlTextReader(path);
+            reader.MoveToContent();
+
+            try
+            {
+                if (reader.Name.Equals("diagram"))
+                {
+                    while (reader.Read())
+                    {
+                        if (reader.Name.Equals("class"))
+                        {
+                            Boolean flagClass = true;
+
+                            reader.MoveToFirstAttribute();
+                            id = reader.Value;
+                            reader.MoveToNextAttribute();
+                            nama = reader.Value;
+                            reader.MoveToNextAttribute();
+                            x = Int32.Parse(reader.Value);
+                            reader.MoveToNextAttribute();
+                            y = Int32.Parse(reader.Value);
+                            reader.MoveToNextAttribute();
+                            height = Int32.Parse(reader.Value);
+                            reader.MoveToNextAttribute();
+                            width = Int32.Parse(reader.Value);
+                            reader.MoveToElement();
+
+                            while (reader.Read() && flagClass)
+                            {
+                                reader.MoveToContent();
+                                flag = true; flagAtr = 0;
+                                if (reader.Name.Equals("attribute"))
+                                {
+                                    Attribute atr = new Attribute();
+                                    while (reader.Read() && flag)
+                                    {
+                                        switch (reader.NodeType)
+                                        {
+                                            case XmlNodeType.Element:
+                                                if (reader.Name.Equals("visibility"))
+                                                {
+                                                    flagAtr = 1;
+                                                }
+                                                else if (reader.Name.Equals("type"))
+                                                {
+                                                    flagAtr = 2;
+                                                }
+                                                else if (reader.Name.Equals("nama"))
+                                                {
+                                                    flagAtr = 3;
+                                                }
+                                                break;
+                                            case XmlNodeType.Text:
+                                                if (flagAtr == 1)
+                                                {
+                                                    atr.visibility = reader.Value;
+                                                }
+                                                else if (flagAtr == 2)
+                                                {
+                                                    atr.tipe = reader.Value;
+                                                }
+                                                else if (flagAtr == 3)
+                                                {
+                                                    atr.nama = reader.Value;
+                                                }
+                                                break;
+                                            case XmlNodeType.EndElement:
+                                                if (reader.Name.Equals("attribute"))
+                                                {
+                                                    flag = false;
+                                                    Attribute.Add(atr);
+                                                }
+                                                break;
+                                        }
+                                    }
+                                }
+                                else if (reader.Name.Equals("method"))
+                                {
+                                    Method mtd = new Method();
+                                    while (reader.Read() && flag)
+                                    {
+                                        switch (reader.NodeType)
+                                        {
+                                            case XmlNodeType.Element:
+                                                if (reader.Name.Equals("visibility"))
+                                                {
+                                                    flagAtr = 1;
+                                                }
+                                                else if (reader.Name.Equals("return"))
+                                                {
+                                                    flagAtr = 2;
+                                                }
+                                                else if (reader.Name.Equals("nama"))
+                                                {
+                                                    flagAtr = 3;
+                                                }
+                                                break;
+                                            case XmlNodeType.Text:
+                                                if (flagAtr == 1)
+                                                {
+                                                    mtd.visibility = reader.Value;
+                                                }
+                                                else if (flagAtr == 2)
+                                                {
+                                                    mtd.tipe = reader.Value;
+                                                }
+                                                else if (flagAtr == 3)
+                                                {
+                                                    mtd.nama = reader.Value;
+                                                }
+                                                break;
+                                            case XmlNodeType.EndElement:
+                                                if (reader.Name.Equals("method"))
+                                                {
+                                                    flag = false;
+                                                    Method.Add(mtd);
+                                                }
+                                                break;
+                                        }
+                                    }
+                                }
+                                else if(reader.Name.Equals("class"))
+                                {
+                                    flagClass = false;
+                                }
+                            }
+                            if (id != null)
+                            {
+                                Console.WriteLine("ID: " + id);
+                                Console.WriteLine("x: " + x);
+                                Console.WriteLine("y: " + y);
+                                Console.WriteLine("width: " + width);
+                                Console.WriteLine("Height" + height);
+                                rectangle = new Rectangle(x, y);
+                                rectangle.ID = new Guid(id);
+                                rectangle.nama = nama;
+                                rectangle.Width = width;
+                                rectangle.Height = height;
+                                foreach(Attribute attr in Attribute)
+                                {
+                                    rectangle.att.Add(attr);
+                                }
+                                foreach (Method mtd in Method)
+                                {
+                                    rectangle.meth.Add(mtd);
+                                }
+
+                                DrawingObject.Add(rectangle);
+
+                                Attribute.Clear();
+                                Method.Clear();
+
+                            }
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Unserialize Rectangle: " + ex);
+            }
+
+            reader.Close();
+            return DrawingObject;
+
         }
     }
 }
