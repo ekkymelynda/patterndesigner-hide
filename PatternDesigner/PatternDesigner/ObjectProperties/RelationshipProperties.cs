@@ -19,7 +19,9 @@ namespace PatternDesigner
         private Button applyButton, cancelButton;
         private Form main;
         private Label relationshipNameLabel, relationLabel;
-        private TextBox relationshipName, relationStart, relationEnd;
+        private TextBox relationshipName;
+        private ComboBox relationStart, relationEnd;
+        
 
         public RelationshipProperties(ICanvas canvas, Edge obj, Form main1)
         {
@@ -28,7 +30,6 @@ namespace PatternDesigner
             this.main = main1;
             this.edge = obj;
             this.Size = new Size(300, 200);
-
 
             relationshipNameLabel = new Label();
             relationshipNameLabel.Text = "Nama Relationship";
@@ -61,21 +62,26 @@ namespace PatternDesigner
             relationLabel.Size = new Size(100, 20);
             this.Controls.Add(relationLabel);
 
-            relationStart = new TextBox();
+            relationStart = new ComboBox();
+            relationStart.Items.Add("0");
+            relationStart.Items.Add("1");
+
             relationStart.Text = this.edge.relationStart;
-            relationStart.WordWrap = true;
             relationStart.Location = new Point(120, 70);
             relationStart.Size = new Size(45, 45);
             this.Controls.Add(relationStart);
 
-            relationEnd = new TextBox();
+            relationEnd = new ComboBox();
+            relationEnd.Items.Add("0");
+            relationEnd.Items.Add("1");
+            
             relationEnd.Text = this.edge.relationEnd;
-            relationEnd.WordWrap = true;
             relationEnd.Location = new Point(185, 70);
             relationEnd.Size = new Size(45, 45);
             this.Controls.Add(relationEnd);
 
         }
+
 
         private void ApplyButton_Click(object sender, EventArgs e)
         {
