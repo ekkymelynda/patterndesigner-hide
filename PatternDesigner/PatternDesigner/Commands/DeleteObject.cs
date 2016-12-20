@@ -8,17 +8,18 @@ namespace PatternDesigner.Commands
 {
     public class DeleteObject : Command
     {
-        private List<DrawingObject> listObject;
+        List<DrawingObject> listObject;
 
-        public DeleteObject(List<DrawingObject> objects, ICanvas canvas)
+        public DeleteObject(ICanvas canvas)
         {
-            this.listObject = objects;
+            this.listObject = new List<DrawingObject>();
             this.canvas = canvas;
             removeRedoStack();
         }
 
         public override void Execute()
         {
+            this.listObject = canvas.GetListSelectedObject();
             foreach (DrawingObject obj in listObject)
             {
                 if(obj is Vertex)
@@ -41,6 +42,7 @@ namespace PatternDesigner.Commands
                 }
                 
             }
+            canvas.Repaint();
         }
 
         public override void Unexecute()

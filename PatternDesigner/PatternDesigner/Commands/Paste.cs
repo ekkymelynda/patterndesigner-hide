@@ -22,6 +22,7 @@ namespace PatternDesigner.Commands
 
         public override void Execute()
         {
+            
             if (canvas.GetCopyStack().Count > 0)
             {
                 ICommand command = canvas.GetCopyStack().Peek();

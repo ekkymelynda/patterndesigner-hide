@@ -15,19 +15,21 @@ namespace PatternDesigner.Commands
         private List<DrawingObject> listObjectSelected;
         private Vertex choosenObject;
         private Rectangle rectangle;
+        private Vertex lastObject;
 
-
-        public CreateClassCopy(ICanvas canvas)
+        public CreateClassCopy(List<DrawingObject> lo, ICanvas canvas)
         {
+            listObjectSelected = new List<DrawingObject>(lo);
             this.canvas = canvas;
             removeRedoStack();
         }
 
         public override void Execute()
         {
-            this.listObjectSelected = canvas.GetListSelectedObject();
+            Debug.WriteLine(listObjectSelected.Count);
             List<DrawingObject> newListSelectedObject = new List<DrawingObject>();
-            foreach(DrawingObject obj in listObjectSelected)
+            
+            foreach (DrawingObject obj in listObjectSelected)
             {
                 if(obj is Vertex)
                 {
@@ -58,14 +60,15 @@ namespace PatternDesigner.Commands
 
                     choosenObject.Deselect();
                     rectangle.Select();
+                    
                     newListSelectedObject.Add(rectangle);
                 }
             }
             canvas.GetListSelectedObject().Clear();
             ICommand command = new CreateClass(newListSelectedObject.Cast<Vertex>().ToList(), canvas);
+            listObjectSelected = newListSelectedObject;
             canvas.AddCommand(command);
             canvas.SetListSelectedObecjt(newListSelectedObject);
-
         }
 
         public override void Unexecute()

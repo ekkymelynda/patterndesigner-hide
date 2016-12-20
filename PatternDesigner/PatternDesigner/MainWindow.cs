@@ -21,7 +21,11 @@ namespace PatternDesigner
         private IEditor editor;
         private IToolbar toolbar;
         private IMenubar menubar;
-        
+        private Undo undo;
+        private Redo redo;
+        private Copy copy;
+        private Paste paste;
+
 
         public MainWindow()
         {
@@ -57,10 +61,10 @@ namespace PatternDesigner
             Exit exit = new Exit();
 
             //command di menubar edit
-            Undo undo = new Undo(canvas);
-            Redo redo = new Redo(canvas);
-            Copy copy = new Copy(canvas);
-            Paste paste = new Paste(canvas);
+            undo = new Undo(canvas);
+            redo = new Redo(canvas);
+            copy = new Copy(canvas);
+            paste = new Paste(canvas);
 
             //command di menubar generate
             AddPattern1 addPattern1 = new AddPattern1(canvas);
@@ -228,62 +232,21 @@ namespace PatternDesigner
             switch (keyData)
             {
                 case Keys.Control | Keys.Z:
-                    if (canvas.GetUndoStack().Count > 0)
-                    {
-                        ICommand command = canvas.GetUndoStack().Pop();
-                        command.Unexecute();
-                        canvas.Repaint();
-                        canvas.GetRedoStack().Push(command);
-                    }
+                    undo.Execute();
                     break;
                 case Keys.Control | Keys.Y:
-                    if (canvas.GetRedoStack().Count > 0)
-                    {
-                        ICommand command = canvas.GetRedoStack().Pop();
-                        command.Execute();
-                        canvas.Repaint();
-                        canvas.GetUndoStack().Push(command);
-                    }
+                    redo.Execute();
                     break;
                 case Keys.Control | Keys.C:
-                    DrawingObject selectedObject = canvas.GetSelectedObject();
-
-                    if (selectedObject != null)
-                    {
-                        if (selectedObject is Vertex)
-                        {
-                            Vertex choosenObject = (Vertex)selectedObject;
-
-                            while (canvas.GetCopyStack().Count > 0)
-                            {
-                                canvas.GetCopyStack().Pop();
-                            }
-
-                            ICommand command = new Commands.CreateClassCopy(canvas);
-                            canvas.AddCopyCommand(command);
-                        }
-                    }
+                    copy.Execute();
                     break;
                 case Keys.Control | Keys.V:
-                    if (canvas.GetCopyStack().Count > 0)
-                    {
-                        ICommand command = canvas.GetCopyStack().Peek();
-                        command.Execute();
-                        canvas.Repaint();
-                    }
+                    paste.Execute();
                     break;
                 case Keys.Delete:
-                    if(canvas != null)
-                    {
-                        List<DrawingObject> listSelectedObject = canvas.GetListSelectedObject();
-                        if(listSelectedObject.Count > 0)
-                        {
-                            ICommand command = new DeleteObject(listSelectedObject, canvas);
-                            canvas.AddCommand(command);
-                            command.Execute();
-                            canvas.Repaint();
-                        }
-                    }
+                    DeleteObject deleteCommand = new DeleteObject(canvas);
+                    deleteCommand.Execute();
+                    canvas.AddCommand(deleteCommand);
                     break;
 
                 case Keys.Control | Keys.Q:
