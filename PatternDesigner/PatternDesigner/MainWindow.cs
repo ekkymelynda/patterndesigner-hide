@@ -50,7 +50,18 @@ namespace PatternDesigner
             #endregion
 
             #region Commands
-            
+
+            //command di menubar file
+            GenerateFile addGenerateFile = new GenerateFile(canvas);
+            Exit exit = new Exit();
+
+            //command di menubar edit
+            Undo undo = new Undo(canvas);
+            Redo redo = new Redo(canvas);
+            Copy copy = new Copy(canvas);
+            Paste paste = new Paste(canvas);
+
+            //command di menubar generate
             AddPattern1 addPattern1 = new AddPattern1(canvas);
             AddFactoryPattern addFactoryPattern = new AddFactoryPattern(canvas);
             AddCommandPattern addCommandPattern = new AddCommandPattern(canvas);
@@ -58,15 +69,7 @@ namespace PatternDesigner
             AddFacadePattern addFacadePattern = new AddFacadePattern(canvas);
             AddMementoPattern addMementroPattern = new AddMementoPattern(canvas);
             AddSingletonPattern addSingletonPattern = new AddSingletonPattern(canvas);
-            GenerateFile addGenerateFile = new GenerateFile(canvas);
-
-            Undo undo = new Undo(canvas);
-            Redo redo = new Redo(canvas);
-            Copy copy = new Copy(canvas);
-            Paste paste = new Paste(canvas);
-            Exit exit = new Exit();
-   
-
+ 
             #endregion
 
             #region Menubar
@@ -75,6 +78,7 @@ namespace PatternDesigner
             this.menubar = new DefaultMenubar();
             this.Controls.Add((Control)this.menubar);
 
+            //menubar file
             DefaultMenuItem fileMenuItem = new DefaultMenuItem("File");
             this.menubar.AddMenuItem(fileMenuItem);
 
@@ -85,14 +89,35 @@ namespace PatternDesigner
             generateFile.SetCommand(addGenerateFile);
             fileMenuItem.AddMenuItem(generateFile);
 
-            DefaultMenuItem generateMenuItem = new DefaultMenuItem("Generate");
-            this.menubar.AddMenuItem(generateMenuItem);
-
             fileMenuItem.AddSeparator();
 
             DefaultMenuItem exitMenuItem = new DefaultMenuItem("Exit");
             exitMenuItem.SetCommand(exit);
             fileMenuItem.AddMenuItem(exitMenuItem);
+
+            //menubar edit
+            DefaultMenuItem editMenuItem = new DefaultMenuItem("Edit");
+            this.menubar.AddMenuItem(editMenuItem);
+
+            DefaultMenuItem undoItem = new DefaultMenuItem("Undo");
+            undoItem.SetCommand(undo);
+            editMenuItem.AddMenuItem(undoItem);
+
+            DefaultMenuItem redoItem = new DefaultMenuItem("Redo");
+            redoItem.SetCommand(redo);
+            editMenuItem.AddMenuItem(redoItem);
+
+            DefaultMenuItem copyItem = new DefaultMenuItem("Copy");
+            copyItem.SetCommand(copy);
+            editMenuItem.AddMenuItem(copyItem);
+
+            DefaultMenuItem pasteItem = new DefaultMenuItem("Paste");
+            pasteItem.SetCommand(paste);
+            editMenuItem.AddMenuItem(pasteItem);
+
+            //menubar generate
+            DefaultMenuItem generateMenuItem = new DefaultMenuItem("Generate");
+            this.menubar.AddMenuItem(generateMenuItem);
 
             DefaultMenuItem creationalSubMenu = new DefaultMenuItem("Creational Pattern");
             generateMenuItem.AddMenuItem(creationalSubMenu);
@@ -126,27 +151,6 @@ namespace PatternDesigner
             DefaultMenuItem mementoMenuItem = new DefaultMenuItem("Memento Pattern");
             mementoMenuItem.SetCommand(addMementroPattern);
             behavioralSubMenu.AddMenuItem(mementoMenuItem);
-
-
-            DefaultMenuItem editMenuItem = new DefaultMenuItem("Edit");
-            this.menubar.AddMenuItem(editMenuItem);
-
-            DefaultMenuItem undoItem = new DefaultMenuItem("Undo");
-            undoItem.SetCommand(undo);
-            editMenuItem.AddMenuItem(undoItem);
-
-            DefaultMenuItem redoItem = new DefaultMenuItem("Redo");
-            redoItem.SetCommand(redo);
-            editMenuItem.AddMenuItem(redoItem);
-
-            DefaultMenuItem copyItem = new DefaultMenuItem("Copy");
-            copyItem.SetCommand(copy);
-            editMenuItem.AddMenuItem(copyItem);
-
-            DefaultMenuItem pasteItem = new DefaultMenuItem("Paste");
-            pasteItem.SetCommand(paste);
-            editMenuItem.AddMenuItem(pasteItem);
-
 
             #endregion
 
@@ -283,7 +287,16 @@ namespace PatternDesigner
                         }
                     }
                     break;
-                
+
+                case Keys.Control | Keys.Q:
+                    if (canvas != null)
+                    {
+                        ICommand command = new Exit ();
+                        command.Execute();
+                        canvas.Repaint();
+                    }
+                    break;
+
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
