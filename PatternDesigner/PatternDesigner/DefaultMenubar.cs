@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 namespace PatternDesigner
 {
-    public class DefaultMenubar : MenuStrip, IMenubar, IPluginHost
+    public class DefaultMenubar : MenuStrip, IMenubar
     {
         public ICommand command;
 
@@ -25,18 +25,6 @@ namespace PatternDesigner
         public void AddMenuItem(IMenuItem menuItem)
         {
             this.Items.Add((ToolStripMenuItem)menuItem);
-        }
-
-        public void Register(IPlugin plugin, ICanvas canvas)
-        { 
-            if (plugin is ICommand)
-            {
-                ICommand command = (ICommand)plugin;
-                this.command = command.MakeCommand(canvas);
-                DefaultMenuItem Item = new DefaultMenuItem(this.command.GetCommandName());
-                Item.SetCommand(this.command);
-                AddMenuItem(Item);
-            }
         }
 
     }

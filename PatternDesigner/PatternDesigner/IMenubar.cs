@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PatternDesigner
 {
-    public interface IMenubar : IPluginHost
+    public interface IMenubar
     {
         void AddMenuItem(IMenuItem menuItem);
     }

@@ -53,10 +53,9 @@ namespace PatternDesigner
         {
             if (plugin is ICommand)
             {
-                
                 ICommand command = (ICommand)plugin;
                 this.commands = command.MakeCommand(canvas);
-                Debug.WriteLine(this.commands.GetCommandName());
+                Debug.WriteLine("Command Name: "+this.commands.GetCommandName());
                 DefaultMenuItem Item = new DefaultMenuItem(this.commands.GetCommandName());
                 Item.SetCommand(this.commands);
                 AddMenuItem(Item);

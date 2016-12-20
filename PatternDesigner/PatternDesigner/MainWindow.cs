@@ -43,7 +43,7 @@ namespace PatternDesigner
 
                 try
                 {
-                    Assembly asm = Assembly.Load(pluginFiles[i]);
+                    Assembly asm = Assembly.LoadFile(pluginFiles[i]);
 
                     if (asm != null)
                     {

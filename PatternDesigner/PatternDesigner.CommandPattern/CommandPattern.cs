@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace PatternDesigner.CommandPattern
 {
@@ -17,20 +18,7 @@ namespace PatternDesigner.CommandPattern
 
         public ICanvas canvas;
         public Pen pen;
-        public string name;
-
-        public string Name
-        {
-            get
-            {
-                return this.name;
-            }
-
-            set
-            {
-                this.name = "Command Pattern";
-            }
-        }
+        public string Name;
 
         public IPluginHost Host
         {
@@ -45,10 +33,14 @@ namespace PatternDesigner.CommandPattern
             }
         }
 
-        public CommandPattern(ICanvas canvas)
+        public CommandPattern()
+        {
+            this.Name = "Command Pattern";
+        }
+
+        public CommandPattern(ICanvas canvas): this()
         {
             this.canvas = canvas;
-            this.name = "Command Pattern";
         }
 
         public void Execute()
@@ -56,7 +48,7 @@ namespace PatternDesigner.CommandPattern
             pen = new Pen(Color.Black);
             pen.Width = 1.5f;
 
-            string[] lines = System.IO.File.ReadAllLines("CommandPattern.txt");
+            string[] lines = System.IO.File.ReadAllLines(Application.StartupPath + "\\Plugin\\CommandPattern.txt");
 
             foreach (string line in lines)
             {
@@ -78,7 +70,7 @@ namespace PatternDesigner.CommandPattern
 
         public string GetCommandName()
         {
-            return this.name;
+            return this.Name;
         }
 
         public void Unexecute()

@@ -8,7 +8,6 @@ namespace PatternDesigner
 {
     public interface IPlugin
     {
-        String Name { get; set; }
         IPluginHost Host { get; set; }
     }
 }
